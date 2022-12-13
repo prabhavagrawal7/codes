@@ -1,0 +1,7 @@
+**/*.dSYM
+**/*.bin
+**/*.fls
+**/*.aux
+**/*.synctex.gz
+**/*.csv
+*./.cph
