@@ -1,0 +1,70 @@
+
+\documentclass{article}
+
+\usepackage{lipsum} % for dummy text
+
+\title{My Document}
+\author{John Doe}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+Given an array $a_1, a_2, \ldots, a_n$ such that $a_i = i$ for all $i$. For an integer $k \geq 2$, the operation $Swap(k)$ is defined as:
+
+Let $d$ be the largest divisor of $k$ which is not equal to $k$. Swap the elements $a_d$ and $a_k$.
+
+Suppose you perform $Swap(i)$ for all $2 \leq i \leq n$ in order. Find the position of 1 in the resulting array. In other words, find such $j$ that $a_j = 1$ after performing these operations.
+
+Input
+
+Each test case contains multiple test cases. The first line contains the number of test cases $t$ ($1 \leq t \leq 10^4$). The description of the test cases follows.
+
+The only line of each test case contains one integer $n$ ($1 \leq n \leq 10^9$) — the length of the array $a$.
+
+Output
+
+For each test case, output the position of 1 in the resulting array.
+
+Example
+
+input
+
+4
+
+1
+
+4
+
+5
+
+120240229
+
+output
+
+1
+
+4
+
+4
+
+67108864
+
+Note
+
+In the first test case, the array is [1] and there are no operations performed.
+
+In the second test case, $a$ changes as follows:
+
+Initially, $a$ is [1,2,3,4].
+
+After performing $Swap(2)$, $a$ changes to [2,\underline{1},3,4].
+
+After performing $Swap(3)$, $a$ changes to [3,1,2,4].
+
+After performing $Swap(4)$, $a$ changes to [3,4,1,2] (that is, the element 1 lies on index 4). Thus, the answer is 4.
+
+\end{document}
+
+

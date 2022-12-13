@@ -1,0 +1,28 @@
+{
+  "configurations": [
+    {
+      "name": "Python: Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Launch",
+      "program": "${workspaceFolder}/${fileBasenameNoExtension}",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "expressions": "native",
+      "preLaunchTask": "C/C++: clang++ build active file"
+    },
+    {
+      "type": "msedge",
+      "name": "http://127.0.0.1:3000/index.html",
+      "request": "launch",
+      "url": "http://127.0.0.1:3000/index.html"
+    }
+  ]
+}

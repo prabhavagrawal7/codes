@@ -1,0 +1,21 @@
+.DS_Store
+**/*.dSYM
+**/*.bin
+**/*.fls
+**/*.aux
+**/*.synctex.gz
+**/*.csv
+**/*.plist
+.cph/
+**/*.exe
+
+
+# latex docs
+latex-docs/*.fdb_latexmk
+latex-docs/*.log
+latex-docs/*.synctex.gz
+latex-docs/*.fls
+latex-docs/*.aux
+latex-docs/*.out
+
+

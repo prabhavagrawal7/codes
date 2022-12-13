@@ -1,0 +1,13 @@
+# Fdb version 4
+["pdflatex"] 1690624625 "/Users/prabhavagrawal7/prabhav/codes/test1.tex" "test1.pdf" "test1" 1690624626 2
+  "/Users/prabhavagrawal7/prabhav/codes/test1.tex" 1690624625 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "/usr/local/texlive/2023/texmf-dist/web2c/texmf.cnf" 1677365944 40745 87bb86a62d462f93a1efc6b0c65c872e ""
+  "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1683489216 7883461 4f12da628857ef72763301d42424bf2c ""
+  "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
+  "test1.aux" 1690624625 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "test1.tex" 1690624625 0 d41d8cd98f00b204e9800998ecf8427e ""
+  (generated)
+  "test1.aux"
+  "test1.log"
+  "test1.pdf"
+  (rewritten before read)

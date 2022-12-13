@@ -1,0 +1,88 @@
+// for cp
+{
+  "code-runner.executorMap": {
+    "cpp": "cd $dir && g++ -std=c++17 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover=all -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fno-sanitize=null -fno-sanitize=alignment $fileName -o $fileNameWithoutExt.exe && $dir$fileNameWithoutExt.exe",
+    "python": "python3 -u"
+  },
+  "editor.mouseWheelZoom": true,
+  "code-runner.runInTerminal": true,
+  "editor.fontFamily": "Monolisa, Monaco, 'Courier New', monospace",
+  "editor.autoClosingOvertype": "always",
+  "cph.language.cpp.Args": "-std=c++17",
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "latex-workshop.view.pdf.viewer": "tab",
+  "cph.general.firstTime": false,
+  "terminal.integrated.shellIntegration.enabled": true,
+  "explorer.sortOrder": "modified",
+  "zenMode.hideLineNumbers": false,
+  "zenMode.centerLayout": false,
+  "files.autoSave": "afterDelay",
+  "zenMode.hideActivityBar": false,
+  "editor.accessibilitySupport": "off",
+  "terminal.integrated.inheritEnv": false,
+  "window.commandCenter": false,
+  "latex-workshop.latex.build.forceRecipeUsage": false,
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": true,
+    "markdown": false,
+    "scminput": false,
+    "yaml": false,
+    "cpp": true,
+    "python": true,
+    "latex": false,
+    "javascript": true,
+    "typescript": true
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "django-html": "html"
+  },
+  "security.workspace.trust.untrustedFiles": "open",
+  "[python]": {
+    "editor.formatOnType": true,
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+
+  "files.associations": {
+    "**/*.html": "html",
+    "**/templates/*/*.html": "django-html",
+    "**/templates/*": "django-txt",
+    "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+  },
+  "[latex]": {
+    "editor.defaultFormatter": "James-Yu.latex-workshop"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "cph.general.autoShowJudge": false,
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "liveServer.settings.donotShowInfoMsg": true,
+  "explorer.autoReveal": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "chatgpt.lang": "en",
+  "workbench.colorTheme": "Default Dark+",
+  "codesnippetsai.defaultModel": "Google PaLM2",
+  "codesnippetsai.gpt.accessToken": "aksdalkj",
+  "liveServer.settings.donotVerifyTags": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "auto-rename-tag.activationOnLanguage": ["*"],
+  "diffEditor.ignoreTrimWhitespace": false
+}
