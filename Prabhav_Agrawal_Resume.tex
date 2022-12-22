@@ -1,13 +1,17 @@
+% !TEX program = lualatex
 \documentclass[12pt]{article}
 \usepackage[]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
+\usepackage{tabularx}
 \usepackage{multicol}
 \usepackage{blindtext}
 \usepackage{flafter}
 \usepackage[T1]{fontenc}
 \usepackage{color, hyperref, xcolor}
 \usepackage[document]{ragged2e}
+\usepackage{fontspec}
+\setmainfont{Calibri}
 \definecolor{linkcolor}{HTML}{003c50}
 \hypersetup{ 
      colorlinks=true, 
@@ -17,24 +21,29 @@
      urlcolor=linkcolor
      } 
 \thispagestyle{empty}
-
 \newcommand{\sbullet}{\raisebox{0.35ex}{\tiny$\bullet$}\hspace*{3pt}}
 \geometry{paperheight=11.5in, paperwidth=8.5in, margin=1cm}
-\newcommand{\resumename}[1]{\LARGE\textbf{#1}\hfill\small}
+\newcommand{\resumename}[1]{\LARGE\textbf{#1}\small}
 \titleformat{\section} 
-  {\normalfont\fontfamily{phv}\fontsize{10}{10}\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+  {\normalfont\fontsize{12pt}{10}\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
 \titlespacing*{\section}{0em}{0.9em}{0.5em}
 \titleformat{\subsection}[runin]{\bfseries}{}{}{}[]
 \titlespacing*{\subsection}{0em}{0.5em}{0em}
 
 \begin{document}
-\resumename{Prabhav Agrawal} 
-\vspace*{10pt}
- 
-Linkedin: 	\hspace*{0.50cm} \href{https://linkedin.com/in/prabhavagrawal7}{linkedin.com/in/prabhavagrawal7}\hfill Email: \href{mailto:prabhavagrawal7@gmail.com}{prabhavagrawal7@gmail.com} \\
-Github:		\hspace*{0.77cm} \href{https://github.com/prabhavagrawal7}{github.com/prabhavagrawal7} \hfill Mobile: \href{tel:+919653051636}{+91-9653051636} \\
-Codechef:	\hspace*{0.435cm} \href{https://codechef.com/users/prabhav7}{codechef.com/users/prabhav7}\\
-Codeforces: \hspace*{0.13cm} \href{https://codeforces.com/profile/prabhavagrawal7}{codeforces.com/profile/prabhavagrawal7}
+\resumename{Prabhav Agrawal}
+\vspace*{-6pt}
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{\textwidth}{@{}llXr}
+		Linkedin & \href{https://linkedin.com/in/prabhavagrawal7}{linkedin.com/in/prabhavagrawal7} &   & Email: \href{mailto:prabhavagrawal7@gmail.com}{prabhavagrawal7@gmail.com} \\
+		Github   & \href{https://github.com/prabhavagrawal7}{github.com/prabhavagrawal7}           &   & Mobile: \href{tel:+919653051636}{+91-9653051636}                          \\
+		Codechef & \href{https://codechef.com/users/prabhav7}{codechef.com/users/prabhav7} \\
+		Codeforces & \href{https://codeforces.com/profile/prabhavagrawal7}{codeforces.com/profile/prabhavagrawal7} &                                                               \\
+	\end{tabularx}
+\end{table}
+\vspace{-\topsep}
+\vspace*{-5pt}
 \section*{EDUCATION}
 \subsection*{Indian Institute of Information Technology Lucknow}	\hfill\textbf{Lucknow, Uttar Pradesh, India} \\
 Bachelor of Technology - Information Technology (CGPA: 8.11/10) 	\hfill\textit{December 2020 - Present (May 2024)} \\
@@ -42,39 +51,36 @@ Bachelor of Technology - Information Technology (CGPA: 8.11/10) 	\hfill\textit{D
 CBSE Class 10\textsuperscript{th} \& 12\textsuperscript{th} (10\textsuperscript{th} CGPA : 9.4, 12\textsuperscript{th} Percentage : 89.6) \hfill \textit{December 2015 - June 2019} \\
 
 \section*{PROJECTS}
-\subsection*{\href{https://github.com/prabhavagrawal7/watchnow/}{Watchnow}}~~~Django \sbullet Scikit-learn \sbullet NumPy \sbullet Pandas \sbullet Matplotlib \sbullet JQuery \sbullet JS \hfill\textit{May 2022}\\
-\begin{itemize}[topsep=1pt, itemsep=1pt, partopsep=1pt, parsep=1pt]
-	\item A website to recommend movies based on user ratings. 
-	\item Used K Nearest Neighbors to recommend movies based on user ratings.
-	\item Model optimised by using \textbf{Standard Scaler} \& \textbf{Principal Component Analysis} libraries. 
-	\item Front-end prepared using \textbf{JQuery}, \textbf{HTML}, \textbf{CSS}.
+\subsection*{\href{https://github.com/prabhavagrawal7/watchnow/}{Watchnow}}~~~Django | Scikit-learn | NumPy | Pandas | Matplotlib | JQuery | JS \hfill\textit{May 2022}\\
+\begin{itemize}[leftmargin=*, topsep=0.5pt,itemsep=0.5pt,partopsep=0.5pt, parsep=0.5pt]
+	\item Implemented machine learning algorithms, such as K Nearest Neighbors and Standard Scaler and PCA, to optimize the movie recommendation system.
+	\item Developed a user-friendly interface with personalized recommendations, a search bar, movie pages, and a user authentication system using Django, JQuery, HTML, and CSS.
+	\item Administered the website, including managing user profiles and ensuring smooth operation of the recommendation system.
 \end{itemize}
 
-\subsection*{\href{https://github.com/prabhavagrawal7/bookshop}{Bookshop}}~~~Django \sbullet HTML \sbullet CSS \sbullet JS \sbullet Bootstrap \hfill\textit{September 2021}\\
-\begin{itemize}[topsep=1pt, itemsep=1pt, partopsep=1pt, parsep=1pt]
-	\item A dummy website to shop books.
-	\item Functionalities includes cart checkout, order tracking page
-	\item Applied user authentication using Django user authentication system.
-	\item Front-end prepared using \textbf{Bootstrap} and \textbf{JavaScript} for front-end, making website more interactive.
+\subsection*{\href{https://github.com/prabhavagrawal7/bookshop}{Bookshop}}~~~Django | HTML | CSS | JS | Bootstrap \hfill\textit{September 2021}\\
+\begin{itemize}[leftmargin=*, topsep=0.5pt,itemsep=1pt,partopsep=0.5pt, parsep=0.5pt]
+	\item Created a dummy website for shopping books using Django, HTML, CSS, JavaScript, and Bootstrap.
+	\item Implemented user authentication and cart checkout functionality.
+	\item Developed an order tracking page to help users keep track of their orders.
 \end{itemize}
 
-\subsection*{\href{https://github.com/prabhavagrawal7/grievance-addressal-system}{Grievance Addressal System}}~~~Django \sbullet Data Structures \sbullet CSS \sbullet JS \sbullet BootStrap \hfill \textit{April 2021 - May 2021} \\
-\begin{itemize}[topsep=0pt,itemsep=1pt,partopsep=1pt, parsep=1pt]
-	\item A complete website to handle lodge complain request in smart way. 
-	\item Complaints or reports lodged by staff can be addressed and followed up on through this website.
-	\item In the event that the complaint is not handled after a predetermined amount of time, it is automatically escalated to its next senior authority.
-	\item If senior authority fails to respond the complaint, the complaint will be esclated accordingly until solved. 
+\subsection*{\href{https://github.com/prabhavagrawal7/grievance-addressal-system}{Grievance Addressal System}}~~~Django | Data Structures | CSS | JS | BootStrap \hfill \textit{April 2021 - May 2021} \\
+\begin{itemize}[leftmargin=*, topsep=0.5pt,itemsep=0.5pt,partopsep=0.5pt, parsep=0.5pt]
+	\item Developed a grievence redressal system website using Django, Data Structures, CSS, JS, and Bootstrap to handle and track complaints or reports lodged by staff.
+	\item Implemented smart system for addressing and escalating complaints, with automatic escalation if not resolved in predetermined time.
+	\item Added a user login system for users to track the status of their complaints and receive updates.
 \end{itemize}
 
 \section*{ACHIEVEMENTS}
-\begin{itemize}[leftmargin=*, topsep=0pt, itemsep=1pt, partopsep=2pt, parsep=2pt]
+\begin{itemize}[leftmargin=*, topsep=1pt, itemsep=1pt, partopsep=1pt, parsep=2pt]
 	\item \textbf{5 star} at \href{https://www.codechef.com/users/prabhav7}{\textbf{Codechef}} (Max Rated: \textbf{2173})
-		\item \textbf{Expert} at \href{https://codeforces.com/profile/prabhavagrawal7}{\textbf{Codeforces}} (Max Rated: \textbf{1721})
+	\item \textbf{Expert} at \href{https://codeforces.com/profile/prabhavagrawal7}{\textbf{Codeforces}} (Max Rated: \textbf{1761})
 	\item Selected for \textbf{Microsoft Intern Engage 2022} \& \textbf{Amazon ML Summer School 2022}.
-	\item Global rank \textbf{7} in \href{https://www.codechef.com/rankings/START64B?search=prabhav7}{Codechef Starters 64 (Div.2)} 
-	\item Global rank \textbf{34} in \href{https://www.codechef.com/rankings/START32B?search=prabhav7}{Codechef Starters 32 (Div.2)} 
-	\item Global rank \textbf{76} in \href{https://www.codechef.com/rankings/LTIME102B?search=prabhav7}{Codechef November Lunchtime 2021 (Div.2)} 
-	\item Global rank \textbf{93} in \href{https://www.codechef.com/rankings/START31B?search=prabhav7}{Codechef Starters 31 (Div.2)} 
+	\item Global rank \textbf{7} in \href{https://www.codechef.com/rankings/START64B?search=prabhav7}{Codechef Starters 64 (Div.2)}
+	\item Global rank \textbf{34} in \href{https://www.codechef.com/rankings/START32B?search=prabhav7}{Codechef Starters 32 (Div.2)}
+	\item Global rank \textbf{76} in \href{https://www.codechef.com/rankings/LTIME102B?search=prabhav7}{Codechef November Lunchtime 2021 (Div.2)}
+	\item Global rank \textbf{93} in \href{https://www.codechef.com/rankings/START31B?search=prabhav7}{Codechef Starters 31 (Div.2)}
 	\item Global rank \textbf{387} out of 13k in \href{https://codeforces.com/contest/1713/standings/participant/137877142#p137877142}{Codeforces Round 812 (Div.2)}.
 	\item Global rank \textbf{638} out of 10k in \href{https://codeforces.com/contest/1750/standings/participant/143636092#p143636092}{Codeforces CodeTON Round 3 (Div.1 + Div.2)}.
 	\item Global rank \textbf{690} out of 15k in \href{https://codeforces.com/contest/1719/standings/participant/138512906#p138512906}{Codeforces Round 814 (Div.2)}.
@@ -84,14 +90,14 @@ CBSE Class 10\textsuperscript{th} \& 12\textsuperscript{th} (10\textsuperscript{
 \section*{POSITION OF RESPONSIBILITY}
 \textbf{Senior Member, Competitive Programming Wing, Axios} \hfill \textit{May 2022 - Present} \\
 Indian Institute of Information Technology, Lucknow, Uttar Pradesh, India
+
+% \vspace{-\topsep}
 \section*{TECHNICAL SKILLS}
-
-\subsection*{Languages}	 \hspace*{3.2cm} C++ \sbullet Python \sbullet HTML \sbullet CSS \sbullet JS 
-\vspace{-5pt}
-\subsection*{Frameworks \& Libraries} \hspace*{0.54cm} Django \sbullet JQuery \sbullet NumPy \sbullet Pandas \sbullet Scikit-learn \sbullet Matplotlib \sbullet Seaborn \sbullet Bootstrap\\
-\vspace{-5pt}
-\subsection*{Dev Tools}	 \hspace*{3.25cm} Git \sbullet VS Code \sbullet Jupyter Notebook \\
-\vspace{-5pt}
-\subsection*{Academic Coursework}  \hspace*{0.90cm} DSA \sbullet OOPS \sbullet DBMS \sbullet Operating System \\
-
+\begin{tabular}{@{}llll}
+	\textbf{Languages}               & C++, Python, HTML, CSS, JS                                                  \\
+	\textbf{Frameworks \& Libraries} & Django, JQuery, NumPy, Pandas, Scikit-learn, Matplotlib, Seaborn, Bootstrap \\
+	\textbf{Dev Tools}               & Git, VS Code, Jupyter Notebook                                              \\
+	\textbf{Academic Coursework}     & DSA, OOPS, DBMS, Operating System                                           \\
+	\vspace{-\topsep}
+\end{tabular}
 \end{document}

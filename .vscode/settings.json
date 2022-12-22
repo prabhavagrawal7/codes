@@ -77,7 +77,11 @@
         "numbers": "cpp",
         "complex": "cpp",
         "new": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "__mutex_base": "cpp",
+        "mutex": "cpp",
+        "ratio": "cpp",
+        "cstdint": "cpp"
     },
     "livePreview.defaultPreviewPath": "/Users/prabhavagrawal/prabhav/codes/index.html"
 }

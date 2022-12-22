@@ -215,12 +215,13 @@ const ll range = 1000006;
 vi prime(range + 1, 1);
 void sieve()
 {
+    for(int p = 0; p < range; ++p) prime[p] = p;
     for (int p = 2; p * p <= range; ++p)
     {
-        if (prime[p] == 1)
+        if (prime[p] == p)
         {
             for (int i = p * p; i <= range; i += p)
-                if (prime[i] == 1)
+                if (prime[i] == i)
                     prime[i] = p;
         }
     }
