@@ -141,23 +141,66 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
+const ll range = 1000006;
+vi primes;
+void sieve()
+{
+    vi prime(range + 1, 1);
+    for (int p = 0; p < range; ++p)
+        prime[p] = p;
+    for (int p = 2; p * p <= range; ++p)
+    {
+        if (prime[p] == p)
+        {
+            for (int i = p * p; i <= range; i += p)
+                if (prime[i] == i)
+                    prime[i] = p;
+        }
+    }
+    range(i, 2, prime.size())
+    {
+        if (prime[i] == i)
+            primes.push_back(i);
+        if (primes.back() > 100)
+            break;
+    }
+}
 void func()
 {
+    newint(n);
+    vi vec = inputvec(n);
+    sort(all(vec)); 
+    range(i, n-1)
+    {
+        if(vec[i] == vec[i+1]) {give("NO");}
+    }
+    foreach (i, primes)
+    {
+        vi s(i, 0);
+        foreach (j, vec)
+        {
+            s[j % i]++;
+        }
+        bool flag = false; 
+        foreach (i, s)
+        {
+            if (i <= 1)
+            {
+                flag = true;
+                break;
+            }
+        }
+        if(flag == false) {give("NO"); }
+    }
+    give("YES");
 }
 int main()
 {
     // FAST;
-    vi vec = {79, 89, 50, 17, 69, 83, 7, 73, 59, 67};
-    vi t; 
-    ll n = vec.size(); 
-    range(i, n)
+    sieve();
+    newint(t);
+    range(t)
     {
-        range(j, i + 1, n)
-        {
-            t.push_back(abs(vec[i] - vec[j])); 
-        }
+        func();
     }
-    sort(all(t)); 
-    print(t); 
 }

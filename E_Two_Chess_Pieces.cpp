@@ -142,22 +142,145 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
+vvi g;
+vi depth, parent, vis;
+si vc1, vc2;
+pair<bool, bool> dfs(ll n)
+{
+    vis[n] = true;
+    foreach (i, g[n])
+    {
+        if (vis[i])
+            continue;
+        depth[i] = depth[n] + 1;
+        parent[i] = n;
+        auto ans = dfs(i);
+        if (ans.first)
+            vc1.insert(n);
+        if (ans.second)
+            vc2.insert(n);
+    }
+    return {vc1.count(n), vc2.count(n)};
+}
+vi coin1;
+vi coin2;
+ll dislim;
+ll dfs(ll n, ll mode)
+{
+    ll ans = 0;
+    vis[n] = true;
+    if (mode == 0)
+    {
+        coin1.push_back(n);
+        ans++;
+        coin2.push_back(n);
+        ans++;
+        foreach (i, g[n])
+        {
+            if (vis[i] || (vc1.count(i) == 0 && vc2.count(i) == 0))
+                continue;
+            if (vc1.count(i) && vc2.count(i))
+                ans += dfs(i, 0);
+            else if (vc1.count(i))
+                ans += dfs(i, 1);
+            else
+                ans += dfs(i, 2);
+        }
+        while (coin1.size() > coin2.size())
+        {
+            coin1.pop_back();
+            ans++;
+        }
+        while (coin1.size() < coin2.size())
+        {
+            coin2.pop_back();
+            ans++;
+        }
+        coin1.pop_back();
+        ans++;
+        coin2.pop_back();
+        ans++;
+    }
+    else if (mode == 1)
+    {
+        coin1.pb(n);
+        ans++;
+        foreach (i, g[n])
+        {
+            if (vis[i] || vc1.count(i) == 0)
+                continue;
+            if (coin1.size() - coin2.size() == dislim)
+            {
+                coin2.push_back(coin1[coin2.size()]);
+                ans++;
+            }
+            ans += dfs(i, 1);
+        }
+        coin1.pop_back();
+        ans++;
+        while (coin2.size() > coin1.size())
+        {
+            coin2.pop_back();
+            ans++;
+        }
+    }
+    else
+    {
+        coin2.pb(n);
+        ans++;
+        foreach (i, g[n])
+        {
+            if (vis[i] || vc2.count(i) == 0)
+                continue;
+            if (coin2.size() - coin1.size() == dislim)
+            {
+                coin1.push_back(coin2[coin1.size()]);
+                ans++;
+            }
+            ans += dfs(i, 2);
+        }
+        coin2.pop_back();
+        ans++;
+        while (coin1.size() > coin2.size())
+        {
+            coin1.pop_back();
+            ans++;
+        }
+    }
+    return ans;
+}
 void func()
 {
+    ll n;
+    cin >> n >> dislim;
+    g.assign(n + 1, {});
+    range(i, n - 1)
+    {
+        newint(a, b);
+        g[a].pb(b);
+        g[b].pb(a);
+    }
+    newint(c1);
+    range(i, c1)
+    {
+        newint(x);
+        vc1.insert(x);
+    }
+    newint(c2);
+    range(i, c2)
+    {
+        newint(x);
+        vc2.insert(x);
+    }
+    depth.assign(n + 1, 0);
+    parent.assign(n + 1, 0);
+    vis.assign(n + 1, 0);
+    dfs(1);
+    vis.assign(n + 1, 0);
+    print(dfs(1, 0) - 4);
 }
 int main()
 {
     // FAST;
-    vi vec = {79, 89, 50, 17, 69, 83, 7, 73, 59, 67};
-    vi t; 
-    ll n = vec.size(); 
-    range(i, n)
-    {
-        range(j, i + 1, n)
-        {
-            t.push_back(abs(vec[i] - vec[j])); 
-        }
-    }
-    sort(all(t)); 
-    print(t); 
+    func();
 }

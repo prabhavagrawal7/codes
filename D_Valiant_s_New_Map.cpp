@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ll int64_t
+#define ll int
 
 // ordered set
 // #include <ext/pb_ds/assoc_container.hpp>
@@ -141,23 +141,67 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
+bool checker(ll mid, vvi vec)
+{
+    ll n = vec.size(), m = vec[0].size();
+    range(i, n)
+    {
+        range(j, m)
+        {
+            if (vec[i][j] >= mid)
+                vec[i][j] = 1;
+            else
+                vec[i][j] = 0;
+        }
+    }
+    vvi nvec(n, vi(m, 1));
+    range(i, n)
+    {
+        auto last = m;
+        range(j, m - 1, -1, -1)
+        {
+            if (vec[i][j] == 0)
+                last = j;
+            if (last - j < mid)
+                nvec[i][j] = 0;
+            else
+                nvec[i][j] = 1;
+        }
+    }
+    range(j, m)
+    {
+        ll last0 = -1; 
+        range(i, n)
+        {
+            if(nvec[i][j] == 0) last0 = i; 
+            if(i - last0 == mid) return true; 
+        }
+    }
+    return false; 
+}
 void func()
 {
+    newint(n, m);
+    vvi vec(n, vi(m));
+    cin >> vec;
+
+    ll l = 1, r = min(n, m) + 1, mid;
+    while (r - l > 1)
+    {
+        mid = (l + r) / 2;
+        if (checker(mid, vec))
+            l = mid;
+        else
+            r = mid;
+    }
+    print(l);
 }
 int main()
 {
-    // FAST;
-    vi vec = {79, 89, 50, 17, 69, 83, 7, 73, 59, 67};
-    vi t; 
-    ll n = vec.size(); 
-    range(i, n)
+    FAST;
+    newint(t);
+    range(t)
     {
-        range(j, i + 1, n)
-        {
-            t.push_back(abs(vec[i] - vec[j])); 
-        }
+        func();
     }
-    sort(all(t)); 
-    print(t); 
 }

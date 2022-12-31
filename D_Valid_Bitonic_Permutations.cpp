@@ -141,49 +141,55 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
+#define nextval (len - (end - start + 1))
+ll pos1, pos2, val1, val2, len;
+vvi dp; 
+ll rec(ll start, ll end)
+{
+    if(dp[start][end] != -1) return dp[start][end]; 
+    if (start == 0 && end == len - 1)
+        return 1;
+    ll ans = 0;
+    if (start != 0)
+    {
+        if ((start - 1 == pos1 && nextval != val1) ||
+            (start - 1 == pos2 && nextval != val2))
+            ans += 0;
+        else
+            ans += rec(start - 1, end);
+    }
+    if (end != len - 1)
+    {
+        if ((end + 1 == pos1 && nextval != val1) ||
+            (end + 1 == pos2 && nextval != val2))
+            ans += 0;
+        else
+            ans += rec(start, end + 1);
+    }
+    ans = rs(ans); 
+    return dp[start][end] = ans;
+}
 void func()
 {
+    cin >> len >> pos1 >> pos2 >> val1 >> val2;
+    dp.assign(len, vi(len, -1)); 
+    pos1 -= 1, pos2 -= 1;
+    ll ans = 0;
+    range(i, 1, len - 1)
+    {
+        if(i == pos1 && len != val1) continue;
+        if(i == pos2 && len != val2) continue;
+        ans += rec(i, i);
+        ans = rs(ans); 
+    }
+    print(ans);
 }
 int main()
 {
-    vi ovec = {1, 2, 3, 4, 5, 6, 7, 8};
-    vi vec = {1, 2, 3, 4, 5, 6, 7, 8};
-    do
+    // FAST;
+    newint(t);
+    range(t)
     {
-        auto check = [&vec]()
-        {
-            bool inc = true;
-            bool flag = false;
-            range(i, 1, vec.size())
-            {
-                if (vec[i] > vec[i - 1] && inc == true)
-                    continue;
-                else if (inc == true)
-                {
-                    inc = false;
-                    continue;
-                }
-                else if (vec[i] < vec[i - 1] && inc == false)
-                {
-                    continue;
-                }
-                flag = true;
-            }
-            if (!(flag || inc == true))
-            {
-                return 1;
-            }
-            else
-                return 0;
-        };
-        if (check())
-        {
-            reverse(all(vec));
-            if (check())
-                print(vec);
-            reverse(all(vec));
-        }
-        next_permutation(all(vec));
-    } while (vec != ovec);
+        func();
+    }
 }

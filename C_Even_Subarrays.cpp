@@ -21,10 +21,10 @@ using namespace std;
 #define ctz(x) __builtin_ctz(x)         // count trailing zeros
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
-#define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
-#define r3(var, start, stop) for (ll var = start; var < stop; ++var)
-#define r2(var, stop) for (ll var = 0; var < stop; ++var)
-#define r1(stop) for (ll start_from_0 = 0; start_from_0 < stop; ++start_from_0)
+#define r4(var, start, stop, step) for (int var = start; step > 0 ? var < stop : var > stop; var = var + step)
+#define r3(var, start, stop) for (int var = start; var < stop; ++var)
+#define r2(var, stop) for (int var = 0; var < stop; ++var)
+#define r1(stop) for (int start_from_0 = 0; start_from_0 < stop; ++start_from_0)
 #define newint(...) \
     ll __VA_ARGS__; \
     take_input(__VA_ARGS__)
@@ -141,23 +141,45 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
+ll countlz(ll c)
+{
+    ll count = 0;
+    while (c)
+    {
+        c >>= 1;
+        count++;
+    }
+    return count;
+}
 void func()
 {
+    newint(n);
+    V<int> vec(n);
+    cin >> vec;
+    ll ans = 0;
+    int c = (1 << (countlz(n)));
+    vi prevsum(c << 1);
+    ll currsum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        currsum ^= vec[i];
+        for (int sum = 0; sum * sum <= c; ++sum)
+        {
+            if (currsum == (sum * sum))
+                ans++;
+            ans += (prevsum[currsum ^ (sum * sum)]);
+        }
+        prevsum[currsum]++;
+    }
+    print(n * (n - 1) / 2 + n - ans);
 }
+
 int main()
 {
     // FAST;
-    vi vec = {79, 89, 50, 17, 69, 83, 7, 73, 59, 67};
-    vi t; 
-    ll n = vec.size(); 
-    range(i, n)
+    newint(t);
+    range(t)
     {
-        range(j, i + 1, n)
-        {
-            t.push_back(abs(vec[i] - vec[j])); 
-        }
+        func();
     }
-    sort(all(t)); 
-    print(t); 
 }

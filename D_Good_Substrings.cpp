@@ -1,4 +1,4 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
 #define ll int64_t
 
@@ -9,22 +9,22 @@ using namespace std;
 // #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
 // Uncomment them for optimisations
-//#pragma GCC optimize("Ofast")
-//#pragma GCC target("avx,avx2,fma")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx,avx2,fma")
 
 // for segment tree
 // #define mid (start+end)/2
 // #define lnode (node*2+1)
 // #define rnode (node*2+2)
 #define popcount(x) __builtin_popcount(x)
-#define clz(x) 63 - __builtin_clzl(x) // count leading zeros
-#define ctz(x) __builtin_ctz(x)       // count trailing zeros
+#define clz(x) (63 - __builtin_clzl(x)) // count leading zeros
+#define ctz(x) __builtin_ctz(x)         // count trailing zeros
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
-#define r4(var, start, stop, step) for (ll var = start; step >= 0 ? var < stop : var > stop; var = var + step)
-#define r3(var, start, stop) for (ll var = start; var < stop; var++)
-#define r2(var, stop) for (ll var = 0; var < stop; var++)
-#define r1(stop) for (ll start_from_0 = 0; start_from_0 < stop; start_from_0++)
+#define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
+#define r3(var, start, stop) for (ll var = start; var < stop; ++var)
+#define r2(var, stop) for (ll var = 0; var < stop; ++var)
+#define r1(stop) for (ll start_from_0 = 0; start_from_0 < stop; ++start_from_0)
 #define newint(...) \
     ll __VA_ARGS__; \
     take_input(__VA_ARGS__)
@@ -51,7 +51,9 @@ using namespace std;
 #define mt make_tuple
 #define mp make_pair
 #define pb push_back
+#define ppb pop_back
 #define pf push_front
+#define ppf pop_front
 #define FAST ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define all(a) a.begin(), a.end()
 #define db(x) cout << #x << " = " << x << "\n"
@@ -93,14 +95,15 @@ inline bool btn(T a, T b, T c)
     return false;
 }
 template <typename T>
+istream &operator>>(istream &is, V<T> &v)
+{
+    range(i, v.size()) { is >> v[i]; }
+    return is;
+}
+template <typename T>
 ostream &operator<<(ostream &os, const V<T> &v)
 {
-    for (int i = 0; i < v.size(); ++i)
-    {
-        os << v[i];
-        if (i != v.size() - 1)
-            os << " ";
-    }
+    range(i, v.size()) { os << v[i] << (i + 1 != v.size() ? " " : ""); }
     return os;
 }
 template <typename _A, typename _B>
@@ -124,6 +127,7 @@ const ll mod = 1000000007;
 inline ll rs(ll n) { return (n = n % mod) >= 0 ? n : n + mod; }
 ll power(ll x, ll y)
 {
+    x %= mod, y %= mod - 1;
     ll res = 1;
     while (y)
     {
@@ -134,62 +138,64 @@ ll power(ll x, ll y)
     }
     return res % mod;
 }
+ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-// using tries
-struct trie
+struct tries
 {
-    V<pair<bool, trie *>> next;
-    trie(char ch)
+    bool u = false;
+    vector<tries *> nxt;
+    tries()
     {
-        next.assign(26, make_pair(false, (trie *)nullptr));
-        next[ch - 'a'].first = 1;
-    }
-    trie()
-    {
-        next.assign(26, make_pair(false, (trie *)nullptr));
-    }
-    pair<trie *, ll> *update(char ch)
-    {
-        pair<trie *, ll> ans;
-        if (this->next[ch - 'a'].second == nullptr)
-            this->next[ch - 'a'].second = new trie();
-        if (this->next[ch - 'a'].first == 0)
-            ans.second++;
-        this->next[ch - 'a'].first = 1;
-        return this->next[ch - 'a'].second;
+        nxt.assign(26, nullptr); 
     }
 };
 
 void func()
 {
-    newstring(str);
-    newstring(badblocks);
-    newint(k);
-    trie *mytrie = new trie();
-    ll ans = 0;
+    newstring(str); 
+    newstring(bad); 
+    newint(badcnt); 
+    foreach(i, bad) i = !(i - '0');
+    tries* st = new tries(); 
+
     range(i, str.size())
     {
-        auto temptrie = mytrie;
-        ll bad = 0;
+        auto ptr = st; 
+        ll tempcnt = 0;
         range(j, i, str.size())
         {
-            if (badblocks[str[i] - '0'])
-                bad++;
-            if (bad > k)
+            tempcnt += bad[str[j] - 'a'];
+            if (tempcnt > badcnt)
                 break;
-            temptrie = temptrie->update(str[i]);
+            if (ptr->nxt[str[j] - 'a'] == nullptr)
+                ptr->nxt[str[j] - 'a'] = new tries();
+            ptr = ptr->nxt[str[j] - 'a'];
+            ptr->u = true;
         }
     }
+
+    ll count = 0; 
+    stack<tries*> dfs; 
+    dfs.push(st); 
+
+    while(dfs.size())
+    {
+        auto x = dfs.top(); 
+        dfs.pop(); 
+        foreach(i, x->nxt)
+        {
+            if(i == nullptr) continue;
+            dfs.push(i); 
+            count += i->u; 
+        }
+        delete x; 
+    }
+    print(count); 
+
 }
 int main()
 {
-    // Uncomment for faster I/O
     // FAST;
-    newint(t);
-    range(t)
-    {
-        func();
-    }
+    func();
 }

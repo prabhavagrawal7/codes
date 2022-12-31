@@ -144,20 +144,29 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 void func()
 {
+    newint(n, m);
+    vi vec = inputvec(n);
+    vi nvec = inputvec(m);
+    range(i, m)
+    {
+        ll x = -INT_INF, ind = -1; 
+        range(j, n)
+        {
+            if(x <= nvec[i] - vec[j]) {
+                x = nvec[i] - vec[j]; 
+                ind = j; 
+            }
+        }
+        vec[ind] = nvec[i]; 
+    }
+    print(accumulate(all(vec), 0LL)); 
 }
 int main()
 {
     // FAST;
-    vi vec = {79, 89, 50, 17, 69, 83, 7, 73, 59, 67};
-    vi t; 
-    ll n = vec.size(); 
-    range(i, n)
+    newint(t);
+    range(t)
     {
-        range(j, i + 1, n)
-        {
-            t.push_back(abs(vec[i] - vec[j])); 
-        }
+        func();
     }
-    sort(all(t)); 
-    print(t); 
 }

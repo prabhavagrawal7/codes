@@ -144,20 +144,67 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 void func()
 {
+    newint(n, k);
+    newstring(str);
+    V<pii> compress;
+    range(i, str.size())
+    {
+        if (compress.empty() || compress.back().first != str[i] - '0')
+        {
+            compress.push_back({str[i] - '0', 1});
+        }
+        else
+        {
+            compress.back().second++;
+        }
+    }
+    foreach (i, compress)
+    {
+        if (i.first == 1 && i.second >= k)
+        {
+            give(0);
+        }
+    }
+    if (compress.back().first == 0)
+        compress.push_back({1, 0});
+    n = compress.size();
+    auto &vec = compress;
+    ll ans = INT_INF;
+    ll l = 0, r = 0;
+    ll total = 0;
+
+    while (true)
+    {
+        if (total >= k)
+        {
+            ll tans = (r - l - 1);
+            ans = min(ans, tans);
+            total -= vec[l].second;
+            l++;
+            continue;
+        }
+        if (r == n)
+            break;
+        if (vec[r].first == 0)
+        {
+            total += vec[r].second;
+            r++;
+        }
+        if (vec[r].first == 1)
+        {
+            total += vec[r].second;
+            r++;
+            continue;
+        }
+    }
+    print(ans);
 }
 int main()
 {
     // FAST;
-    vi vec = {79, 89, 50, 17, 69, 83, 7, 73, 59, 67};
-    vi t; 
-    ll n = vec.size(); 
-    range(i, n)
+    newint(t);
+    range(t)
     {
-        range(j, i + 1, n)
-        {
-            t.push_back(abs(vec[i] - vec[j])); 
-        }
+        func();
     }
-    sort(all(t)); 
-    print(t); 
 }

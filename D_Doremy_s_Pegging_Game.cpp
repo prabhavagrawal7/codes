@@ -122,7 +122,7 @@ template <typename... T>
 inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-const ll mod = 1000000007;
+ll mod = 1000000007;
 // const ll mod = 998244353;
 inline ll rs(ll n) { return (n = n % mod) >= 0 ? n : n + mod; }
 ll power(ll x, ll y)
@@ -142,22 +142,37 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
+vector<ll> _fac;
+ll fac(ll n)
+{
+    if (_fac.size() == 0)
+    {
+        _fac.push_back(1);
+        while (_fac.size() != 5002)
+            _fac.push_back(rs(_fac.back() * _fac.size()));
+    }
+    return _fac[n];
+}
 void func()
 {
+    newint(n, m);
+    mod = m;
+    ll ans = 0;
+    for (ll i = 1; i < (n + 1) / 2; i += 1)
+    {
+        ll teather = i + !(n % 2);
+        ans += rs(teather * fac(n - 3));
+        ans = rs(ans);
+    }
+    ans *= n;
+    ans = rs(ans);
+    if (n % 2 == 0)
+        ans += (n / 2) * fac(n - 2) * 2;
+    ans = rs(ans);
+    print(ans);
 }
 int main()
 {
     // FAST;
-    vi vec = {79, 89, 50, 17, 69, 83, 7, 73, 59, 67};
-    vi t; 
-    ll n = vec.size(); 
-    range(i, n)
-    {
-        range(j, i + 1, n)
-        {
-            t.push_back(abs(vec[i] - vec[j])); 
-        }
-    }
-    sort(all(t)); 
-    print(t); 
+    func();
 }
