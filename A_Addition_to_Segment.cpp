@@ -1,4 +1,4 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
 #define ll int64_t
 
@@ -9,20 +9,22 @@ using namespace std;
 // #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
 // Uncomment them for optimisations
-//#pragma GCC optimize("Ofast")
-//#pragma GCC target("avx,avx2,fma")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx,avx2,fma")
 
 // for segment tree
-#define mid (start + end) / 2
-#define lnode (node * 2 + 1)
-#define rnode (node * 2 + 2)
-#define popcount(x) __builtin_popcount(x)
+// #define mid (start+end)/2
+// #define lnode (node*2+1)
+// #define rnode (node*2+2)
+#define popcount(x) __builtin_popcountll(x)
+#define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
+#define ctz(x) __builtin_ctzll(x)         // count trailing zeros
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
-#define r4(var, start, stop, step) for (ll var = start; step >= 0 ? var < stop : var > stop; var = var + step)
-#define r3(var, start, stop) for (ll var = start; var < stop; var++)
-#define r2(var, stop) for (ll var = 0; var < stop; var++)
-#define r1(stop) for (ll start_from_0 = 0; start_from_0 < stop; start_from_0++)
+#define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
+#define r3(var, start, stop) for (ll var = start; var < stop; ++var)
+#define r2(var, stop) for (ll var = 0; var < stop; ++var)
+#define r1(stop) for (ll start_from_0 = 0; start_from_0 < stop; ++start_from_0)
 #define newint(...) \
     ll __VA_ARGS__; \
     take_input(__VA_ARGS__)
@@ -49,7 +51,9 @@ using namespace std;
 #define mt make_tuple
 #define mp make_pair
 #define pb push_back
+#define ppb pop_back
 #define pf push_front
+#define ppf pop_front
 #define FAST ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define all(a) a.begin(), a.end()
 #define db(x) cout << #x << " = " << x << "\n"
@@ -91,14 +95,15 @@ inline bool btn(T a, T b, T c)
     return false;
 }
 template <typename T>
+istream &operator>>(istream &is, V<T> &v)
+{
+    range(i, v.size()) { is >> v[i]; }
+    return is;
+}
+template <typename T>
 ostream &operator<<(ostream &os, const V<T> &v)
 {
-    for (int i = 0; i < v.size(); ++i)
-    {
-        os << v[i];
-        if (i != v.size() - 1)
-            os << " ";
-    }
+    range(i, v.size()) { os << v[i] << (i + 1 != v.size() ? " " : ""); }
     return os;
 }
 template <typename _A, typename _B>
@@ -117,11 +122,12 @@ template <typename... T>
 inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-const int64_t mod = 1000000007;
+const ll mod = 1000000007;
 // const ll mod = 998244353;
 inline ll rs(ll n) { return (n = n % mod) >= 0 ? n : n + mod; }
 ll power(ll x, ll y)
 {
+    x %= mod, y %= mod - 1;
     ll res = 1;
     while (y)
     {
@@ -132,71 +138,102 @@ ll power(ll x, ll y)
     }
     return res % mod;
 }
+ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-class seg
+struct segtree
 {
-public:
-    ll n;
-    vi tree, lazy;
-    seg(ll n)
+    // critical
+    const ll initstart = 0;
+    const ll initend = (1 << (clz(1e5) + 2));
+#define mid ((start + end) >> 1)
+#define lnode (node->left)
+#define rnode (node->right)
+#define neutral_element vi(2, 0)
+    struct SegNode
     {
-        this->n = n;
-        tree.assign(n << 2, 0);
-        lazy.assign(n << 2, 0);
+        SegNode *left, *right;
+        vi val;
+        SegNode() : left(nullptr), right(nullptr), val(neutral_element) {}
+    };
+    SegNode *node;
+    segtree()
+    {
+        node = new SegNode();
     }
-    void add(ll l, ll r, ll val, ll node, ll start, ll end)
+    void push(SegNode *&node, ll start, ll end)
     {
-        if (end < l || r < start)
-            return;
-        else if (l <= start && end <= r)
-        {
-            lazy[node] += val;
-            return;
-        }
-        add(l, r, val, lnode, start, mid);
-        add(l, r, val, rnode, mid + 1, end);
-        return;
+        if (lnode == nullptr)
+            lnode = new SegNode();
+        if (rnode == nullptr)
+            rnode = new SegNode();
+        // critical
+        lnode->val[1] += node->val[1];
+        rnode->val[1] += node->val[1];
+        node->val[1] = 0; 
     }
 
-    ll rf(ll l, ll r, ll node, ll start, ll end)
+    vi opr(vi a, vi b)
     {
-        if (r < start || end < l)
-            return 0;
+        // critical;
+        vi c = {a[0] + b[0], a[1] + b[1]}; 
+        return c;
+    }
+    void rangeupdate(ll l, ll r, ll val)
+    {
+        rangeupdate(l, r, val, node, initstart, initend);
+    }
+    vi rangefind(ll l, ll r)
+    {
+        return rangefind(l, r, node, initstart, initend);
+    }
+    void rangeupdate(ll l, ll r, ll val, SegNode *&node, ll start, ll end)
+    {
+        if (r < start || end < l) return;
+        if (node == nullptr) node = new SegNode();
         if (l <= start && end <= r)
         {
-            return tree[node] + lazy[node] * (end - start + 1);
+            // critical
+            node->val[1] += val;
+            return;
         }
-        lazy[lnode] += lazy[node];
-        lazy[rnode] += lazy[node];
-        tree[node] += lazy[node] * (end - start + 1);
-        lazy[node] = 0;
-        return rf(l, r, lnode, start, mid) + rf(l, r, rnode, mid + 1, end);
+        push(node, start, end);
+        rangeupdate(l, r, val, lnode, start, mid);
+        rangeupdate(l, r, val, rnode, mid + 1, end);
+    }
+    vi rangefind(ll l, ll r, SegNode *&node, ll start, ll end)
+    {
+        if (r < start || end < l) return neutral_element;
+        if (l <= start && end <= r) return node->val;
+
+        push(node, start, end);
+        return opr(rangefind(l, r, lnode, start, mid),
+                   rangefind(l, r, rnode, mid + 1, end));
     }
 };
 
 void func()
 {
-    newint(n, k);
-    seg tree(n);
-    range(i, k)
+    newint(n, q);
+    segtree s;
+    range(i, q)
     {
-        newint(u);
-        if (u == 1)
+        newint(op);
+        if (op == 1)
         {
-            newint(l, r, v);
-            tree.add(l, r - 1, v, 0, 0, n - 1);
+            newint(a, b, c);
+            s.rangeupdate(a, b - 1, c);
         }
         else
         {
-            newint(p);
-            cout << tree.rf(p, p, 0, 0, n - 1) << endl;
+            newint(x);
+            auto ans = s.rangefind(x, x); 
+            print(ans[1]);
         }
     }
 }
 int main()
 {
-    // Uncomment for faster I/O
     // FAST;
     func();
 }

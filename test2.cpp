@@ -9,8 +9,8 @@ using namespace std;
 // #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
 // Uncomment them for optimisations
-//#pragma GCC optimize("Ofast")
-//#pragma GCC target("avx,avx2,fma")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx,avx2,fma")
 
 // for segment tree
 // #define mid (start+end)/2
@@ -137,75 +137,77 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
 struct seg
 {
 #define mid ((start + end) % 2 == 0 ? (start + end) / 2 : (start + end - 1) / 2)
 #define lnode (node->left)
 #define rnode (node->right)
-#define initstart -1e18
-#define initend 1e18
-#define lnodeval (lnode == nullptr ? 0 : lnode->val)
-#define rnodeval (rnode == nullptr ? 0 : rnode->val)
-    struct Node
+#define INIT_START -1e18
+#define INIT_END 1e18
+#define lnodeval (lnode->val)
+#define rnodeval (rnode->val)
+#define trivialnode (node == lnode && node == rnode)
+    struct __node
     {
-        Node *left, *right;
+        __node *left, *right;
         ll val;
-        Node()
+        __node() : left(this), right(this)
         {
-            left = nullptr, right = nullptr;
+            left = this, right = this;
             val = 0;
         }
     };
-    Node *node;
+    __node sentinel;
+    __node *node;
     template <typename _InputIterator>
     seg(_InputIterator __first, _InputIterator __last)
     {
         for (; __first != __last; ++__first)
         {
-            this->__insert(*__first, node, initstart, initend);
+            __insert(*__first, node, INIT_START, INIT_END);
         }
     }
     seg();
-    void __insert(ll val, Node *&node, ll start, ll end)
+    void __insert(ll val, __node *&node, ll start, ll end)
     {
-        if (node == nullptr)
-            node = new Node();
+        if (trivialnode)
+            node = new __node();
         if (start == end)
         {
             if (node == nullptr)
-                node = new Node();
-            node->val += 1;
+                node = new __node();
+            node->val = 1;
             return;
         }
         if (val <= mid)
             __insert(val, lnode, start, mid);
         else
             __insert(val, rnode, mid + 1, end);
+        node->val = 0; 
         node->val = lnodeval + rnodeval;
     }
-    void __erase(ll val, Node *&node, ll start, ll end)
+    void __erase(ll val, __node *&node, ll start, ll end)
     {
-        if (node == nullptr)
+        if (node->val == 0)
             return;
         if (start == end)
         {
             delete node;
-            node = nullptr;
             return;
         }
         if (val <= mid)
             __erase(val, lnode, start, mid);
         else
             __erase(val, rnode, mid + 1, end);
-        if (lnode == nullptr && rnode == nullptr)
-        {
-            delete node;
-            node = nullptr;
-        }
+        if(lnode == nullptr) lnode = node; 
+        if(rnode == nullptr) rnode = node; 
+
+        if(trivialnode) delete node; 
         else
             node->val = lnodeval + rnodeval;
     }
-    void __clear(Node *&node, ll start, ll end)
+    void __clear(__node *&node, ll start, ll end)
     {
         if (node == nullptr)
             return;
@@ -214,7 +216,7 @@ struct seg
         delete node;
         node = nullptr;
     }
-    ll __find_by_ind(ll n, Node *&node, ll start, ll end)
+    ll __find_by_ind(ll n, __node *&node, ll start, ll end)
     {
         if (start == end)
             return start;
@@ -226,11 +228,11 @@ struct seg
 
     void erase(ll val)
     {
-        __erase(val, node, initstart, initend);
+        __erase(val, node, INIT_START, INIT_END);
     }
     ll operator[](ll ind)
     {
-        return __find_by_ind(ind + 1, node, initstart, initend);
+        return __find_by_ind(ind + 1, node, INIT_START, INIT_END);
     }
     size_t size()
     {
@@ -238,7 +240,7 @@ struct seg
     }
     ll find(ll n)
     {
-        ll start = initstart, end = initend;
+        ll start = INIT_START, end = INIT_END;
         ll before = 0;
         auto node = this->node;
         while (start != end)
@@ -265,7 +267,7 @@ struct seg
     }
     void clear()
     {
-        __clear(node, initstart, initend);
+        __clear(node, INIT_START, INIT_END);
     }
 };
 void func()

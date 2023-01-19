@@ -123,15 +123,16 @@ ll power(ll x, ll y)
     }
     return res % mod;
 }
-
 vector<ll> randvec(ll n, ll start = 0, ll end = 10)
 {
     vector<ll> arr(n);
     for (ll i = 0; i < n; i++)
-    {
         arr[i] = rand() % (end - start + 1) + start;
-    }
     return arr;
+}
+ll randint(ll start, ll end)
+{
+    return rand() % (end - start + 1) + start;
 }
 
 ll inv(ll n) { return power(n, mod - 2); }

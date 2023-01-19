@@ -1,0 +1,1 @@
+{"name":"Local: segment_tree","url":"/Users/prabhavagrawal/prabhav/codes/segment_tree.cpp","tests":[{"id":1674046780576,"input":"5 5\n1 0 3 3\n2 1\n1 2 4 4\n2 3\n2 4","output":"3\n4\n0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/prabhavagrawal/prabhav/codes/segment_tree.cpp","group":"local","local":true}

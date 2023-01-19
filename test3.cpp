@@ -124,23 +124,111 @@ inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
 const ll mod = 1000000007;
 // const ll mod = 998244353;
-inline ll rs(ll n) { return (n = n % mod) >= 0 ? n : n + mod; }
-ll power(ll x, ll y)
+inline ll rs(ll n) { return (n = n) >= 0 ? n : n + mod; }
+template <typename T>
+ll power(T x, ll y)
 {
-    x %= mod, y %= mod - 1;
+    ll _x = x;
+    _x %= mod;
+    y %= mod - 1;
     ll res = 1;
     while (y)
     {
         if (y & 1LL)
-            res = (res * x) % mod;
+            res = (res * _x);
         y >>= 1;
-        x = (x * x) % mod;
+        _x = (_x * _x);
     }
-    return res % mod;
+    return res;
 }
 ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
+class ModularInteger
+{
+private:
+    int64_t val = 0;
+    int64_t mod = 1e9 + 7;
+
+public:
+    operator int64_t() const { return val; }
+    template <typename T> operator T() { return static_cast<T>(val); }
+    constexpr ModularInteger() : val(0) {}
+    template <typename T>
+    constexpr ModularInteger(T _n) : val((_n % mod + mod) % mod) {}
+    int64_t getMod() { return mod; }
+    void setMod(int64_t newMod) { mod = newMod; }
+    inline ModularInteger power(ModularInteger b, int64_t p) const noexcept
+    {
+        int64_t res = 1;
+        while (p > 0)
+        {
+            if (p & 1)
+                res = (res * b.val) % mod;
+            b.val = (b.val * b.val) % mod;
+            p = p >> 1;
+        }
+        return res;
+    }
+
+    // arithmetic operators
+    inline ModularInteger operator++() { return val++; }
+    inline ModularInteger operator--() { return val--; }
+    inline ModularInteger operator+(const ModularInteger a) const noexcept { return ModularInteger(val + a.val); }
+    inline ModularInteger operator-(const ModularInteger a) const noexcept { return ModularInteger(val - a.val); }
+    inline ModularInteger operator*(const ModularInteger a) const noexcept { return ModularInteger(a.val * val); }
+    inline ModularInteger operator/(const ModularInteger a) const noexcept { return ModularInteger(power(a, mod - 2) * val); }
+    inline ModularInteger operator%(const ModularInteger a) const noexcept { return ModularInteger(val % a.val); }
+    inline ModularInteger operator>>(const ModularInteger a) const noexcept { return ModularInteger(val >> a.val); }
+    inline ModularInteger operator<<(const ModularInteger a) const noexcept { return ModularInteger(val << a.val); }
+    template <typename T>
+    inline ModularInteger operator+(T a) const noexcept { return val + ModularInteger(a); }
+    template <typename T>
+    inline ModularInteger operator-(T a) const noexcept { return val - ModularInteger(a); }
+    template <typename T>
+    inline ModularInteger operator*(T a) const noexcept { return val * ModularInteger(a); }
+    template <typename T>
+    inline ModularInteger operator/(T a) const noexcept { return val / ModularInteger(a); }
+    template <typename T>
+    inline ModularInteger operator%(T a) const noexcept { return val % ModularInteger(a); }
+    template <typename T>
+    inline ModularInteger operator>>(T a) const noexcept { return val >> ModularInteger(a); }
+    template <typename T>
+    inline ModularInteger operator<<(T a) const noexcept { return val << ModularInteger(a); }
+
+    template <typename T>
+    inline void operator+=(T a) { this = *this + ModularInteger(a); }
+    template <typename T>
+    inline void operator-=(T a) { val = val - ModularInteger(a); }
+    template <typename T>
+    inline void operator*=(T a) { val = val * ModularInteger(a); }
+    template <typename T>
+    inline void operator/=(T a) { val = val / ModularInteger(a); }
+    template <typename T>
+    inline void operator%=(T a) { val = val % a; }
+    template <typename T>
+    inline void operator>>=(T a) { val = val >> ModularInteger(a); }
+    template <typename T>
+    inline void operator<<=(T a) { val = val << ModularInteger(a); }
+
+    // logical operators
+    template <typename T>
+    inline bool operator<(T a) const noexcept { return (val < a); }
+    template <typename T>
+    inline bool operator>(T a) const noexcept { return (val > a); }
+    template <typename T>
+    inline bool operator<=(T a) { return (val <= a); }
+    template <typename T>
+    inline bool operator>=(T a) { return (val >= a); }
+    inline bool operator!() { return !val; }
+    friend istream &operator>>(istream &cc, ModularInteger &a)
+    {
+        ll __x;
+        cc >> __x;
+        a = __x;
+        return cc;
+    }
+};
 
 void func()
 {
@@ -148,11 +236,8 @@ void func()
 int main()
 {
     // FAST;
-    string str = "";
-    stringstream s(str);
-    int a;
-    if (s.tellp() == streampos(0))
-        cout << "Invalid Record";
-    s >> a;
-    print(a);
+    ll a = 1e18;
+    ModularInteger b = a;
+    b.
+    print();
 }
