@@ -1,287 +1,74 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
-#define ll int64_t
 
-// ordered set
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-// using namespace __gnu_pbds;
-// #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
+#define ll long long
+const int N = 1e5 + 4;
+const int M = 1e9 + 7;
+ll dist[20][20], a[20][20];
+int dp[(1 << 15) + 2][16];
+int len;
+int n, x, y;
+int l;
 
-// Uncomment them for optimisations
-// #pragma GCC optimize("Ofast")
-// #pragma GCC target("avx,avx2,fma")
-
-// for segment tree
-// #define mid (start+end)/2
-// #define lnode (node*2+1)
-// #define rnode (node*2+2)
-#define popcount(x) __builtin_popcount(x)
-#define clz(x) 63 - __builtin_clzl(x) // count leading zeros
-#define ctz(x) __builtin_ctz(x)       // count trailing zeros
-#define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
-#define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
-#define r4(var, start, stop, step) for (ll var = start; step >= 0 ? var < stop : var > stop; var = var + step)
-#define r3(var, start, stop) for (ll var = start; var < stop; var++)
-#define r2(var, stop) for (ll var = 0; var < stop; var++)
-#define r1(stop) for (ll start_from_0 = 0; start_from_0 < stop; start_from_0++)
-#define newint(...) \
-    ll __VA_ARGS__; \
-    take_input(__VA_ARGS__)
-#define min(...) min({__VA_ARGS__})
-#define max(...) max({__VA_ARGS__})
-#define give(...)           \
-    {                       \
-        print(__VA_ARGS__); \
-        return;             \
-    }
-#define endl "\n"
-#define FULL_INF numeric_limits<double>::infinity()
-#define INF INT64_MAX
-#define INT_INF INT32_MAX
-#define ld long double
-#define V vector
-#define P pair
-#define S set
-#define MS multiset
-#define M map
-#define UM unordered_map
-#define US unordered_set
-#define MM multimap
-#define mt make_tuple
-#define mp make_pair
-#define pb push_back
-#define pf push_front
-#define FAST ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-#define all(a) a.begin(), a.end()
-#define db(x) cout << #x << " = " << x << "\n"
-string db_bin(ll n)
+int fun(int mask, int prev)
 {
-    string ans;
-    while (n)
+    if (mask == (1 << len) - 1)
+        return a[prev][n + 1];
+    int &ans = dp[mask][prev];
+    if (ans != -1)
+        return ans;
+    ans = 1e9;
+    for (int i = 0; i < len; i++)
     {
-        ans.push_back((n & 1) + '0');
-        n >>= 1;
+        if (!(mask & (1 << i)))
+        {
+            ans = min((ll)ans, a[prev][i + l] + fun((mask | (1 << i)), i + l));
+        }
     }
-    reverse(all(ans));
     return ans;
 }
-#define newstring(str) \
-    string str;        \
-    cin >> str;
-#define foreach(a, x) for (auto &&a : x)
-const ld pi = acos(-1);
-typedef vector<string> vs;
-typedef pair<ll, ll> pii;
-typedef vector<ll> vi;
-typedef map<ll, ll> mii;
-typedef set<ll> si;
-typedef vector<vector<ll>> vvi;
-template <typename... T>
-inline void take_input(T &&...args) { ((cin >> args), ...); }
-vi inputvec(ll n, ll start = 0)
-{
-    vi vec(n);
-    range(i, start, n) cin >> vec[i];
-    return vec;
-}
-template <typename T>
-inline bool btn(T a, T b, T c)
-{
-    if ((a <= b && b <= c) || (a >= b && b >= c))
-        return true;
-    return false;
-}
-template <typename T>
-ostream &operator<<(ostream &os, const V<T> &v)
-{
-    for (int i = 0; i < v.size(); ++i)
-    {
-        os << v[i];
-        if (i != v.size() - 1)
-            os << " ";
-    }
-    return os;
-}
-template <typename _A, typename _B>
-ostream &operator<<(ostream &os, const pair<_A, _B> &p)
-{
-    os << "[" << p.first << ", " << p.second << "]";
-    return os;
-}
-template <typename... T>
-inline void print(T &&...args)
-{
-    ((cout << args << " "), ...);
-    cout << endl;
-}
-template <typename... T>
-inline void printl(T &&...args) { ((cout << args << " "), ...); }
-inline ld TLD(ll n) { return n; }
-ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-const ll mod = 1000000007;
-// const ll mod = 998244353;
-inline ll rs(ll n) { return (n = n % mod) >= 0 ? n : n + mod; }
-ll power(ll x, ll y)
-{
-    ll res = 1;
-    while (y)
-    {
-        if (y & 1LL)
-            res = (res * x) % mod;
-        y >>= 1;
-        x = (x * x) % mod;
-    }
-    return res % mod;
-}
-ll inv(ll n) { return power(n, mod - 2); }
 
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-struct seg
+ll dp2[20];
+ll fun2(int pos)
 {
-#define mid ((start + end) % 2 == 0 ? (start + end) / 2 : (start + end - 1) / 2)
-#define lnode (node->left)
-#define rnode (node->right)
-#define INIT_START -1e18
-#define INIT_END 1e18
-#define lnodeval (lnode->val)
-#define rnodeval (rnode->val)
-#define trivialnode (node == lnode && node == rnode)
-    struct __node
-    {
-        __node *left, *right;
-        ll val;
-        __node() : left(this), right(this)
-        {
-            left = this, right = this;
-            val = 0;
-        }
-    };
-    __node sentinel;
-    __node *node;
-    template <typename _InputIterator>
-    seg(_InputIterator __first, _InputIterator __last)
-    {
-        for (; __first != __last; ++__first)
-        {
-            __insert(*__first, node, INIT_START, INIT_END);
-        }
-    }
-    seg();
-    void __insert(ll val, __node *&node, ll start, ll end)
-    {
-        if (trivialnode)
-            node = new __node();
-        if (start == end)
-        {
-            if (node == nullptr)
-                node = new __node();
-            node->val = 1;
-            return;
-        }
-        if (val <= mid)
-            __insert(val, lnode, start, mid);
-        else
-            __insert(val, rnode, mid + 1, end);
-        node->val = 0; 
-        node->val = lnodeval + rnodeval;
-    }
-    void __erase(ll val, __node *&node, ll start, ll end)
-    {
-        if (node->val == 0)
-            return;
-        if (start == end)
-        {
-            delete node;
-            return;
-        }
-        if (val <= mid)
-            __erase(val, lnode, start, mid);
-        else
-            __erase(val, rnode, mid + 1, end);
-        if(lnode == nullptr) lnode = node; 
-        if(rnode == nullptr) rnode = node; 
+    if (pos > n)
+        return 0;
+    ll &ans = dp2[pos];
+    if (ans != -1)
+        return ans;
+    ans = 1e15;
+    for (int i = pos; i <= n; i++)
+        ans = min(ans, dist[pos][i] + fun2(i + 1));
+    return ans;
+}
 
-        if(trivialnode) delete node; 
-        else
-            node->val = lnodeval + rnodeval;
-    }
-    void __clear(__node *&node, ll start, ll end)
+void solve()
+{
+
+    cin >> n >> x >> y;
+    for (int i = 0; i < n + 2; i++)
     {
-        if (node == nullptr)
-            return;
-        __clear(lnode, start, mid);
-        __clear(rnode, mid + 1, end);
-        delete node;
-        node = nullptr;
-    }
-    ll __find_by_ind(ll n, __node *&node, ll start, ll end)
-    {
-        if (start == end)
-            return start;
-        if (n <= lnodeval)
-            return __find_by_ind(n, lnode, start, mid);
-        else
-            return __find_by_ind(n - lnodeval, rnode, mid + 1, end);
+        for (int j = 0; j < n + 2; j++)
+            cin >> a[i][j];
     }
 
-    void erase(ll val)
+    for (l = 1; l <= n; l++)
     {
-        __erase(val, node, INIT_START, INIT_END);
-    }
-    ll operator[](ll ind)
-    {
-        return __find_by_ind(ind + 1, node, INIT_START, INIT_END);
-    }
-    size_t size()
-    {
-        return node->val;
-    }
-    ll find(ll n)
-    {
-        ll start = INIT_START, end = INIT_END;
-        ll before = 0;
-        auto node = this->node;
-        while (start != end)
+        for (int r = l; r <= n; r++)
         {
-            if (node == nullptr)
-                return -1;
-            if (n <= mid)
-            {
-                node = lnode;
-                end = mid;
-            }
-            else
-            {
-                before += lnodeval;
-                node = rnode;
-                start = mid + 1;
-            }
+            len = r - l + 1;
+            for (int i = 0; i <= (1 << len); i++)
+                for (int j = 0; j <= 15; j++)
+                    dp[i][j] = -1;
+
+            dist[l][r] = (fun(0, 0) * ((ll)2 * y)) + x;
         }
-        return before;
     }
-    ll count(ll n)
-    {
-        return find(n) != n;
-    }
-    void clear()
-    {
-        __clear(node, INIT_START, INIT_END);
-    }
-};
-void func()
-{
-    vi vec = {1, 0, -1, 3, 5};
-    seg s(vec.begin(), vec.end());
-    print(s[4]);
-    s.erase(3);
-    print(s[0]);
-    print(s.find(3));
+    memset(dp2, -1, sizeof(dp2));
+    cout << fun2(1) << "\n";
 }
 int main()
 {
-    // Uncomment for faster I/O
-    // FAST;
-    func();
+    solve();
+    return 0;
 }

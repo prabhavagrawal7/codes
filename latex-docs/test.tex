@@ -1,80 +1,91 @@
+% !TEX program = lualatex
 \documentclass[12pt]{article}
 \usepackage[]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
-\usepackage{multicol}
-\usepackage{blindtext}
-\usepackage{flafter}
-\usepackage[T1]{fontenc}
-\usepackage{color,hyperref}
+\usepackage{tabularx}
+\usepackage{color, hyperref, xcolor}
 \usepackage[document]{ragged2e}
-\usepackage{graphicx}
-\graphicspath{ {./} }
+\definecolor{linkcolor}{HTML}{003c50}
+\hypersetup{ 
+	colorlinks=true, 
+     urlcolor=linkcolor
+     } 
 \thispagestyle{empty}
-\geometry{paperheight=11in, paperwidth=8.5in, margin=1cm}
-\newcommand{\resumename}[1]{\LARGE\textbf{#1} \hfill \small}
-\newcommand{\sbullet}{\raisebox{0.35ex}{\tiny$\bullet$}\hspace*{3pt}}
-\titleformat{\section}[runin]{\bfseries}{}{1em}{}[:]
-\titlespacing*{\section}{0em}{1em}{0.5em}
-\titleformat{\subsection}[runin]{\normalfont\bfseries}{}{1em}{}[]
-\titlespacing*{\subsection}{0em}{0.5em}{0em}
+\geometry{paperheight=11.5in, paperwidth=8.5in, margin=1cm}
+\newcommand{\resumename}[1]{\LARGE\textbf{#1}\small}
+\titleformat{\section} 
+  {\normalfont\fontsize{12pt}{10}\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+\titlespacing*{\section}{0em}{1.2em}{0.5em}
+\titleformat{\subsection}[runin]{\bfseries}{}{}{}[]
+\titlespacing*{\subsection}{0em}{0.75em}{0em}
 
 \begin{document}
-% \noindent
+\resumename{Prabhav Agrawal}
+\vspace*{-6pt}
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{\textwidth}{@{}llXr}
+		Linkedin & \href{https://linkedin.com/in/prabhavagrawal7}{linkedin.com/in/prabhavagrawal7} &   & Email: \href{mailto:prabhavagrawal7@gmail.com}{prabhavagrawal7@gmail.com} \\
+		Github   & \href{https://github.com/prabhavagrawal7}{github.com/prabhavagrawal7}           &   & Mobile: \href{tel:+919653051636}{+91-9653051636}                          \\
+		Codechef & \href{https://codechef.com/users/prabhav7}{codechef.com/users/prabhav7} \\
+		Codeforces & \href{https://codeforces.com/profile/prabhavagrawal7}{codeforces.com/profile/prabhavagrawal7} &                                                               \\
+	\end{tabularx}
+\end{table}
+\vspace{-\topsep}
+\vspace*{-5pt}
+\section*{EDUCATION}
+\subsection*{Indian Institute of Information Technology Lucknow}	\hfill\textbf{Lucknow, Uttar Pradesh, India} \\
+Bachelor of Technology - Information Technology (CGPA: 8.11/10) 	\hfill\textit{December 2020 - Present (May 2024)} \\
+\subsection*{Sunbeam English School}	\hfill\textbf{Varanasi, Uttar Pradesh, India} \\
+CBSE Class 10\textsuperscript{th} \& 12\textsuperscript{th} (10\textsuperscript{th} CGPA : 9.4, 12\textsuperscript{th} Percentage : 89.6) \hfill \textit{December 2015 - June 2019} \\
 
-\begin{center}
-    \includegraphics[scale=0.7]{college_logo.png} \\
-    \vspace*{1pt}
-    \resumename{Mini-Project 6th Semester}
-\end{center}
-\section*{Title of the Project}
-Grievance Redressal System
-\section*{Name of the Supervisor(s)}
-Dr. Niharika Anand
-\section*{Abstract}
-In this project, we will develop a web-based grievance redressal system using Django, various data structures including trees and graphs, CSS, JavaScript, and Bootstrap. The system will be designed to handle and track complaints or reports lodged by faculty and students. A smart system for addressing and escalating complaints will also be implemented using a tree and graph data structure, which will include automatic escalation if a complaint is not resolved within a predetermined time. This system will provide the facility to the users to see the hierarchical representation of the complaints and the authority to which it is escalated. Additionally, a user login system will be added to allow users to track the status of their complaints and receive updates.
-
-\section*{Learning Objectives}
-\subsection{Knowledge to Acquire}
-\begin{itemize}
-    \item Understanding the need for efficient grievance redressal in a college or university setting
-    \item Principles of web development using Django and other web development frameworks
-    \item Database management and user authentication and authorization
-\end{itemize}
-\subsection{Skills to Acquire}
-\begin{itemize}
-    \item Developing web applications using Django and other web development frameworks
-    \item Implementing data structures, such as trees, to solve real-world problems
-    \item Designing and implementing a user-friendly and responsive web interface using CSS, JS, and Bootstrap
-    \item Writing clean and maintainable code and adhering to coding conventions
-    \item Testing and debugging web applications
-    \item Working in a team and using version control tools such as Git.    
-\end{itemize}
-\subsection{Competences to Acquire}
-\begin{itemize}
-    \item  The ability to design and develop a web-based system to manage the complaints
-    \item The ability to develop the skills required to implement a user-friendly and responsive web interface
-    \item The ability to use data structures such as trees and to understand the importance of user authentication and authorization
-    \item The ability to understand and apply the principles of database management and user authentication and authorization
-    \item The ability to work in a team and to use version control tools such as Git.
-    \item The ability to understand the importance of efficiency and timeliness in grievance redressal.
-    \item The ability to use Relational database for creating trees and designing MVT (Model, View, Template)
+\section*{PROJECTS}
+\subsection*{\href{https://github.com/prabhavagrawal7/watchnow/}{Watchnow}} \quad Django | Scikit-learn | NumPy | Pandas | Matplotlib | JQuery | JS \\
+\begin{itemize}[topsep=0pt,itemsep=1pt,partopsep=3.5pt, parsep=1pt]
+	\item K-Nearest Neighbors (KNN) content-based recommendation system is demonstrated in the project.
+	\item Principle Component Analysis (PCA) to reduce dataset dimensionality and improve KNN algorithm computational efficiency.
+	\item Created a user-friendly interface with personalised recommendations, search bar, movie pages, and user authentication using Django, JQuery, HTML, and CSS.
 \end{itemize}
 
-\section*{Attempting to solve any Research Problem?} No
-\section*{Overview of Research Problem/Project}
-The project aims to develop a web-based grievance redressal system to address the problem of inefficient and ineffective grievance redressal in a college or university setting. The system will allow students and faculty to lodge complaints in writing, track the status of complaints, and include automatic escalation to ensure timely resolution. The system will be built using Django, data structures including trees and graphs, CSS, JavaScript, and Bootstrap. It will also provide a hierarchical representation of complaints and authorities and a user login system for tracking and updates.
+\subsection*{\href{https://github.com/prabhavagrawal7/bookshop}{Bookshop}} \quad Django | HTML | CSS | JS | Bootstrap \\
+\begin{itemize}[topsep=0pt,itemsep=1pt,partopsep=3.5pt, parsep=1pt]
+	\item Created a dummy website for shopping books using Django, HTML, CSS, JavaScript, and Bootstrap
+	\item Implemented user authentication and cart checkout functionality
+	\item Developed an order tracking page to help users keep track of their orders
+\end{itemize}
 
-\section*{Date} 17 January 2023
-\section*{Signature of all the students along with their supervisor(s)} \hfill \\
-\vspace*{15pt}
-Akanksha Bhadauria (LIT2020026) \\
-\vspace*{30pt}
-Prabhav Agrawal (LIT2020036) \\
-\vspace*{30pt}
-Shubham Kumar (LIT2020042) \\
-\vspace*{30pt}
-Prajwal Khune (LIT2020050) \\
-\vspace*{30pt}
-Supervisor (Dr. Niharika Anand)
+\subsection*{\href{https://github.com/prabhavagrawal7/grievance-addressal-system}{Grievance Addressal System}} \quad Django | Data Structures | CSS | JS | BootStrap \\
+\begin{itemize}[topsep=0pt,itemsep=1pt,partopsep=3.5pt, parsep=1pt]
+	\item Created a grievance redressal system website to track staff complaints.
+	\item Created a tree database schema for handling and escalating complaints, with automatic escalation if the complaint does not resolve in a fixed timeframe.
+	\item Added a user login system for complaint tracking and updates.
+\end{itemize}
+
+\section*{ACHIEVEMENTS}
+\begin{itemize}[leftmargin=*, topsep=1pt, itemsep=1pt, partopsep=1pt, parsep=2pt]
+	\item Rated \textbf{5 star} on \href{https://www.codechef.com/users/prabhav7}{Codechef} (Max Rated: \textbf{2173})
+	\item Rated \textbf{Expert} on \href{https://codeforces.com/profile/prabhavagrawal7}{Codeforces} (Max Rated: \textbf{1761})
+	\item Selected in Microsoft Engage 2022 \& Amazon ML Summer School 2022
+	\item Global rank \textbf{7} in \href{https://www.codechef.com/rankings/START64B?search=prabhav7}{Codechef Starters 64 (Div.2)}
+	\item Global rank \textbf{34} in \href{https://www.codechef.com/rankings/START32B?search=prabhav7}{Codechef Starters 32 (Div.2)}
+	\item Global rank \textbf{76} in \href{https://www.codechef.com/rankings/LTIME102B?search=prabhav7}{Codechef November Lunchtime 2021 (Div.2)}
+	\item Global rank \textbf{387} out of 13k in \href{https://codeforces.com/contest/1713/standings/participant/137877142#p137877142}{Codeforces Round 812 (Div.2)}
+	\item Global rank \textbf{638} out of 10k in \href{https://codeforces.com/contest/1750/standings/participant/143636092#p143636092}{Codeforces CodeTON Round 3 (Div.1 + Div.2)}
+	\item Global rank \textbf{620} in \href{https://codingcompetitions.withgoogle.com/kickstart/certificate/summary/00000000008caba4}{Google Kickstart 2022}
+\end{itemize}
+
+\section*{POSITION OF RESPONSIBILITY}
+\textbf{Senior Member, Competitive Programming Wing, Axios} \hfill \textit{May 2022 - Present} \\
+Indian Institute of Information Technology, Lucknow, Uttar Pradesh, India
+
+% \vspace{-\topsep}
+\section*{TECHNICAL SKILLS}
+\begin{tabular}{@{}llll}
+	\textbf{Languages}               && C++, Python, HTML, CSS                                               		\\
+	\textbf{Frameworks \& Libraries} && Django, Scikit-learn, Matplotlib, Seaborn, Bootstrap, JQuery \\
+	\textbf{Dev Tools}               && Git, VS Code, Jupyter Notebook                                              \\
+	\textbf{Academic Coursework}     && DSA, OOPS, DBMS, Operating System                                           \\
+	\vspace{-\topsep}
+\end{tabular}
 \end{document}

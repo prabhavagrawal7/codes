@@ -142,48 +142,56 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-V<vi>;
-
-V<bool> dfs(ll n, ll par, vvi &g, vi &values, vi &subtree)
+V<V<V<bool>>> dp;
+V<V<bool>> posvals;
+vi subtree, values; 
+vvi g; 
+V<bool> dfs(ll n)
 {
     V<bool> ans(32);
     ans[values[n]] = 1;
     foreach (i, g[n])
     {
-        if (par == i)
-            continue;
-        V<bool> otherval = dfs(i, n, g, values, subtree);
+        V<bool> oans = dfs(i);
+        posvals[i] = oans;
         subtree[n] += subtree[i];
         V<bool> newans(32);
         for (int x = 0; x < 32; ++x)
         {
             for (int y = 0; y < 32; ++y)
             {
-                if (ans[y] && ans[x ^ y])
+                if (ans[y] && oans[x ^ y])
                     newans[x] = true;
             }
         }
         swap(ans, newans);
+        dp[n].push_back(ans);
     }
+    if(subtree[n] % 2 == 0) ans[0] = 1; 
+    return ans; 
 }
+void _dfs(ll n)
+{
+    
+}
+
 void func()
 {
     newint(n);
-    vi vec = inputvec(n + 1, 1);
-    vvi g(n + 1);
+    values = inputvec(n + 1, 1);
+    g.assign(n + 1, {});
+    posvals.assign(n + 1, {});
+    subtree.assign(n + 1, 0); 
+    dp.assign(n + 1, {}); 
     range(i, n - 1)
     {
         newint(x);
-        g[i + 2].push_back(x);
         g[x].push_back(i + 2);
     }
+
 }
 int main()
 {
     // FAST;
-    newint(t);
-    range(t)
-    {
-        func();
-    }
+    func();
 }
