@@ -1,3 +1,4 @@
+% !TEX program = lualatex
 \documentclass[12pt]{article}
 \usepackage[]{geometry}
 \usepackage{titlesec}
@@ -5,74 +6,73 @@
 \usepackage{tabularx}
 \usepackage{color, hyperref, xcolor}
 \usepackage[document]{ragged2e}
+\definecolor{linkcolor}{HTML}{003c50}
+\hypersetup{ 
+	colorlinks=true, 
+     urlcolor=linkcolor
+     } 
 \thispagestyle{empty}
-\geometry{paperheight=11in, paperwidth=8.5in, margin=1cm}
+\geometry{paperheight=11.5in, paperwidth=8.5in, margin=1cm}
 \newcommand{\resumename}[1]{\LARGE\textbf{#1}\small}
 \titleformat{\section} 
   {\normalfont\fontsize{12pt}{10}\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
-\titlespacing*{\section}{0em}{1em}{0.5em}
+\titlespacing*{\section}{0em}{1.2em}{0.5em}
 \titleformat{\subsection}[runin]{\bfseries}{}{}{}[]
-\titlespacing*{\subsection}{0em}{0.7em}{0em}
-\let\sffamily\rmfamily
-\let\ttfamily\rmfamily
-\let\scshape\upshape
-\let\slshape\upshape
-\let\itshape\upshape
-\let\em\upshape
+\titlespacing*{\subsection}{0em}{0.75em}{0em}
 
 \begin{document}
+\resumename{Prabhav Agrawal}
+\vspace*{-6pt}
 \begin{table}[h]
-	{\LARGE\bfseries Prabhav Agrawal} \hfill Email: \href{mailto:prabhavagrawal7@gmail.com}{prabhavagrawal7@gmail.com}\\
-	\hfill Mobile: \href{tel:+919653051636}{+91-9653051636}    \\ 
 	\centering
-	\begin{tabularx}{\textwidth}{@{}ll}
-		\small \textbf{Linkedin} & \url{https://linkedin.com/in/prabhavagrawal7}\\
-		\small \textbf{Github} & \url{https://github.com/prabhavagrawal7}\\
-		\small \textbf{Codechef} & \url{https://codechef.com/users/prabhav7}\\
-		\small \textbf{Codeforces} & \url{https://codeforces.com/profile/prabhavagrawal7}\\
+	\begin{tabularx}{\textwidth}{@{}llXr}
+		Linkedin & \href{https://linkedin.com/in/prabhavagrawal7}{linkedin.com/in/prabhavagrawal7} &   & Email: \href{mailto:prabhavagrawal7@gmail.com}{prabhavagrawal7@gmail.com} \\
+		Github   & \href{https://github.com/prabhavagrawal7}{github.com/prabhavagrawal7}           &   & Mobile: \href{tel:+919653051636}{+91-9653051636}                          \\
+		Codechef & \href{https://codechef.com/users/prabhav7}{codechef.com/users/prabhav7} \\
+		Codeforces & \href{https://codeforces.com/profile/prabhavagrawal7}{codeforces.com/profile/prabhavagrawal7} &                                                               \\
 	\end{tabularx}
 \end{table}
 \vspace{-\topsep}
 \vspace*{-5pt}
 \section*{EDUCATION}
 \subsection*{Indian Institute of Information Technology Lucknow}	\hfill\textbf{Lucknow, Uttar Pradesh, India} \\
-\small Bachelor of Technology - Information Technology (CGPA: 8.11/10) 	\hfill\textit{December 2020 - Present (May 2024)} \\
+Bachelor of Technology - Information Technology (CGPA: 8.11/10) 	\hfill\textit{December 2020 - Present (May 2024)} \\
 \subsection*{Sunbeam English School}	\hfill\textbf{Varanasi, Uttar Pradesh, India} \\
 CBSE Class 10\textsuperscript{th} \& 12\textsuperscript{th} (10\textsuperscript{th} CGPA : 9.4, 12\textsuperscript{th} Percentage : 89.6) \hfill \textit{December 2015 - June 2019} \\
 
 \section*{PROJECTS}
-\subsection*{Watchnow} \quad Django $|$ Scikit-learn $|$ NumPy $|$ Pandas $|$ Matplotlib $|$ JQuery $|$ JS \hfill \href{https://github.com/prabhavagrawal7/watchnow/}{Project Link}\\
-\begin{itemize}[topsep=0.5pt,itemsep=0pt,partopsep=1pt, parsep=0pt]
-	\item K-Nearest Neighbors (KNN) content-based recommendation is demonstrated in the project.
+\subsection*{\href{https://github.com/prabhavagrawal7/watchnow/}{Watchnow}} \quad Django | Scikit-learn | NumPy | Pandas | Matplotlib | JQuery | JS \\
+\begin{itemize}[topsep=0pt,itemsep=1pt,partopsep=3.5pt, parsep=1pt]
+	\item K-Nearest Neighbors (KNN) content-based recommendation system is demonstrated in the project.
 	\item Principle Component Analysis (PCA) to reduce dataset dimensionality and improve KNN algorithm computational efficiency.
 	\item Created a user-friendly interface with personalised recommendations, search bar, movie pages, and user authentication using Django, JQuery, HTML, and CSS.
 \end{itemize}
 
-\subsection*{Bookshop} \quad Django $|$ HTML $|$ CSS $|$ JS $|$ Bootstrap \hfill \href{https://github.com/prabhavagrawal7/bookshop}{Project Link} \\ 
-\begin{itemize}[topsep=0.5pt,itemsep=0pt,partopsep=1pt, parsep=0pt]
+\subsection*{\href{https://github.com/prabhavagrawal7/bookshop}{Bookshop}} \quad Django | HTML | CSS | JS | Bootstrap \\
+\begin{itemize}[topsep=0pt,itemsep=1pt,partopsep=3.5pt, parsep=1pt]
 	\item Created a dummy website for shopping books using Django, HTML, CSS, JavaScript, and Bootstrap
 	\item Implemented user authentication and cart checkout functionality
 	\item Developed an order tracking page to help users keep track of their orders
 \end{itemize}
 
-\subsection*{Grievance Addressal System} \quad Django $|$ Data Structures $|$ CSS $|$ JS $|$ BootStrap \hfill \href{https://github.com/prabhavagrawal7/grievance-addressal-system}{Project Link}\\
-\begin{itemize}[topsep=0.5pt,itemsep=0pt,partopsep=1pt, parsep=0pt]
+\subsection*{\href{https://github.com/prabhavagrawal7/grievance-addressal-system}{Grievance Addressal System}} \quad Django | Data Structures | CSS | JS | BootStrap \\
+\begin{itemize}[topsep=0pt,itemsep=1pt,partopsep=3.5pt, parsep=1pt]
 	\item Created a grievance redressal system website to track staff complaints.
-	\item Created a smart tree database schema for handling and escalating complaints, with automatic escalation if not resolved in a fixed timeframe.
+	\item Created a tree database schema for handling and escalating complaints, with automatic escalation if the complaint does not resolve in a fixed timeframe.
 	\item Added a user login system for complaint tracking and updates.
 \end{itemize}
 
 \section*{ACHIEVEMENTS}
 \begin{itemize}[leftmargin=*, topsep=1pt, itemsep=1pt, partopsep=1pt, parsep=2pt]
-	\item Rated as \textbf{Expert} on \textbf{Codeforces} ~~\href{https://codeforces.com/profile/prabhavagrawal7}{Handle: prabhavagrawal7} (Max rated: 1761)
-	\item Rated as \textbf{5 star} on \textbf{Codechef}  \href{https://www.codechef.com/users/prabhav7}{Handle: prabhav7} (Max Rated: \textbf{2173})
-	\item Selected for \textbf{Microsoft Intern Engage 2022} \& \textbf{Amazon ML Summer School 2022}
+	\item Rated \textbf{5 star} on \href{https://www.codechef.com/users/prabhav7}{Codechef} (Max Rated: \textbf{2173})
+	\item Rated \textbf{Expert} on \href{https://codeforces.com/profile/prabhavagrawal7}{Codeforces} (Max Rated: \textbf{1761})
+	\item Selected in Microsoft Engage 2022 \& Amazon ML Summer School 2022
 	\item Global rank \textbf{7} in \href{https://www.codechef.com/rankings/START64B?search=prabhav7}{Codechef Starters 64 (Div.2)}
 	\item Global rank \textbf{34} in \href{https://www.codechef.com/rankings/START32B?search=prabhav7}{Codechef Starters 32 (Div.2)}
 	\item Global rank \textbf{76} in \href{https://www.codechef.com/rankings/LTIME102B?search=prabhav7}{Codechef November Lunchtime 2021 (Div.2)}
 	\item Global rank \textbf{387} out of 13k in \href{https://codeforces.com/contest/1713/standings/participant/137877142#p137877142}{Codeforces Round 812 (Div.2)}
 	\item Global rank \textbf{638} out of 10k in \href{https://codeforces.com/contest/1750/standings/participant/143636092#p143636092}{Codeforces CodeTON Round 3 (Div.1 + Div.2)}
-	\item Global rank \textbf{690} out of 15k in \href{https://codeforces.com/contest/1719/standings/participant/138512906#p138512906}{Codeforces Round 814 (Div.2)}
+	\item Global rank \textbf{620} in \href{https://codingcompetitions.withgoogle.com/kickstart/certificate/summary/00000000008caba4}{Google Kickstart 2022}
 \end{itemize}
 
 \section*{POSITION OF RESPONSIBILITY}
@@ -83,7 +83,7 @@ Indian Institute of Information Technology, Lucknow, Uttar Pradesh, India
 \section*{TECHNICAL SKILLS}
 \begin{tabular}{@{}llll}
 	\textbf{Languages}               && C++, Python, HTML, CSS                                               		\\
-	\textbf{Frameworks \& Libraries} && Django, JQuery, NumPy, Pandas, Scikit-learn, Matplotlib, Seaborn, Bootstrap \\
+	\textbf{Frameworks \& Libraries} && Django, Scikit-learn, Matplotlib, Seaborn, Bootstrap, JQuery \\
 	\textbf{Dev Tools}               && Git, VS Code, Jupyter Notebook                                              \\
 	\textbf{Academic Coursework}     && DSA, OOPS, DBMS, Operating System                                           \\
 	\vspace{-\topsep}
