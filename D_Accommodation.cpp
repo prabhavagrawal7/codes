@@ -143,152 +143,91 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-struct ordered_set
+ll ans1(string &str)
 {
-#define mid ((start + end) >> 1)
-#define lnode (node->left)
-#define rnode (node->right)
-#define lval (lnode != nullptr ? lnode->val : 0)
-#define rval (rnode != nullptr ? rnode->val : 0)
-    struct tree
+    ll one = 0, two = 0;
+    ll people = 0;
+    range(i, str.size())
     {
-        tree *left, *right;
-        ll val;
-        tree() : left(nullptr), right(nullptr), val(0) {}
-    };
-    tree *node;
-    ordered_set() : node(nullptr) {}
-    ll __size = 0;
-    size_t size()
-    {
-        return __size;
-    };
-    ll initstart = 0, initend = 100;
-    void insert(ll n)
-    {
-        insert(n, node, initstart, initend);
-    }
-    void insert(ll n, tree *&node, ll start, ll end)
-    {
-        if (node == nullptr)
+        if (i + 1 < str.size() && str[i] == '1' && str[i + 1] == '1')
         {
-            node = new tree();
+            two++;
+            i += 1;
+            people++;
         }
-        if (start == end)
-        {
-            if (node->val == 0)
-            {
-                node->val = 1;
-                __size += 1;
-            }
-            return;
-        }
-        if (n <= mid)
-            insert(n, lnode, start, mid);
-        else
-            insert(n, rnode, mid + 1, end);
-        node->val = lval + rval;
-    }
-
-    void erase(ll n)
-    {
-        erase(n, node, initstart, initend);
-    }
-    void erase(ll n, tree *&node, ll start, ll end)
-    {
-        if (node == nullptr)
-            return;
-        if (start == end)
-        {
-            __size -= 1;
-            delete node;
-            node = nullptr;
-            return;
-        }
-        if (n <= mid)
-            erase(n, lnode, start, mid);
-        else
-            erase(n, rnode, mid + 1, end);
-        node->val = lval + rval;
-        if (node->val == 0)
-        {
-            delete node;
-            node = nullptr;
-        }
-    }
-
-    ll operator[](ll n)
-    {
-        if (n < __size)
-            return find_by_order(n + 1, node, initstart, initend);
         else
         {
-            print("Bad key exception");
-            return INF;
+            if (str[i] == '1')
+                people++;
+            one++;
         }
     }
-    ll find_by_order(ll n, tree *&node, ll start, ll end)
+    while (one < two * 2)
     {
-        if (start == end)
-            return start;
-        if (n <= lval)
-            return find_by_order(n, lnode, start, mid);
+        two -= 1;
+        people += 1;
+        one += 2;
+    }
+    while (one > two * 2)
+    {
+        two += 1;
+        one -= 1;
+    }
+    return people;
+}
+ll ans2(string &str)
+{
+    ll n = str.size();
+    ll zz = 0, zo = 1, people = 0;
+    ll one = 0, two = 0; ; 
+    range(i, n)
+    {
+        if (i + 1 < n && str[i] == '1' && str[i + 1] == '0')
+        {
+            zo += 1;
+            i += 1;
+            people += 1;
+            two += 1; 
+        }
+        else if (i + 1 < n && str[i] == '0' && str[i + 1] == '0')
+        {
+            zz += 1;
+            i += 1;
+            two += 1; 
+        }
+        else if (i + 1 < n && str[i] == '0' && str[i + 1] == '1')
+        {
+            zo += 1;
+            i += 1;
+            people += 1;
+            two += 1; 
+        }
         else
-            return find_by_order(n - lval, rnode, mid + 1, end);
+        {
+            if (str[i] == '1')
+                people += 1;
+            one++;
+        }
     }
-
-    ll find_order(ll n)
+    while(two * 2 < one)
     {
-        return find_order(n, node, initstart, initend);
+        two += 1; 
+        one -= 2; 
+        people -= 1; 
     }
-    ll find_order(ll n, tree *&node, ll start, ll end)
-    {
-        if (start == end)
-            return 0;
-        if (n <= mid)
-            return find_order(n, lnode, start, mid);
-        else
-            return lval + find_order(n, rnode, mid + 1, end);
-    }
-};
-
+    return people; 
+}
 void func()
 {
-    newint(n);
-    vi a = inputvec(n);
-    vi b = inputvec(n);
-    ordered_set s;
-    range(i, n) s.insert(i);
-    vi facts(n + 1, 0);
-    range(i, n)
+    newint(n, m);
+    V<string> vstr(n);
+    cin >> vstr;
+    ll a1 = 0, a2 = 0;
+    foreach (str, vstr)
     {
-        ll &val = facts[n - 1 - i];
-        ll id = s.find_order(a[i]);
-        s.erase(a[i]);
-        val += id;
+        a1 += ans1(str), a2 += ans2(str);
     }
-    range(i, n) s.insert(i);
-    range(i, n)
-    {
-        ll &val = facts[n - 1 - i];
-        ll id = s.find_order(b[i]);
-        s.erase(b[i]);
-        val += id;
-    }
-    range(i, n)
-    {
-        while (facts[i] > i)
-            facts[i] -= i + 1, facts[i + 1] += 1;
-    }
-    range(i, n) s.insert(i);
-    range(i, n - 1, -1, -1)
-    {
-        ll id = facts[i];
-        ll rem = s[id];
-        printl(rem);
-        s.erase(rem);
-        cout.flush(); 
-    }
+    print(a1, a2);
 }
 int main()
 {

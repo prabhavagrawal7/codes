@@ -18,7 +18,7 @@ using namespace std;
 // #define rnode (node*2+2)
 #define popcount(x) __builtin_popcountll(x)
 #define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
-#define ctz(x) __builtin_ctzll(x)        // count trailing zeros
+#define ctz(x) __builtin_ctzll(x)		 // count trailing zeros
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
 #define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
@@ -26,15 +26,15 @@ using namespace std;
 #define r2(var, stop) for (ll var = 0; var < stop; ++var)
 #define r1(stop) for (ll start_from_0 = 0; start_from_0 < stop; ++start_from_0)
 #define newint(...) \
-    ll __VA_ARGS__; \
-    take_input(__VA_ARGS__)
+	ll __VA_ARGS__; \
+	take_input(__VA_ARGS__)
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
 #define give(...)           \
-    {                       \
-        print(__VA_ARGS__); \
-        return;             \
-    }
+	{                       \
+		print(__VA_ARGS__); \
+		return;             \
+	}
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
@@ -59,18 +59,18 @@ using namespace std;
 #define db(x) cout << #x << " = " << x << "\n"
 string db_bin(ll n)
 {
-    string ans;
-    while (n)
-    {
-        ans.push_back((n & 1) + '0');
-        n >>= 1;
-    }
-    reverse(all(ans));
-    return ans;
+	string ans;
+	while (n)
+	{
+		ans.push_back((n & 1) + '0');
+		n >>= 1;
+	}
+	reverse(all(ans));
+	return ans;
 }
 #define newstring(str) \
-    string str;        \
-    cin >> str;
+	string str;        \
+	cin >> str;
 #define foreach(a, x) for (auto &&a : x)
 const ld pi = acos(-1);
 typedef vector<string> vs;
@@ -83,40 +83,40 @@ template <typename... T>
 inline void take_input(T &&...args) { ((cin >> args), ...); }
 vi inputvec(ll n, ll start = 0)
 {
-    vi vec(n);
-    range(i, start, n) cin >> vec[i];
-    return vec;
+	vi vec(n);
+	range(i, start, n) cin >> vec[i];
+	return vec;
 }
 template <typename T>
 inline bool btn(T a, T b, T c)
 {
-    if ((a <= b && b <= c) || (a >= b && b >= c))
-        return true;
-    return false;
+	if ((a <= b && b <= c) || (a >= b && b >= c))
+		return true;
+	return false;
 }
 template <typename T>
 istream &operator>>(istream &is, V<T> &v)
 {
-    range(i, v.size()) { is >> v[i]; }
-    return is;
+	range(i, v.size()) { is >> v[i]; }
+	return is;
 }
 template <typename T>
 ostream &operator<<(ostream &os, const V<T> &v)
 {
-    range(i, v.size()) { os << v[i] << (i + 1 != v.size() ? " " : ""); }
-    return os;
+	range(i, v.size()) { os << v[i] << (i + 1 != v.size() ? " " : ""); }
+	return os;
 }
 template <typename _A, typename _B>
 ostream &operator<<(ostream &os, const pair<_A, _B> &p)
 {
-    os << "[" << p.first << ", " << p.second << "]";
-    return os;
+	os << "[" << p.first << ", " << p.second << "]";
+	return os;
 }
 template <typename... T>
 inline void print(T &&...args)
 {
-    ((cout << args << " "), ...);
-    cout << endl;
+	((cout << args << " "), ...);
+	cout << endl;
 }
 template <typename... T>
 inline void printl(T &&...args) { ((cout << args << " "), ...); }
@@ -129,78 +129,92 @@ inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
 #ifndef __RLL__
 ll power(ll x, ll y)
 {
-    x %= mod, y %= mod - 1;
-    ll res = 1;
-    while (y)
-    {
-        if (y & 1LL)
-            res = (res * x) % mod;
-        y >>= 1;
-        x = (x * x) % mod;
-    }
-    return res % mod;
+	x %= mod, y %= mod - 1;
+	ll res = 1;
+	while (y)
+	{
+		if (y & 1LL)
+			res = (res * x) % mod;
+		y >>= 1;
+		x = (x * x) % mod;
+	}
+	return res % mod;
 }
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-vi parent;
-ll gp(ll n)
+// normalize the vectors
+ll normalize(vvi &vvec)
 {
-    if (parent[n] == n)
-        return n;
-    return parent[n] = gp(parent[n]);
+	map<ll, ll> flat;
+	foreach (i, vvec)
+		foreach (j, i)
+			flat[j] = 0;
+	ll count = 0;
+	foreach (i, flat)
+	{
+		i.second = count;
+		count++;
+	}
+	range(i, vvec.size())
+	{
+		range(j, vvec[i].size())
+			vvec[i][j] = flat[vvec[i][j]];
+	}
+	return prev(flat.end())->second;
+}
+
+ll rec(ll n, vvi &store, vvi &vvec, vi &dp)
+{
+	if (n == store.size())
+		return 0;
+	if (dp[n] != -1)
+		return dp[n];
+	ll ans = 0;
+	ans = max(ans, rec(n + 1, store, vvec, dp));
+	foreach (i, store[n])
+	{
+		auto &cv = vvec[i];
+		ll id = lower_bound(all(cv), n) - cv.begin();
+		ans = max(ans, (ll)cv.size() - id + rec(cv.back() + 1, store, vvec, dp));
+	}
+	return dp[n] = ans;
 }
 
 void func()
 {
-    parent.clear();
-    newint(n);
-    parent.assign(n + 1, 0);
-    range(i, parent.size()) parent[i] = i;
-    vi a = inputvec(n);
-    vi b = inputvec(n);
-
-    si singles;
-    ll ans = 1;
-    range(i, n)
-    {
-        parent[gp(a[i])] = parent[gp(b[i])];
-        if (a[i] == b[i])
-        {
-            if (!singles.count(a[i]))
-            {
-                singles.insert(a[i]);
-                ans *= n;
-            }
-            else
-            {
-                give(0);
-            }
-        }
-    }
-    si singleparents;
-    foreach (i, singles)
-    {
-        singleparents.insert(gp(i));
-    }
-    si trueparents;
-    range(i, 1, parent.size())
-    {
-        if (singleparents.count(gp(i)))
-            continue;
-        else
-        {
-            trueparents.insert(gp(i));
-        }
-    }
-    print(ans * power(2, trueparents.size()));
+	newint(n);
+	vvi vvec;
+	range(i, n)
+	{
+		newint(x);
+		auto cx = inputvec(x);
+		vi nvec;
+		range(i, cx.size())
+		{
+			if (nvec.empty() || nvec.back() < cx[i])
+				nvec.pb(cx[i]);
+		}
+		vvec.pb(nvec);
+	}
+	ll lastno = normalize(vvec);
+	vvi store(lastno + 1);
+	range(i, vvec.size())
+	{
+		range(j, vvec[i].size())
+		{
+			store[vvec[i][j]].pb(i);
+		}
+	}
+	vi dp(store.size(), -1);
+	print(rec(0, store, vvec, dp));
 }
 int main()
 {
-    FAST;
-    newint(t);
-    range(t)
-    {
-        func();
-    }
+	FAST;
+	newint(t);
+	range(t)
+	{
+		func();
+	}
 }

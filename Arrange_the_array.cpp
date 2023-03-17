@@ -143,155 +143,78 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-struct ordered_set
-{
-#define mid ((start + end) >> 1)
-#define lnode (node->left)
-#define rnode (node->right)
-#define lval (lnode != nullptr ? lnode->val : 0)
-#define rval (rnode != nullptr ? rnode->val : 0)
-    struct tree
-    {
-        tree *left, *right;
-        ll val;
-        tree() : left(nullptr), right(nullptr), val(0) {}
-    };
-    tree *node;
-    ordered_set() : node(nullptr) {}
-    ll __size = 0;
-    size_t size()
-    {
-        return __size;
-    };
-    ll initstart = 0, initend = 100;
-    void insert(ll n)
-    {
-        insert(n, node, initstart, initend);
-    }
-    void insert(ll n, tree *&node, ll start, ll end)
-    {
-        if (node == nullptr)
-        {
-            node = new tree();
-        }
-        if (start == end)
-        {
-            if (node->val == 0)
-            {
-                node->val = 1;
-                __size += 1;
-            }
-            return;
-        }
-        if (n <= mid)
-            insert(n, lnode, start, mid);
-        else
-            insert(n, rnode, mid + 1, end);
-        node->val = lval + rval;
-    }
-
-    void erase(ll n)
-    {
-        erase(n, node, initstart, initend);
-    }
-    void erase(ll n, tree *&node, ll start, ll end)
-    {
-        if (node == nullptr)
-            return;
-        if (start == end)
-        {
-            __size -= 1;
-            delete node;
-            node = nullptr;
-            return;
-        }
-        if (n <= mid)
-            erase(n, lnode, start, mid);
-        else
-            erase(n, rnode, mid + 1, end);
-        node->val = lval + rval;
-        if (node->val == 0)
-        {
-            delete node;
-            node = nullptr;
-        }
-    }
-
-    ll operator[](ll n)
-    {
-        if (n < __size)
-            return find_by_order(n + 1, node, initstart, initend);
-        else
-        {
-            print("Bad key exception");
-            return INF;
-        }
-    }
-    ll find_by_order(ll n, tree *&node, ll start, ll end)
-    {
-        if (start == end)
-            return start;
-        if (n <= lval)
-            return find_by_order(n, lnode, start, mid);
-        else
-            return find_by_order(n - lval, rnode, mid + 1, end);
-    }
-
-    ll find_order(ll n)
-    {
-        return find_order(n, node, initstart, initend);
-    }
-    ll find_order(ll n, tree *&node, ll start, ll end)
-    {
-        if (start == end)
-            return 0;
-        if (n <= mid)
-            return find_order(n, lnode, start, mid);
-        else
-            return lval + find_order(n, rnode, mid + 1, end);
-    }
-};
 
 void func()
 {
     newint(n);
-    vi a = inputvec(n);
-    vi b = inputvec(n);
-    ordered_set s;
-    range(i, n) s.insert(i);
-    vi facts(n + 1, 0);
-    range(i, n)
+    vi vec = inputvec(n);
+    if (vec == vi(n, vec[0]) || vec.size() == 2)
     {
-        ll &val = facts[n - 1 - i];
-        ll id = s.find_order(a[i]);
-        s.erase(a[i]);
-        val += id;
+        give(-1);
     }
-    range(i, n) s.insert(i);
-    range(i, n)
+    vi svec = vec;
+    sort(all(svec));
+
+    ll mini = INF;
+    ll mdueto = -1;
+    range(i, 1, n)
     {
-        ll &val = facts[n - 1 - i];
-        ll id = s.find_order(b[i]);
-        s.erase(b[i]);
-        val += id;
+        if (svec[i] - svec[i - 1] < mini)
+        {
+            mini = svec[i] - svec[i - 1];
+            mdueto = i - 1;
+        }
     }
-    range(i, n)
+
+    deque<ll> ans;
+    range(25)
     {
-        while (facts[i] > i)
-            facts[i] -= i + 1, facts[i + 1] += 1;
+        deque<ll> tempans;
+        tempans.pb(svec[mdueto]);
+        tempans.pb(svec[mdueto + 1]);
+
+        range(i, 0, n)
+        {
+            if (i == mdueto || i == mdueto + 1)
+                continue;
+            if (rand() % 2 == 0)
+                tempans.push_back(svec[i]);
+            else
+                tempans.push_front(svec[i]);
+        }
+
+        if (!is_sorted(all(tempans)) && !is_sorted(tempans.rbegin(), tempans.rend()))
+        {
+            swap(ans, tempans);
+            break;
+        }
     }
-    range(i, n) s.insert(i);
-    range(i, n - 1, -1, -1)
+    if (ans.size() == 0)
     {
-        ll id = facts[i];
-        ll rem = s[id];
-        printl(rem);
-        s.erase(rem);
-        cout.flush(); 
+        sort(all(svec));
+        range(i, svec.size() - 1)
+        {
+            if (svec[i] != svec[i + 1])
+            {
+                swap(svec[i], svec[i + 1]);
+                break;
+            }
+        }
+        ans = deque<ll>(all(svec));
     }
+    foreach (i, ans)
+    {
+        printl(i);
+    }
+    print();
 }
 int main()
 {
+    srand(time(0));
     FAST;
-    func();
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

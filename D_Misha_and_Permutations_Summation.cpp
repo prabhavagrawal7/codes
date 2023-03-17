@@ -163,7 +163,7 @@ struct ordered_set
     {
         return __size;
     };
-    ll initstart = 0, initend = 100;
+    ll initstart = 0, initend = 2e5+1;
     void insert(ll n)
     {
         insert(n, node, initstart, initend);

@@ -122,8 +122,8 @@ template <typename... T>
 inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-const ll mod = 1000000007;
-// const ll mod = 998244353;
+// const ll mod = 1000000007;
+const ll mod = 998244353;
 inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
 // define rll above this
 #ifndef __RLL__
@@ -143,155 +143,79 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-struct ordered_set
+const ll range = 1e6 + 6;
+vi prime(range + 1, 1);
+void sieve()
 {
-#define mid ((start + end) >> 1)
-#define lnode (node->left)
-#define rnode (node->right)
-#define lval (lnode != nullptr ? lnode->val : 0)
-#define rval (rnode != nullptr ? rnode->val : 0)
-    struct tree
+    for (int p = 2; p * p <= range; ++p)
     {
-        tree *left, *right;
-        ll val;
-        tree() : left(nullptr), right(nullptr), val(0) {}
-    };
-    tree *node;
-    ordered_set() : node(nullptr) {}
-    ll __size = 0;
-    size_t size()
-    {
-        return __size;
-    };
-    ll initstart = 0, initend = 100;
-    void insert(ll n)
-    {
-        insert(n, node, initstart, initend);
-    }
-    void insert(ll n, tree *&node, ll start, ll end)
-    {
-        if (node == nullptr)
+        if (prime[p] == 1)
         {
-            node = new tree();
+            for (int i = p * p; i <= range; i += p)
+                if (prime[i] == 1)
+                    prime[i] = p;
         }
-        if (start == end)
-        {
-            if (node->val == 0)
-            {
-                node->val = 1;
-                __size += 1;
-            }
-            return;
-        }
-        if (n <= mid)
-            insert(n, lnode, start, mid);
-        else
-            insert(n, rnode, mid + 1, end);
-        node->val = lval + rval;
     }
+    prime[0] = 0, prime[1] = 0;
+}
+ll fac(ll n)
+{
+    static vi vec(1, 1);
+    while (vec.size() <= n)
+        vec.pb(rs(vec.back() * vec.size()));
+    return vec[n];
+}
 
-    void erase(ll n)
-    {
-        erase(n, node, initstart, initend);
-    }
-    void erase(ll n, tree *&node, ll start, ll end)
-    {
-        if (node == nullptr)
-            return;
-        if (start == end)
-        {
-            __size -= 1;
-            delete node;
-            node = nullptr;
-            return;
-        }
-        if (n <= mid)
-            erase(n, lnode, start, mid);
-        else
-            erase(n, rnode, mid + 1, end);
-        node->val = lval + rval;
-        if (node->val == 0)
-        {
-            delete node;
-            node = nullptr;
-        }
-    }
-
-    ll operator[](ll n)
-    {
-        if (n < __size)
-            return find_by_order(n + 1, node, initstart, initend);
-        else
-        {
-            print("Bad key exception");
-            return INF;
-        }
-    }
-    ll find_by_order(ll n, tree *&node, ll start, ll end)
-    {
-        if (start == end)
-            return start;
-        if (n <= lval)
-            return find_by_order(n, lnode, start, mid);
-        else
-            return find_by_order(n - lval, rnode, mid + 1, end);
-    }
-
-    ll find_order(ll n)
-    {
-        return find_order(n, node, initstart, initend);
-    }
-    ll find_order(ll n, tree *&node, ll start, ll end)
-    {
-        if (start == end)
-            return 0;
-        if (n <= mid)
-            return find_order(n, lnode, start, mid);
-        else
-            return lval + find_order(n, rnode, mid + 1, end);
-    }
-};
+ll rec(ll n, ll need, vi &vps, vi &here, vvi &dp)
+{
+    if (need < 0 || (n == -1 && need != 0))
+        return 0;
+    if (need == 0)
+        return 1;
+    if (dp[n][need] != -1)
+        return dp[n][need];
+    ll ans = 0;
+    ans += rec(n - 1, need, vps, here, dp);
+    ans += rec(n - 1, need - 1, vps, here, dp) * inv(here[vps[n]] + 1);
+    ans = rs(ans);
+    return dp[n][need] = ans;
+}
 
 void func()
 {
     newint(n);
-    vi a = inputvec(n);
-    vi b = inputvec(n);
-    ordered_set s;
-    range(i, n) s.insert(i);
-    vi facts(n + 1, 0);
+    n = n * 2;
+    vi vec = inputvec(n);
+    si p;
+    vi np(1e6 + 1);
     range(i, n)
     {
-        ll &val = facts[n - 1 - i];
-        ll id = s.find_order(a[i]);
-        s.erase(a[i]);
-        val += id;
+        if (prime[vec[i]] == 1 && !p.count(vec[i]))
+            p.insert(vec[i]);
+        else
+            np[vec[i]]++;
     }
-    range(i, n) s.insert(i);
-    range(i, n)
+    if (p.size() < n / 2)
     {
-        ll &val = facts[n - 1 - i];
-        ll id = s.find_order(b[i]);
-        s.erase(b[i]);
-        val += id;
+        give(0);
     }
-    range(i, n)
+    vi vps;
+    foreach (i, p)
+        vps.pb(i);
+
+    ll prevans = fac(n / 2);
+    range(i, np.size())
     {
-        while (facts[i] > i)
-            facts[i] -= i + 1, facts[i + 1] += 1;
+        prevans *= inv(fac(np[i]));
+        prevans = rs(prevans);
     }
-    range(i, n) s.insert(i);
-    range(i, n - 1, -1, -1)
-    {
-        ll id = facts[i];
-        ll rem = s[id];
-        printl(rem);
-        s.erase(rem);
-        cout.flush(); 
-    }
+    vvi dp(n + 1, vi (n + 1, -1));
+    ll ans = rec(p.size() - 1, p.size() - n / 2, vps, np, dp);
+    print(rs(ans * prevans));
 }
 int main()
 {
+    sieve();
     FAST;
     func();
 }

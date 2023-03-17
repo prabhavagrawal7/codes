@@ -143,155 +143,73 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-struct ordered_set
+ll gp(ll n, vi &parent)
 {
-#define mid ((start + end) >> 1)
-#define lnode (node->left)
-#define rnode (node->right)
-#define lval (lnode != nullptr ? lnode->val : 0)
-#define rval (rnode != nullptr ? rnode->val : 0)
-    struct tree
-    {
-        tree *left, *right;
-        ll val;
-        tree() : left(nullptr), right(nullptr), val(0) {}
-    };
-    tree *node;
-    ordered_set() : node(nullptr) {}
-    ll __size = 0;
-    size_t size()
-    {
-        return __size;
-    };
-    ll initstart = 0, initend = 100;
-    void insert(ll n)
-    {
-        insert(n, node, initstart, initend);
-    }
-    void insert(ll n, tree *&node, ll start, ll end)
-    {
-        if (node == nullptr)
-        {
-            node = new tree();
-        }
-        if (start == end)
-        {
-            if (node->val == 0)
-            {
-                node->val = 1;
-                __size += 1;
-            }
-            return;
-        }
-        if (n <= mid)
-            insert(n, lnode, start, mid);
-        else
-            insert(n, rnode, mid + 1, end);
-        node->val = lval + rval;
-    }
-
-    void erase(ll n)
-    {
-        erase(n, node, initstart, initend);
-    }
-    void erase(ll n, tree *&node, ll start, ll end)
-    {
-        if (node == nullptr)
-            return;
-        if (start == end)
-        {
-            __size -= 1;
-            delete node;
-            node = nullptr;
-            return;
-        }
-        if (n <= mid)
-            erase(n, lnode, start, mid);
-        else
-            erase(n, rnode, mid + 1, end);
-        node->val = lval + rval;
-        if (node->val == 0)
-        {
-            delete node;
-            node = nullptr;
-        }
-    }
-
-    ll operator[](ll n)
-    {
-        if (n < __size)
-            return find_by_order(n + 1, node, initstart, initend);
-        else
-        {
-            print("Bad key exception");
-            return INF;
-        }
-    }
-    ll find_by_order(ll n, tree *&node, ll start, ll end)
-    {
-        if (start == end)
-            return start;
-        if (n <= lval)
-            return find_by_order(n, lnode, start, mid);
-        else
-            return find_by_order(n - lval, rnode, mid + 1, end);
-    }
-
-    ll find_order(ll n)
-    {
-        return find_order(n, node, initstart, initend);
-    }
-    ll find_order(ll n, tree *&node, ll start, ll end)
-    {
-        if (start == end)
-            return 0;
-        if (n <= mid)
-            return find_order(n, lnode, start, mid);
-        else
-            return lval + find_order(n, rnode, mid + 1, end);
-    }
-};
+    if (parent[n] == n)
+        return n;
+    else
+        return parent[n] = gp(parent[n], parent);
+}
 
 void func()
 {
-    newint(n);
-    vi a = inputvec(n);
-    vi b = inputvec(n);
-    ordered_set s;
-    range(i, n) s.insert(i);
-    vi facts(n + 1, 0);
+    newint(n, k);
+    newstring(str);
+    newstring(target);
+    vi parent(n);
     range(i, n)
     {
-        ll &val = facts[n - 1 - i];
-        ll id = s.find_order(a[i]);
-        s.erase(a[i]);
-        val += id;
-    }
-    range(i, n) s.insert(i);
-    range(i, n)
-    {
-        ll &val = facts[n - 1 - i];
-        ll id = s.find_order(b[i]);
-        s.erase(b[i]);
-        val += id;
+        parent[i] = i;
     }
     range(i, n)
     {
-        while (facts[i] > i)
-            facts[i] -= i + 1, facts[i + 1] += 1;
+        if (i + k < n)
+        {
+            ll a = gp(i, parent);
+            ll b = gp(i + k, parent);
+            parent[a] = b;
+        }
+        if (i + k + 1 < n)
+        {
+            ll a = gp(i, parent);
+            ll b = gp(i + k + 1, parent);
+            parent[a] = b;
+        }
     }
-    range(i, n) s.insert(i);
-    range(i, n - 1, -1, -1)
+    
+    UM<ll, vi> cstore;
+    range(i, n)
     {
-        ll id = facts[i];
-        ll rem = s[id];
-        printl(rem);
-        s.erase(rem);
-        cout.flush(); 
+        if (cstore.count(gp(i, parent)))
+        {
+            cstore[gp(i, parent)][str[i] - 'a']++;
+        }
+        else
+        {
+            cstore[gp(i, parent)].assign(26, 0);
+            cstore[gp(i, parent)][str[i] - 'a']++;
+        } 
     }
+    range(i, n)
+    {
+        auto &c = cstore[gp(i, parent)];
+        if (c[target[i] - 'a'] == 0)
+        {
+            give("NO");
+        }
+        else
+        {
+            c[target[i] - 'a']--;
+        }
+    }
+    print("YES");
 }
 int main()
 {
     FAST;
-    func();
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

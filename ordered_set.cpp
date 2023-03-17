@@ -157,18 +157,17 @@ struct ordered_set
         tree() : left(nullptr), right(nullptr), val(0) {}
     };
     tree *node;
-    ordered_set() : node(nullptr) {}
     ll __size = 0;
     size_t size()
     {
         return __size;
     };
-    ll initstart = 0, initend = 100;
-    void insert(ll n)
+    ll initstart = 0, initend = 1e9;
+    ll insert(ll n)
     {
         insert(n, node, initstart, initend);
     }
-    void insert(ll n, tree *&node, ll start, ll end)
+    ll insert(ll n, tree *&node, ll start, ll end)
     {
         if (node == nullptr)
         {
@@ -200,9 +199,8 @@ struct ordered_set
             return;
         if (start == end)
         {
-            __size -= 1;
+            __size = 0;
             delete node;
-            node = nullptr;
             return;
         }
         if (n <= mid)
@@ -211,16 +209,13 @@ struct ordered_set
             erase(n, rnode, mid + 1, end);
         node->val = lval + rval;
         if (node->val == 0)
-        {
             delete node;
-            node = nullptr;
-        }
     }
 
     ll operator[](ll n)
     {
         if (n < __size)
-            return find_by_order(n + 1, node, initstart, initend);
+            return find_by_order(n, node, initstart, initend);
         else
         {
             print("Bad key exception");
@@ -234,7 +229,7 @@ struct ordered_set
         if (n <= lval)
             return find_by_order(n, lnode, start, mid);
         else
-            return find_by_order(n - lval, rnode, mid + 1, end);
+            return find_by_order(n - lval, lnode, mid + 1, end);
     }
 
     ll find_order(ll n)
@@ -255,43 +250,13 @@ struct ordered_set
 void func()
 {
     newint(n);
-    vi a = inputvec(n);
-    vi b = inputvec(n);
-    ordered_set s;
-    range(i, n) s.insert(i);
-    vi facts(n + 1, 0);
-    range(i, n)
-    {
-        ll &val = facts[n - 1 - i];
-        ll id = s.find_order(a[i]);
-        s.erase(a[i]);
-        val += id;
-    }
-    range(i, n) s.insert(i);
-    range(i, n)
-    {
-        ll &val = facts[n - 1 - i];
-        ll id = s.find_order(b[i]);
-        s.erase(b[i]);
-        val += id;
-    }
-    range(i, n)
-    {
-        while (facts[i] > i)
-            facts[i] -= i + 1, facts[i + 1] += 1;
-    }
-    range(i, n) s.insert(i);
-    range(i, n - 1, -1, -1)
-    {
-        ll id = facts[i];
-        ll rem = s[id];
-        printl(rem);
-        s.erase(rem);
-        cout.flush(); 
-    }
 }
 int main()
 {
     FAST;
-    func();
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }
