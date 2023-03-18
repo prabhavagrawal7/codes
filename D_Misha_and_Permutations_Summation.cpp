@@ -163,7 +163,7 @@ struct ordered_set
     {
         return __size;
     };
-    ll initstart = 0, initend = 2e5+1;
+    ll initstart = 0, initend = 2e5 + 1;
     void insert(ll n)
     {
         insert(n, node, initstart, initend);
@@ -287,7 +287,7 @@ void func()
         ll rem = s[id];
         printl(rem);
         s.erase(rem);
-        cout.flush(); 
+        cout.flush();
     }
 }
 int main()

@@ -143,133 +143,55 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-class ordered_set
-{
-#define mid ((start + end) >> 1)
-#define lnode (node->left)
-#define rnode (node->right)
-#define lval (lnode != nullptr ? lnode->val : 0)
-#define rval (rnode != nullptr ? rnode->val : 0)
-    struct tree
-    {
-        tree *left, *right;
-        ll val;
-        tree() : left(nullptr), right(nullptr), val(0) {}
-    };
 
-private:
-    tree *node;
-    ll initstart = 0, initend = 2e5 + 1;
-    ll __size = 0;
-    void insert(ll n, tree *&node, ll start, ll end)
+ll func()
+{
+    newint(x1, y1, x2, y2);
+    newint(dx, dy, n);
+    x1 -= dx, y1 -= dy;
+    x2 -= dx, y2 -= dy;
+    V<tuple<ll, ll, ld>> vec;
+    range(i, n)
     {
-        if (node == nullptr)
-        {
-            node = new tree();
-        }
-        if (start == end)
-        {
-            if (node->val == 0)
-            {
-                node->val = 1;
-                __size += 1;
-            }
-            return;
-        }
-        if (n <= mid)
-            insert(n, lnode, start, mid);
-        else
-            insert(n, rnode, mid + 1, end);
-        node->val = lval + rval;
-    }
-    void erase(ll n, tree *&node, ll start, ll end)
-    {
-        if (node == nullptr)
-            return;
-        if (start == end)
-        {
-            __size -= 1;
-            delete node;
-            node = nullptr;
-            return;
-        }
-        if (n <= mid)
-            erase(n, lnode, start, mid);
-        else
-            erase(n, rnode, mid + 1, end);
-        node->val = lval + rval;
-        if (node->val == 0)
-        {
-            delete node;
-            node = nullptr;
-        }
-    }
-    void clear(tree *&node, ll start, ll end)
-    {
-        if (node == nullptr)
-            return;
-        if (start == end)
-        {
-            delete node;
-            node = nullptr;
-            return;
-        }
-        clear(lnode, start, mid);
-        clear(rnode, mid + 1, end);
-        delete node;
-        node = nullptr;
-    }
-    ll find_by_order(ll n, tree *&node, ll start, ll end)
-    {
-        if (start == end)
-            return start;
-        if (n <= lval)
-            return find_by_order(n, lnode, start, mid);
-        else
-            return find_by_order(n - lval, rnode, mid + 1, end);
-    }
-    ll find_order(ll n, tree *&node, ll start, ll end) const
-    {
-        if (start == end)
-            return 0;
-        if (n <= mid)
-            return find_order(n, lnode, start, mid);
-        else
-            return lval + find_order(n, rnode, mid + 1, end);
+        ll a, b;
+        ld c;
+        cin >> a >> b >> c;
+        a -= dx, b -= dy;
+        vec.pb({a, b, c});
     }
 
-public:
-    ordered_set(ll init_start = 0, ll init_end = 2e5 + 1) : node(nullptr), initstart(init_start), initend(init_end) {}
-    void insert(ll n) { insert(n, node, initstart, initend); }
-    ll find_order(ll n) { return find_order(n, node, initstart, initend); }
-    ll operator[](ll n)
+    set<ll> s;
+    range(i, 1, 12000 + 1)
     {
-        if (n < __size)
-            return find_by_order(n + 1, node, initstart, initend);
-        else
+        if (btn(x1, i, x2) && btn(y1, i, y2) && btn(x1, -i, x2) && btn(y1, -i, y2))
         {
-            print("Bad key exception");
-            return INF;
+            s.insert(i);
         }
     }
-    void clear(ll n)
+    foreach (i, vec)
     {
-        __size = 0;
-        clear(node, initstart, initend);
+        auto [xi, yi, r] = i;
+        ll X = xi;
+        ll Y = yi;
+        ld dis = sqrtl(X * X + Y * Y);
+        auto it = s.lower_bound(ceil(dis - r));
+        if(it != s.end() && dis - r == *it) it++; 
+        while (it != s.end() && *it < dis + r)
+        {
+            ll val = *it;
+            s.erase(val);
+            it = s.lower_bound(val);
+        }
     }
-    void erase(ll n) { erase(n, node, initstart, initend); }
-    size_t size() { return __size; };
-    bool empty() { return __size == 0; }
-};
-void func()
-{
+
+    return (s.size());
 }
 int main()
 {
     FAST;
     newint(t);
-    range(t)
+    range(i, t)
     {
-        func();
+        cout << "Case " << i + 1 << ": " << func() << endl;
     }
 }
