@@ -9,8 +9,8 @@ using namespace std;
 // #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
 // Uncomment them for optimisations
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx2")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx2")
 
 // for segment tree
 // #define mid (start+end)/2
@@ -122,12 +122,11 @@ template <typename... T>
 inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-ll mod = 1000000007;
+const ll mod = 1000000007;
 // const ll mod = 998244353;
-inline ll rs(ll n) { return (n % mod + mod) % mod; }
-// define ll above this
-
-#ifndef __ll__
+inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
+// define rll above this
+#ifndef __RLL__
 ll power(ll x, ll y)
 {
     x %= mod, y %= mod - 1;
@@ -145,64 +144,32 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-vi f = {1};
-inline ll fac(ll n) { return f[n]; }
-ll NCR(ll n, ll r) { return rs(fac(n) * inv(rs(fac(r) * fac(n - r)))); }
 void func()
 {
-    newint(n, mod);
-    ::mod = mod;
-    f.reserve(5000);
-    range(i, 1, 5001)
+    newint(n, k);
+    ll rec = 0;
+    while (rec * (rec + 1) / 2 < k)
+        rec++;
+    rec--;
+    vi vec(n, -1000);
+    range(i, rec)
     {
-        f.push_back(f.back() * f.size() % mod);
+        vec[i] = 2;
     }
-    ll ans = 0;
-    if (n % 2 == 0)
+    ll nk = k - (rec * (rec + 1)) / 2;
+    if (nk == 0)
     {
-        range(dis, 1, n / 2)
-        {
-            ll tempans = 0;
-            ll left = n - dis - 2;
-            range(r, 0, dis)
-            {
-                ll N = dis - 1;
-                tempans += rs(fac(left + r) * NCR(N, r));
-                tempans = rs(tempans);
-            }
-            ans += rs(tempans * dis);
-            ans = rs(ans);
-        }
-        range(i, 0, n / 2)
-        {
-            ll right = n / 2 - 1;
-            ll tlft = n / 2 - 1;
-            ans += rs(fac(right + i) * NCR(tlft, i));
-            ans = rs(ans);
-        }
+        give(vec);
     }
-    else
-    {
-        range(dis, 1, n / 2 + 1)
-        {
-            ll tempans = 0;
-            ll left = n - dis - 2;
-            range(r, 0, dis)
-            {
-                ll N = dis - 1;
-                tempans += rs(fac(left + r) * NCR(N, r));
-                tempans = rs(tempans);
-            }
-            // print(tempans);
-            ans += rs(tempans * dis);
-            ans = rs(ans);
-        }
-    }
-    print(rs(ans * n)); 
+    vec[rec] = -(rec - nk + 1) * 2 + 1;
+    give(vec);
 }
 int main()
 {
-
     FAST;
-    func();
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

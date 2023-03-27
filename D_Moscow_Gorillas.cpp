@@ -92,15 +92,27 @@ ll inv(ll n){return power(n, mod - 2);}
 
 void func()
 {
-    set<ll> ms = {1, 1, 2, 3, 34, 5, }; 
-    print(ms); 
+	newint(n); 
+	vi a = inputvec(n); 
+	vi b = inputvec(n); 
+	mii ma, mb; 
+	range(i, n) {
+		ma[a[i]] = i, mb[b[i]] = i; 
+	}
+	ll left = ma[1], right = ma[1]; 
+	vi ans(n + 1); 
+	ans[1] = (n * (n + 1)) / 2; 
+	range(i, 2, n + 1)
+	{
+		left = min(left, ma[i], mb[i]); 
+		right = max(right, ma[i], mb[i]); 
+		ans[i] = (n - right) * (left + 1); 
+	}
+	print(ans); 
+
 }
 int main()
 {
-    FAST;
-    newint(t);
-    range(t)
-    {
-        func();
-    }
+	FAST;
+	func();
 }

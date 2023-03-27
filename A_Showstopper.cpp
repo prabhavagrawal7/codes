@@ -177,56 +177,33 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-class Solution
+void func()
 {
-public:
-	ll __help(string s, int k)
-	{
-		ll l = 0, r = 0;
-		ll ans = 0;
-		map<ll, ll> m;
-		while (true)
-		{
-			if(r == s.size())
-			{
-				ans += (r - l) * (r - l + 1) / 2;
-				return ans;
-			}
-			if (m.size() < k)
-			{
-				m[s[r]]++;
-				r++;
-			}
-			else if (m.size() == k && m.count(s[r]))
-			{
-				m[s[r]]++;
-				r++;
-			}
-			else
-			{
-				ans += r - l;
-				m[s[l]]--;
-				if (m[s[l]] == 0)
-					m.erase(s[l]);
-				l++;
-			}
+	newint(n);
+	vi vec = inputvec(n); 
+	vi vec1 = inputvec(n); 
+
+	range(i, n) {
+		if(vec[i] > vec1[i]) {
+			swap(vec[i], vec1[i]); 
 		}
-		return ans;
 	}
-	long long int substrCount(string s, int k)
+	if(vec[n-1] == *max_element(all(vec)))
 	{
-		if(k == 1) return s.size(); 
-		ll u = __help(s, k);
-		ll v = __help(s, k - 1);
-		return u - v;
+		if(vec1[n-1] == *max_element(all(vec1)))
+		{
+			give("Yes"); 
+		}
 	}
-};
+	give("No"); 
+	
+}
 int main()
 {
-	freopen("input.txt", "r", stdin); 
-	string s; 
-	s = "umeaylnlfd";
-	// s = "aba";
-	ll k = 2;
-	print(Solution().substrCount(s, k));
+	FAST;
+	newint(t);
+	range(t)
+	{
+		func();
+	}
 }

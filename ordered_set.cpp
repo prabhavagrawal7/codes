@@ -22,7 +22,9 @@ using namespace std;
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
 #define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
-#define r3(var, start, stop) for (ll var = start; var < stop; ++var)
+#define r3(var, start, stop)                \
+    for (ll var = start; var < stop; ++var) \
+    cod
 #define r2(var, stop) for (ll var = 0; var < stop; ++var)
 #define r1(stop) for (ll start_from_0 = 0; start_from_0 < stop; ++start_from_0)
 #define newint(...) \
@@ -237,6 +239,19 @@ private:
         else
             return lval + find_order(n, rnode, mid + 1, end);
     }
+    ll lower_bound(ll n, tree *&node, ll start, ll end)
+    {
+        if(start == end) return start; 
+        if(btn(start, n, mid) && node->val) return lower_bound(n, lnode, start, mid); 
+        else return lower_bound(n, rnode, mid + 1, end); 
+    }
+    ll upper_bound(ll n, tree *&node, ll start, ll end)
+    {
+        if(start == end) return start; 
+        if(btn(mid + 1, n+1, end) && node->val) return upper_bound(n, rnode, mid + 1, end); 
+        else return upper_bound(n, lnode, start, mid); 
+    }
+    
 
 public:
     ordered_set(ll init_start = 0, ll init_end = 2e5 + 1) : node(nullptr), initstart(init_start), initend(init_end) {}
@@ -260,6 +275,12 @@ public:
     void erase(ll n) { erase(n, node, initstart, initend); }
     size_t size() { return __size; };
     bool empty() { return __size == 0; }
+    ll lower_bound(ll n)
+    {
+        return lower_bound(n, node, initstart, initend);
+    }
+    
+    
 };
 void func()
 {

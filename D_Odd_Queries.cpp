@@ -122,89 +122,10 @@ template <typename... T>
 inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-ll mod = 1000000007;
+const ll mod = 1000000007;
 // const ll mod = 998244353;
 inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
 // define rll above this
-#define __RLL__ 1
-template <typename T>
-ll power(T, ll);
-inline ll inv(ll n) { return power(n, mod - 2); }
-class rll
-{
-private:
-    int64_t val;
-
-public:
-    rll power(unsigned long long y) { return ::power(val, y); }
-    rll div_by(ll x) { return val / x; }
-    friend inline istream &operator>>(istream &cc, rll &a) { return (cc >> a.val), (a += 0), cc; }
-    operator int64_t() const { return val; }
-    template <typename T>
-    rll(T _val) : val(rs(_val)) {}
-    rll() : val(0) {}
-    // arithmetic operators
-    inline rll operator++() { return val++; }
-    inline rll operator--() { return val--; }
-    inline rll operator+(rll a) { return rs(val + a.val); }
-    inline rll operator-(rll a) { return rs(val - a.val); }
-    inline rll operator*(rll a) { return rs(a.val * val); }
-    inline rll operator/(rll a) { return inv(a) * *this; }
-    inline rll operator%(rll a) { return rs(val % a.val); }
-    template <typename T, typename U>
-    friend inline rll operator+(T &&a, U &&b) { return rll(a) + rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator-(T &&a, U &&b) { return rll(a) - rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator*(T &&a, U &&b) { return rll(a) * rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator/(T &&a, U &&b) { return rll(a) / rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator%(T &&a, U &&b) { return rll(a) % rll(b); }
-
-    template <typename T, typename U>
-    friend inline rll operator+=(T &&a, U &&b) { return a = rll(a) + rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator-=(T &&a, U &&b) { return a = rll(a) - rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator*=(T &&a, U &&b) { return a = rll(a) * rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator/=(T &&a, U &&b) { return a = rll(a) / rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator%=(T &&a, U &&b) { return a = rll(a) % rll(b); }
-
-    // logical operators
-    inline bool operator<(rll &&a) { return (val < a.val); }
-    inline bool operator>(rll &&a) { return (val > a.val); }
-    inline bool operator<=(rll &&a) { return (val <= a.val); }
-    inline bool operator>=(rll &&a) { return (val >= a.val); }
-    inline bool operator!() { return !val; }
-
-    template <typename T, typename U>
-    friend inline bool operator<(T &&a, U &&b) { return (ll)a < (ll)b; }
-    template <typename T, typename U>
-    friend inline bool operator>(T &&a, U &&b) { return (ll)a > (ll)b; }
-    template <typename T, typename U>
-    friend inline bool operator<=(T &&a, U &&b) { return (ll)a <= (ll)b; }
-    template <typename T, typename U>
-    friend inline bool operator>=(T &&a, U &&b) { return (ll)a >= (ll)b; }
-};
-template <typename T>
-ll power(T _x, ll _y)
-{
-    rll x = _x;
-    _y %= mod - 1;
-    rll res = 1;
-    while (_y)
-    {
-        if (_y & 1LL)
-            res *= x;
-        _y >>= 1;
-        x = x * x;
-    }
-    return res;
-}
-
 #ifndef __RLL__
 ll power(ll x, ll y)
 {
@@ -222,62 +143,39 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-V<rll> f = {1};
-rll fac(ll n)
-{
-    while (n >= f.size())
-        f.pb(f.back() * f.size());
-    return f[n];
-}
-ll n;
-rll NCR(rll n, rll r)
-{
-    return fac(n) / (fac(r) * fac(n - r));
-}
+inline ll cm(ll n) { return (n %= 2) >= 0 ? n : n + 2; }
 void func()
 {
-    cin >> n >> mod;
-    rll ans = 0;
-    if (n % 2 == 0)
+    newint(n, q);
+    vi vec = inputvec(n);
+    vi prefix(n + 1);
+    range(i, 1, n + 1)
     {
-        range(dis, 1, n / 2)
+        prefix[i] = (prefix[i - 1] + vec[i - 1]);
+    }
+    ll sum = accumulate(all(vec), 0LL); 
+    range(q)
+    {
+        newint(a, b, c);
+        b -= 1, a -= 1;
+        ll nval = ((b - a + 1) * c);
+        ll oval = (prefix[b + 1] - prefix[a]);
+        if (cm(sum - oval + nval)) 
         {
-            rll tempans = 0;
-            ll left = n - dis - 2;
-            range(r, 0, dis)
-            {
-                ll N = dis - 1;
-                tempans += fac(left + r) * NCR(N, r);
-            }
-            ans += tempans * (dis);
+            print("YES");
         }
-        range(i, 0, n / 2)
+        else
         {
-            ll right = n / 2 - 1;
-            ll tlft = n / 2 - 1;
-            ans += fac(right + i) * NCR(tlft, i);
+            print("NO");
         }
     }
-    else
-    {
-        range(dis, 1, n / 2 + 1)
-        {
-            rll tempans = 0;
-            ll left = n - dis - 2;
-            range(r, 0, dis)
-            {
-                ll N = dis - 1;
-                tempans += fac(left + r) * NCR(N, r);
-            }
-            // print(tempans);
-            ans += tempans * (dis);
-        }
-    }
-    print(ans * n);
 }
 int main()
 {
     FAST;
-    func();
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

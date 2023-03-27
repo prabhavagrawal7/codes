@@ -92,8 +92,36 @@ ll inv(ll n){return power(n, mod - 2);}
 
 void func()
 {
-    set<ll> ms = {1, 1, 2, 3, 34, 5, }; 
-    print(ms); 
+    newint(n); 
+    vvi vec; 
+    range(i, n){
+        newint(x); 
+        vec.pb(inputvec(x)); 
+    }
+    mii freq; 
+    range(i, n){
+        range(j, vec[i].size()){
+            freq[vec[i][j]]++; 
+        }
+    }
+    vi ans; 
+    range(i, n)
+    {
+        range(j, vec[i].size())
+        {
+            freq[vec[i][j]]--; 
+        }
+        bool noloop = true; 
+        range(j, vec[i].size())
+        {
+            if(freq[vec[i][j]]) continue;
+            noloop = false; 
+            ans.push_back(vec[i][j]); 
+            break;
+        }
+        if(noloop) {give(-1);}
+    }
+    give(ans); 
 }
 int main()
 {

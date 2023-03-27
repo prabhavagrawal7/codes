@@ -16,24 +16,6 @@ using namespace std;
 // #define mid (start+end)/2
 // #define lnode (node*2+1)
 // #define rnode (node*2+2)
-
-// printing bullshits open
-template<typename _A, typename _B> ostream&operator<<(ostream&os,const pair<_A,_B> &p){os<<"[" << p.
-first<<","<<p.second<<"]";return os;} template<typename T,typename = void> struct is_iterable: 
-false_type {};template<typename T> struct is_iterable<T,void_t<decltype(begin (declval<T &>())),
-decltype(end(declval<T &>()))>>:true_type {};template<typename T> using is_string = is_same<decay_t<T>,
-string>;template<typename T> constexpr bool is_iterable_v = is_iterable<T>::value;template<typename T> 
-typename enable_if<!is_iterable_v<T>,void>::type __print(T &&container){cout<<container;} 
-template<typename T> typename enable_if<is_iterable_v<T>&&!is_string<T>::value,void>::type __print(T&&
-container){auto itr = container.begin();__print(*itr),itr++;for (;itr != container.end();++itr)
-{cout<<' ';__print(*itr);} } template<typename T> typename enable_if<is_string<T>::value, void>::type 
-__print(T &&string_container){cout<<string_container;} template<typename T> typename 
-enable_if<is_same<T,const char *>::value,void>::type __print(T &&string_container){cout<< 
-string_container;} template<size_t N> void __print(const char (&str)[N]){cout<<str;} 
-template<typename... T> inline void print(T &&...args){((__print(args),cout<<" "),...);cout<< endl;} 
-template<typename... T>inline void printl(T &&...args){((__print(args), cout<<" "),...);}
-// printing bullshits close
-
 #define popcount(x) __builtin_popcountll(x)
 #define clz(x) (63-__builtin_clzll(x)) //count leading zeros
 #define ctz(x) __builtin_ctzll(x) //count trailing zeros
@@ -78,6 +60,12 @@ template<typename...T>inline void take_input(T &&...args) { ((cin >> args), ...)
 vi inputvec(ll n,ll start=0){vi vec(n);range(i,start,n)cin>>vec[i];return vec;}
 template <typename T>inline bool btn(T a,T b,T c){if ((a <= b && b <= c) || (a >= b && b >= c))return true;return false;}
 template<typename T>istream&operator>>(istream&is,V<T>&v){range(i,v.size()){is>>v[i];}return is;}
+template<typename T>ostream&operator<<(ostream&os,const V<T>&v){range(i,v.size()){os<<v[i]<<(i+1!=v.size()?" ":"");}return os;}
+template<typename _A,typename _B>ostream &operator<<(ostream &os,const pair<_A,_B>&p)
+{os<<"["<<p.first<<", "<<p.second<<"]";return os;}
+template<typename...T>inline void print(T &&...args){((cout << args << " "), ...);cout << endl;}
+template <typename... T>
+inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
 const ll mod = 1000000007;
@@ -92,8 +80,12 @@ ll inv(ll n){return power(n, mod - 2);}
 
 void func()
 {
-    set<ll> ms = {1, 1, 2, 3, 34, 5, }; 
-    print(ms); 
+    newint(n); 
+    vi vec = inputvec(n); 
+    ll eve = 0; foreach(i, vec) if(i % 2 == 0) eve += i; 
+    ll sum = accumulate(all(vec), 0LL); 
+    if(eve > sum - eve) {give("YES");}
+    give("NO");
 }
 int main()
 {

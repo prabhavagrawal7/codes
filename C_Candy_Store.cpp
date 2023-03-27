@@ -9,13 +9,66 @@ using namespace std;
 // #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
 // Uncomment them for optimisations
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx2")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx2")
 
 // for segment tree
 // #define mid (start+end)/2
 // #define lnode (node*2+1)
 // #define rnode (node*2+2)
+
+// printing bullshits open
+template <typename _A, typename _B>
+ostream &operator<<(ostream &os, const pair<_A, _B> &p)
+{
+    os << "[" << p.first << "," << p.second << "]";
+    return os;
+}
+template <typename T, typename = void>
+struct is_iterable : false_type
+{
+};
+template <typename T>
+struct is_iterable<T, void_t<decltype(begin(declval<T &>())),
+                             decltype(end(declval<T &>()))>> : true_type
+{
+};
+template <typename T>
+using is_string = is_same<decay_t<T>,
+                          string>;
+template <typename T>
+constexpr bool is_iterable_v = is_iterable<T>::value;
+template <typename T>
+typename enable_if<!is_iterable_v<T>, void>::type __print(T &&container) { cout << container; }
+template <typename T>
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&
+                                                                                     container)
+{
+    auto itr = container.begin();
+    __print(*itr), itr++;
+    for (; itr != container.end(); ++itr)
+    {
+        cout << ' ';
+        __print(*itr);
+    }
+}
+template <typename T>
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
+template <typename T>
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
+template <size_t N>
+void __print(const char (&str)[N]) { cout << str; }
+template <typename... T>
+inline void print(T &&...args)
+{
+    ((__print(args), cout << " "), ...);
+    cout << endl;
+}
+template <typename... T>
+inline void printl(T &&...args) { ((__print(args), cout << " "), ...); }
+// printing bullshits close
+
 #define popcount(x) __builtin_popcountll(x)
 #define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
 #define ctz(x) __builtin_ctzll(x)        // count trailing zeros
@@ -100,34 +153,13 @@ istream &operator>>(istream &is, V<T> &v)
     range(i, v.size()) { is >> v[i]; }
     return is;
 }
-template <typename T>
-ostream &operator<<(ostream &os, const V<T> &v)
-{
-    range(i, v.size()) { os << v[i] << (i + 1 != v.size() ? " " : ""); }
-    return os;
-}
-template <typename _A, typename _B>
-ostream &operator<<(ostream &os, const pair<_A, _B> &p)
-{
-    os << "[" << p.first << ", " << p.second << "]";
-    return os;
-}
-template <typename... T>
-inline void print(T &&...args)
-{
-    ((cout << args << " "), ...);
-    cout << endl;
-}
-template <typename... T>
-inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-ll mod = 1000000007;
+const ll mod = 1000000007;
 // const ll mod = 998244353;
-inline ll rs(ll n) { return (n % mod + mod) % mod; }
-// define ll above this
-
-#ifndef __ll__
+inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
+// define rll above this
+#ifndef __RLL__
 ll power(ll x, ll y)
 {
     x %= mod, y %= mod - 1;
@@ -145,64 +177,49 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-vi f = {1};
-inline ll fac(ll n) { return f[n]; }
-ll NCR(ll n, ll r) { return rs(fac(n) * inv(rs(fac(r) * fac(n - r)))); }
 void func()
 {
-    newint(n, mod);
-    ::mod = mod;
-    f.reserve(5000);
-    range(i, 1, 5001)
+    newint(n);
+    V<pii> vec;
+    range(i, n)
     {
-        f.push_back(f.back() * f.size() % mod);
+        newint(a, b);
+        vec.pb({a, b});
     }
     ll ans = 0;
-    if (n % 2 == 0)
+    ll D = 0, B = 0, C = 0;
+    range(i, n)
     {
-        range(dis, 1, n / 2)
+        if (D == 0)
         {
-            ll tempans = 0;
-            ll left = n - dis - 2;
-            range(r, 0, dis)
-            {
-                ll N = dis - 1;
-                tempans += rs(fac(left + r) * NCR(N, r));
-                tempans = rs(tempans);
-            }
-            ans += rs(tempans * dis);
-            ans = rs(ans);
+            ans++; 
+            D = vec[i].first; 
+            B = vec[i].second; 
+            C = vec[i].second;
+            continue;
         }
-        range(i, 0, n / 2)
+
+        ll mul = lcm(C, vec[i].second);
+        if (D % (mul / C) == 0 && vec[i].first % (mul / vec[i].second) == 0)
         {
-            ll right = n / 2 - 1;
-            ll tlft = n / 2 - 1;
-            ans += rs(fac(right + i) * NCR(tlft, i));
-            ans = rs(ans);
+            D = D / (mul / C);
+            vec[i].first = vec[i].first / (mul / vec[i].second); 
+            D = gcd(D, vec[i].first); 
+            C = mul; 
+        }
+        else {
+            D = 0, B = 0, C = 0; 
+            i--; 
         }
     }
-    else
-    {
-        range(dis, 1, n / 2 + 1)
-        {
-            ll tempans = 0;
-            ll left = n - dis - 2;
-            range(r, 0, dis)
-            {
-                ll N = dis - 1;
-                tempans += rs(fac(left + r) * NCR(N, r));
-                tempans = rs(tempans);
-            }
-            // print(tempans);
-            ans += rs(tempans * dis);
-            ans = rs(ans);
-        }
-    }
-    print(rs(ans * n)); 
+    print(ans); 
 }
 int main()
 {
-
     FAST;
-    func();
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

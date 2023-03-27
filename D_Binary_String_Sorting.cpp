@@ -9,8 +9,8 @@ using namespace std;
 // #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
 // Uncomment them for optimisations
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx2")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx2")
 
 // for segment tree
 // #define mid (start+end)/2
@@ -122,12 +122,11 @@ template <typename... T>
 inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-ll mod = 1000000007;
+const ll mod = 1000000007;
 // const ll mod = 998244353;
-inline ll rs(ll n) { return (n % mod + mod) % mod; }
-// define ll above this
-
-#ifndef __ll__
+inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
+// define rll above this
+#ifndef __RLL__
 ll power(ll x, ll y)
 {
     x %= mod, y %= mod - 1;
@@ -144,65 +143,48 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-vi f = {1};
-inline ll fac(ll n) { return f[n]; }
-ll NCR(ll n, ll r) { return rs(fac(n) * inv(rs(fac(r) * fac(n - r)))); }
-void func()
+ll unit = 1000000000001;
+ll rec(ll n, string &str, bool u, bool swapped, V<vvi> &dp)
 {
-    newint(n, mod);
-    ::mod = mod;
-    f.reserve(5000);
-    range(i, 1, 5001)
+    if (n == str.size())
+        return 0;
+    if (dp[n][u][swapped] != -1)
+        return dp[n][u][swapped];
+    ll ans = INF;
+    bool ele = str[n] - '0';
+    if (swapped)
+        ele = str[n - 1] - '0';
+
+    if (ele == u)
     {
-        f.push_back(f.back() * f.size() % mod);
-    }
-    ll ans = 0;
-    if (n % 2 == 0)
-    {
-        range(dis, 1, n / 2)
-        {
-            ll tempans = 0;
-            ll left = n - dis - 2;
-            range(r, 0, dis)
-            {
-                ll N = dis - 1;
-                tempans += rs(fac(left + r) * NCR(N, r));
-                tempans = rs(tempans);
-            }
-            ans += rs(tempans * dis);
-            ans = rs(ans);
-        }
-        range(i, 0, n / 2)
-        {
-            ll right = n / 2 - 1;
-            ll tlft = n / 2 - 1;
-            ans += rs(fac(right + i) * NCR(tlft, i));
-            ans = rs(ans);
-        }
+        ans = min(ans, rec(n + 1, str, u, false, dp));
     }
     else
     {
-        range(dis, 1, n / 2 + 1)
-        {
-            ll tempans = 0;
-            ll left = n - dis - 2;
-            range(r, 0, dis)
-            {
-                ll N = dis - 1;
-                tempans += rs(fac(left + r) * NCR(N, r));
-                tempans = rs(tempans);
-            }
-            // print(tempans);
-            ans += rs(tempans * dis);
-            ans = rs(ans);
-        }
+        ans = min(ans, rec(n + 1, str, u, false, dp) + unit);
+        // swapping
+        if (swapped == false && n + 1 != str.size() && str[n + 1] != str[n])
+            ans = min(ans, rec(n + 1, str, u, true, dp) + unit - 1);
+        if (u == false)
+            ans = min(ans, rec(n + 1, str, true, false, dp));
     }
-    print(rs(ans * n)); 
+    return dp[n][u][swapped] = ans;
+}
+void func()
+{
+    newstring(str);
+    V<vvi> dp(str.size() + 1, vvi(2, vi(2, -1))); 
+    // vvi dp(str.size() + 1, vi(2, -1));
+    ll ans = INF;
+    ans = min(ans, rec(0, str, false, false, dp));
+    print(ans);
 }
 int main()
 {
-
     FAST;
-    func();
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

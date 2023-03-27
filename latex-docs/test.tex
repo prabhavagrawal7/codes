@@ -1,0 +1,33 @@
+% !TEX program = lualatex
+\documentclass[12pt]{article}
+\usepackage[]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{color, hyperref, xcolor}
+\usepackage[document]{ragged2e}
+\definecolor{linkcolor}{HTML}{003c50}
+\hypersetup{ 
+	colorlinks=true, 
+     urlcolor=linkcolor
+     } 
+\thispagestyle{empty}
+\geometry{paperheight=11.5in, paperwidth=8.5in, margin=1cm}
+\newcommand{\resumename}[1]{\LARGE\textbf{#1}\small}
+\titleformat{\section} 
+  {\normalfont\fontsize{12pt}{10}\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+\titlespacing*{\section}{0em}{1.2em}{0.5em}
+\titleformat{\subsection}[runin]{\bfseries}{}{}{}[]
+\titlespacing*{\subsection}{0em}{0.75em}{0em}
+
+\begin{document}
+
+\begin{figure}
+  Let \( \mathcal{T} \) be a topological space, a basis is defined as
+\[
+ \mathcal{B} = \{B_{\alpha} \in \mathcal{T}\, |\,  U = \bigcup B_{\alpha} \forall U \in \mathcal{T} \}
+\]
+  \caption{A famous equation}
+  \end{figure}
+  
+\end{document}

@@ -122,89 +122,10 @@ template <typename... T>
 inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-ll mod = 1000000007;
+const ll mod = 1000000007;
 // const ll mod = 998244353;
 inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
 // define rll above this
-#define __RLL__ 1
-template <typename T>
-ll power(T, ll);
-inline ll inv(ll n) { return power(n, mod - 2); }
-class rll
-{
-private:
-    int64_t val;
-
-public:
-    rll power(unsigned long long y) { return ::power(val, y); }
-    rll div_by(ll x) { return val / x; }
-    friend inline istream &operator>>(istream &cc, rll &a) { return (cc >> a.val), (a += 0), cc; }
-    operator int64_t() const { return val; }
-    template <typename T>
-    rll(T _val) : val(rs(_val)) {}
-    rll() : val(0) {}
-    // arithmetic operators
-    inline rll operator++() { return val++; }
-    inline rll operator--() { return val--; }
-    inline rll operator+(rll a) { return rs(val + a.val); }
-    inline rll operator-(rll a) { return rs(val - a.val); }
-    inline rll operator*(rll a) { return rs(a.val * val); }
-    inline rll operator/(rll a) { return inv(a) * *this; }
-    inline rll operator%(rll a) { return rs(val % a.val); }
-    template <typename T, typename U>
-    friend inline rll operator+(T &&a, U &&b) { return rll(a) + rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator-(T &&a, U &&b) { return rll(a) - rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator*(T &&a, U &&b) { return rll(a) * rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator/(T &&a, U &&b) { return rll(a) / rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator%(T &&a, U &&b) { return rll(a) % rll(b); }
-
-    template <typename T, typename U>
-    friend inline rll operator+=(T &&a, U &&b) { return a = rll(a) + rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator-=(T &&a, U &&b) { return a = rll(a) - rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator*=(T &&a, U &&b) { return a = rll(a) * rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator/=(T &&a, U &&b) { return a = rll(a) / rll(b); }
-    template <typename T, typename U>
-    friend inline rll operator%=(T &&a, U &&b) { return a = rll(a) % rll(b); }
-
-    // logical operators
-    inline bool operator<(rll &&a) { return (val < a.val); }
-    inline bool operator>(rll &&a) { return (val > a.val); }
-    inline bool operator<=(rll &&a) { return (val <= a.val); }
-    inline bool operator>=(rll &&a) { return (val >= a.val); }
-    inline bool operator!() { return !val; }
-
-    template <typename T, typename U>
-    friend inline bool operator<(T &&a, U &&b) { return (ll)a < (ll)b; }
-    template <typename T, typename U>
-    friend inline bool operator>(T &&a, U &&b) { return (ll)a > (ll)b; }
-    template <typename T, typename U>
-    friend inline bool operator<=(T &&a, U &&b) { return (ll)a <= (ll)b; }
-    template <typename T, typename U>
-    friend inline bool operator>=(T &&a, U &&b) { return (ll)a >= (ll)b; }
-};
-template <typename T>
-ll power(T _x, ll _y)
-{
-    rll x = _x;
-    _y %= mod - 1;
-    rll res = 1;
-    while (_y)
-    {
-        if (_y & 1LL)
-            res *= x;
-        _y >>= 1;
-        x = x * x;
-    }
-    return res;
-}
-
 #ifndef __RLL__
 ll power(ll x, ll y)
 {
@@ -222,62 +143,126 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-V<rll> f = {1};
-rll fac(ll n)
+const ll range = 1000006;
+vi prime(range + 1, 1);
+void sieve()
 {
-    while (n >= f.size())
-        f.pb(f.back() * f.size());
-    return f[n];
+    for (int p = 0; p < range; ++p)
+        prime[p] = p;
+    for (int p = 2; p * p <= range; ++p)
+    {
+        if (prime[p] == p)
+        {
+            for (int i = p * p; i <= range; i += p)
+                if (prime[i] == i)
+                    prime[i] = p;
+        }
+    }
 }
-ll n;
-rll NCR(rll n, rll r)
+
+// find all prime factors
+vi pfacs(ll n)
 {
-    return fac(n) / (fac(r) * fac(n - r));
+    set<ll> ans;
+    while (n > 1)
+    {
+        ans.insert(prime[n]);
+        n /= prime[n];
+    }
+    return vi(all(ans));
 }
 void func()
 {
-    cin >> n >> mod;
-    rll ans = 0;
-    if (n % 2 == 0)
+    newint(n, m, k);
+    vi vec = inputvec(n);
+    sort(all(vec));
+    multiset<ll> svec(all(vec));
+    map<ll, MS<ll>> store;
+    range(i, n)
     {
-        range(dis, 1, n / 2)
+        auto prime_factors = pfacs(vec[i]);
+        foreach (j, prime_factors)
         {
-            rll tempans = 0;
-            ll left = n - dis - 2;
-            range(r, 0, dis)
-            {
-                ll N = dis - 1;
-                tempans += fac(left + r) * NCR(N, r);
-            }
-            ans += tempans * (dis);
-        }
-        range(i, 0, n / 2)
-        {
-            ll right = n / 2 - 1;
-            ll tlft = n / 2 - 1;
-            ans += fac(right + i) * NCR(tlft, i);
+            store[j].insert(vec[i]);
         }
     }
-    else
+    while (k--)
     {
-        range(dis, 1, n / 2 + 1)
+        // bruteforce ans
+        ll b_1 = *svec.begin(), b_2 = *next(svec.begin());
+        ll bans = b_1 + b_2 - gcd(b_1, b_2);
+        // find best ans
+        while (!store.empty() && store.begin()->second.size() < 2)
         {
-            rll tempans = 0;
-            ll left = n - dis - 2;
-            range(r, 0, dis)
+            store.erase(store.begin());
+        }
+        if(store.empty()){
+             bans = gcd(b_1, b_2);
+            svec.erase(svec.begin());
+            svec.erase(svec.begin());
+            svec.insert(bans);
+            continue;
+        }
+        auto &cx = store.begin()->second;
+        ll c_1 = *prev(cx.end());
+        ll c_2 = *prev(prev(cx.end()));
+        ll cans = c_1 + c_2 - gcd(c_1, c_2);
+        if (store.empty() || bans < cans)
+        {
+            bans = gcd(b_1, b_2);
+            svec.erase(svec.begin());
+            svec.erase(svec.begin());
+            svec.insert(bans);
+            // remove from store too..
+            auto b_1_prime_factors = pfacs(b_1);
+            foreach (j, b_1_prime_factors)
             {
-                ll N = dis - 1;
-                tempans += fac(left + r) * NCR(N, r);
+                auto &cx = store[j];
+                cx.erase(cx.find(b_1));
             }
-            // print(tempans);
-            ans += tempans * (dis);
+            auto b_2_prime_factors = pfacs(b_2);
+            foreach (j, b_2_prime_factors)
+            {
+                auto &cx = store[j];
+                cx.erase(cx.find(b_2));
+            }
+            auto prime_factors = pfacs(bans);
+            foreach (j, prime_factors)
+                store[j].insert(bans);
+        }
+        else
+        {
+            cans = gcd(c_1, c_2);
+            svec.insert(cans);
+            svec.erase(svec.find(c_1));
+            svec.erase(svec.find(c_2));
+            // remove from store too..
+            auto c_1_prime_factors = pfacs(c_1);
+            foreach (j, c_1_prime_factors)
+            {
+                auto &cx = store[j];
+                cx.erase(cx.find(c_1));
+            }
+            auto c_2_prime_factors = pfacs(c_2);
+            foreach (j, c_2_prime_factors)
+            {
+                auto &cx = store[j];
+                cx.erase(cx.find(c_2));
+            }
+            auto prime_factors = pfacs(cans);
+            foreach (j, prime_factors)
+                store[j].insert(cans);
         }
     }
-    print(ans * n);
+    print(accumulate(all(svec), 0LL));
 }
 int main()
 {
+    sieve();
     FAST;
-    func();
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }
