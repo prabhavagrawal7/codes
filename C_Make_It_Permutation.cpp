@@ -9,8 +9,8 @@ using namespace std;
 // #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
 // Uncomment them for optimisations
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx2")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx2")
 
 // for segment tree
 // #define mid (start+end)/2
@@ -39,10 +39,10 @@ using is_string = is_same<decay_t<T>,
 template <typename T>
 constexpr bool is_iterable_v = is_iterable<T>::value;
 template <typename T>
-typename enable_if<!is_iterable_v<T>, void>::type inline __print(T &&container) { cout << container; }
+typename enable_if<!is_iterable_v<T>, void>::type __print(T &&container) { cout << container; }
 template <typename T>
-typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type inline __print(T &&
-                                                                                            container)
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&
+                                                                                     container)
 {
     auto itr = container.begin();
     __print(*itr), itr++;
@@ -53,9 +53,10 @@ typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type inline 
     }
 }
 template <typename T>
-typename enable_if<is_string<T>::value, void>::type inline __print(T &&string_container) { cout << string_container; }
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
 template <typename T>
-typename enable_if<is_same<T, const char *>::value, void>::type inline __print(T &&string_container) { cout << string_container; }
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
 template <size_t N>
 void __print(const char (&str)[N]) { cout << str; }
 template <typename... T>
@@ -83,10 +84,11 @@ inline void printl(T &&...args) { ((__print(args), cout << " "), ...); }
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
 #define give(...)           \
+    do                      \
     {                       \
         print(__VA_ARGS__); \
         return;             \
-    }
+    } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
@@ -175,63 +177,44 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-struct comp
-{
-    bool operator()(vi a, vi b)
-    {
-        if (a[0] == b[0])
-            return a[1] > b[1];
-        return a[0] < b[0]; 
-    }
-};
-
+P<vi, ll> inp(ll n){
+    vi vec = inputvec(n); 
+    si s(all(vec)); 
+    return {vi(all(s)), vec.size()-s.size()};
+}
 void func()
 {
-    newint(n, m, p);
-    vi profit = inputvec(n + 1, 1);
-    V<V<pii>> g(n + 1);
-    range(i, m)
-    {
-        newint(a, b, c);
-        g[a].push_back({b, c});
+    newint(n, del, add);
+    auto pvec = inp(n);
+    vi &vec = pvec.first; 
+    n = vec.size();
+    ll extradel = pvec.second;
+    sort(all(vec));
+    ll ans = (extradel + n) * del + add;
+    ll ins = 0;
+    ll i = 0, j = 1;
+    if(vec[0] != 1) {
+        j = 2; 
+        ins += 1; 
     }
-
-    V<V<pii>> dis(n + 1, V<pii>(n + 1, {INF, 0}));
-    multiset<vi, comp> bfs; 
-    dis[1][1] = {0, p};
-
-    bfs.insert({0, p, 1, 1});
-    while (bfs.size())
+    while (true)
     {
-        auto x = *bfs.begin();
-        bfs.erase(bfs.begin()); 
-        ll old_dis = x[0], paise = x[1], profit_index = x[2], node = x[3];
-        foreach (i, g[node])
+        if (i == vec.size())
+            break;
+        if (vec[i] == j)
         {
-            ll paisereq = max(0LL, i.second - paise);
-            ll extradis = (paisereq + profit[profit_index] - 1) / profit[profit_index];
-            ll newpaise = paise + extradis * profit[profit_index] - i.second;
-            ll newprofit_index = profit_index;
-            if (profit[i.first] > profit[newprofit_index])
-                newprofit_index = i.first;
-            if (old_dis + extradis > dis[i.first][newprofit_index].first)
-                continue;
-            if (old_dis + extradis == dis[i.first][newprofit_index].first &&
-                newpaise <= dis[i.first][newprofit_index].second)
-                continue;
-            dis[i.first][newprofit_index] = {old_dis + extradis, newpaise};
-            bfs.insert({old_dis + extradis, newpaise, newprofit_index, i.first});
+            ans = min(ans, (n - i - 1 + extradel) * del + ins * add);
+            i += 1;
+            j += 1;
+        }
+        else
+        {
+            ans = min(ans, (extradel + n - i) * del + ins * add); 
+            ins += vec[i] - j;
+            j = vec[i];  
         }
     }
-    ll ans = INF;
-    foreach (i, dis[n])
-        ans = min(ans, i.first);
-    if (ans == INF)
-    {
-        give(-1);
-    }
-    print(ans);
+    print(ans); 
 }
 int main()
 {

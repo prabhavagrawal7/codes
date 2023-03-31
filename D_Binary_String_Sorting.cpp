@@ -16,6 +16,59 @@ using namespace std;
 // #define mid (start+end)/2
 // #define lnode (node*2+1)
 // #define rnode (node*2+2)
+
+// printing bullshits open
+template <typename _A, typename _B>
+ostream &operator<<(ostream &os, const pair<_A, _B> &p)
+{
+    os << "[" << p.first << "," << p.second << "]";
+    return os;
+}
+template <typename T, typename = void>
+struct is_iterable : false_type
+{
+};
+template <typename T>
+struct is_iterable<T, void_t<decltype(begin(declval<T &>())),
+                             decltype(end(declval<T &>()))>> : true_type
+{
+};
+template <typename T>
+using is_string = is_same<decay_t<T>,
+                          string>;
+template <typename T>
+constexpr bool is_iterable_v = is_iterable<T>::value;
+template <typename T>
+typename enable_if<!is_iterable_v<T>, void>::type __print(T &&container) { cout << container; }
+template <typename T>
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&
+                                                                                     container)
+{
+    auto itr = container.begin();
+    __print(*itr), itr++;
+    for (; itr != container.end(); ++itr)
+    {
+        cout << ' ';
+        __print(*itr);
+    }
+}
+template <typename T>
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
+template <typename T>
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
+template <size_t N>
+void __print(const char (&str)[N]) { cout << str; }
+template <typename... T>
+inline void print(T &&...args)
+{
+    ((__print(args), cout << " "), ...);
+    cout << endl;
+}
+template <typename... T>
+inline void printl(T &&...args) { ((__print(args), cout << " "), ...); }
+// printing bullshits close
+
 #define popcount(x) __builtin_popcountll(x)
 #define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
 #define ctz(x) __builtin_ctzll(x)        // count trailing zeros
@@ -31,10 +84,11 @@ using namespace std;
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
 #define give(...)           \
+    do                      \
     {                       \
         print(__VA_ARGS__); \
         return;             \
-    }
+    } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
@@ -90,7 +144,7 @@ vi inputvec(ll n, ll start = 0)
 template <typename T>
 inline bool btn(T a, T b, T c)
 {
-    if ((a <= b && b <= c) || (a >= b && b >= c))
+    if ((a <= b && b <= c))
         return true;
     return false;
 }
@@ -100,26 +154,6 @@ istream &operator>>(istream &is, V<T> &v)
     range(i, v.size()) { is >> v[i]; }
     return is;
 }
-template <typename T>
-ostream &operator<<(ostream &os, const V<T> &v)
-{
-    range(i, v.size()) { os << v[i] << (i + 1 != v.size() ? " " : ""); }
-    return os;
-}
-template <typename _A, typename _B>
-ostream &operator<<(ostream &os, const pair<_A, _B> &p)
-{
-    os << "[" << p.first << ", " << p.second << "]";
-    return os;
-}
-template <typename... T>
-inline void print(T &&...args)
-{
-    ((cout << args << " "), ...);
-    cout << endl;
-}
-template <typename... T>
-inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
 const ll mod = 1000000007;
@@ -143,40 +177,25 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-ll unit = 1000000000001;
-ll rec(ll n, string &str, bool u, bool swapped, V<vvi> &dp)
-{
-    if (n == str.size())
-        return 0;
-    if (dp[n][u][swapped] != -1)
-        return dp[n][u][swapped];
-    ll ans = INF;
-    bool ele = str[n] - '0';
-    if (swapped)
-        ele = str[n - 1] - '0';
-
-    if (ele == u)
-    {
-        ans = min(ans, rec(n + 1, str, u, false, dp));
-    }
-    else
-    {
-        ans = min(ans, rec(n + 1, str, u, false, dp) + unit);
-        // swapping
-        if (swapped == false && n + 1 != str.size() && str[n + 1] != str[n])
-            ans = min(ans, rec(n + 1, str, u, true, dp) + unit - 1);
-        if (u == false)
-            ans = min(ans, rec(n + 1, str, true, false, dp));
-    }
-    return dp[n][u][swapped] = ans;
-}
+ll unit = (ll)(1e12) + 1;
 void func()
 {
     newstring(str);
-    V<vvi> dp(str.size() + 1, vvi(2, vi(2, -1))); 
-    // vvi dp(str.size() + 1, vi(2, -1));
+    vi ahead = {count(all(str), '0'), count(all(str), '1')};
+    vi before = {0, 0};
+
     ll ans = INF;
-    ans = min(ans, rec(0, str, false, false, dp));
+    range(i, str.size() + 1)
+    {
+        ans = min(ans, ahead[0] * unit + before[1] * unit);
+        if (btn(1LL, i, static_cast<ll>(str.size()) - 1))
+        {
+            if (str[i - 1] != str[i] && str[i - 1] == '1')
+                ans = min(ans, unit - 1 + (ahead[0] - 1) * unit + (before[1] - 1) * unit);
+        }
+        if (i != str.size())
+            ahead[str[i] - '0']--, before[str[i] - '0']++;
+    }
     print(ans);
 }
 int main()

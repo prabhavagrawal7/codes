@@ -10,7 +10,7 @@ using namespace std;
 
 // Uncomment them for optimisations
 #pragma GCC optimize("Ofast")
-#pragma GCC target("avx2")
+// #pragma GCC target("avx2")
 
 // for segment tree
 // #define mid (start+end)/2
@@ -39,10 +39,10 @@ using is_string = is_same<decay_t<T>,
 template <typename T>
 constexpr bool is_iterable_v = is_iterable<T>::value;
 template <typename T>
-typename enable_if<!is_iterable_v<T>, void>::type inline __print(T &&container) { cout << container; }
+typename enable_if<!is_iterable_v<T>, void>::type __print(T &&container) { cout << container; }
 template <typename T>
-typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type inline __print(T &&
-                                                                                            container)
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&
+                                                                                     container)
 {
     auto itr = container.begin();
     __print(*itr), itr++;
@@ -53,9 +53,10 @@ typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type inline 
     }
 }
 template <typename T>
-typename enable_if<is_string<T>::value, void>::type inline __print(T &&string_container) { cout << string_container; }
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
 template <typename T>
-typename enable_if<is_same<T, const char *>::value, void>::type inline __print(T &&string_container) { cout << string_container; }
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
 template <size_t N>
 void __print(const char (&str)[N]) { cout << str; }
 template <typename... T>
@@ -83,10 +84,11 @@ inline void printl(T &&...args) { ((__print(args), cout << " "), ...); }
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
 #define give(...)           \
+    do                      \
     {                       \
         print(__VA_ARGS__); \
         return;             \
-    }
+    } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
@@ -175,63 +177,97 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-struct comp
+vi tostr(ll x)
 {
-    bool operator()(vi a, vi b)
+    vi ans;
+    while (x)
     {
-        if (a[0] == b[0])
-            return a[1] > b[1];
-        return a[0] < b[0]; 
+        ans.pb(x % 10);
+        x /= 10;
     }
-};
+    reverse(all(ans));
+    return ans;
+}
+ll toint(vi str)
+{
+    ll ans = 0;
+    range(i, str.size())
+        ans = (ans * 10) + str[i];
+    return ans;
+}
+vi a1, a2;
+ll dp[10][10][2][2][19];
+ll rec(ll mini, ll maxi, bool chkb, bool chka, ll n)
+{
+    if (n == a1.size())
+        return 0;
+    if (dp[mini][maxi][chkb][chka][n] != -INT_INF)
+        return dp[mini][maxi][chkb][chka][n];
+    ll ans = -1;
+    ll lim1 = 0, lim2 = 10;
+    if (chkb)
+        lim1 = max(lim1, a1[n]);
+    if (chka)
+        lim2 = min(lim2, a2[n] + 1);
+    range(i, lim1, lim2)
+    {
+        if (!btn(mini, i, maxi))
+            continue;
+        bool nchkb = false, nchka = false;
+        if (chkb && i == a1[n])
+            nchkb = true;
+        if (chka && i == a2[n])
+            nchka = true;
+        ans = max(ans, 10 * rec(mini, maxi, nchkb, nchka, n + 1) + i);
+    }
+    return dp[mini][maxi][chkb][chka][n] = ans;
+}
 
 void func()
 {
-    newint(n, m, p);
-    vi profit = inputvec(n + 1, 1);
-    V<V<pii>> g(n + 1);
-    range(i, m)
+    newint(a, b);
+    a1 = tostr(a), a2 = tostr(b);
+    if (a1.size() != a2.size())
+        give(string(a1.size(), '9'));
+    if (a == b)
     {
-        newint(a, b, c);
-        g[a].push_back({b, c});
+        give(a);
     }
-
-    V<V<pii>> dis(n + 1, V<pii>(n + 1, {INF, 0}));
-    multiset<vi, comp> bfs; 
-    dis[1][1] = {0, p};
-
-    bfs.insert({0, p, 1, 1});
-    while (bfs.size())
+    range(i, 10)
     {
-        auto x = *bfs.begin();
-        bfs.erase(bfs.begin()); 
-        ll old_dis = x[0], paise = x[1], profit_index = x[2], node = x[3];
-        foreach (i, g[node])
+        range(j, 10)
         {
-            ll paisereq = max(0LL, i.second - paise);
-            ll extradis = (paisereq + profit[profit_index] - 1) / profit[profit_index];
-            ll newpaise = paise + extradis * profit[profit_index] - i.second;
-            ll newprofit_index = profit_index;
-            if (profit[i.first] > profit[newprofit_index])
-                newprofit_index = i.first;
-            if (old_dis + extradis > dis[i.first][newprofit_index].first)
-                continue;
-            if (old_dis + extradis == dis[i.first][newprofit_index].first &&
-                newpaise <= dis[i.first][newprofit_index].second)
-                continue;
-            dis[i.first][newprofit_index] = {old_dis + extradis, newpaise};
-            bfs.insert({old_dis + extradis, newpaise, newprofit_index, i.first});
+            range(k, 2)
+            {
+                range(l, 2)
+                {
+                    range(m, 19)
+                    {
+                        dp[i][j][k][l][m] = -INT_INF;
+                    }
+                }
+            }
         }
     }
-    ll ans = INF;
-    foreach (i, dis[n])
-        ans = min(ans, i.first);
-    if (ans == INF)
+    ll dueto = INT_INF;
+    ll rtn = a;
+
+    range(i, 10)
     {
-        give(-1);
+        range(j, i, 10)
+        {
+            ll ans = rec(i, j, true, true, 0);
+            if (ans < 0)
+                continue;
+            if (dueto > j - i)
+                dueto = j - i, rtn = ans;
+        }
     }
-    print(ans);
+    auto nans = tostr(rtn);
+    reverse(all(nans));
+    while(nans.size() != a1.size()) nans.pb(0); 
+    print(toint(nans));
+    
 }
 int main()
 {

@@ -9,8 +9,8 @@ using namespace std;
 // #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
 // Uncomment them for optimisations
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx2")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx2")
 
 // for segment tree
 // #define mid (start+end)/2
@@ -39,10 +39,10 @@ using is_string = is_same<decay_t<T>,
 template <typename T>
 constexpr bool is_iterable_v = is_iterable<T>::value;
 template <typename T>
-typename enable_if<!is_iterable_v<T>, void>::type inline __print(T &&container) { cout << container; }
+typename enable_if<!is_iterable_v<T>, void>::type __print(T &&container) { cout << container; }
 template <typename T>
-typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type inline __print(T &&
-                                                                                            container)
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&
+                                                                                     container)
 {
     auto itr = container.begin();
     __print(*itr), itr++;
@@ -53,9 +53,10 @@ typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type inline 
     }
 }
 template <typename T>
-typename enable_if<is_string<T>::value, void>::type inline __print(T &&string_container) { cout << string_container; }
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
 template <typename T>
-typename enable_if<is_same<T, const char *>::value, void>::type inline __print(T &&string_container) { cout << string_container; }
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
 template <size_t N>
 void __print(const char (&str)[N]) { cout << str; }
 template <typename... T>
@@ -83,10 +84,11 @@ inline void printl(T &&...args) { ((__print(args), cout << " "), ...); }
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
 #define give(...)           \
+    do                      \
     {                       \
         print(__VA_ARGS__); \
         return;             \
-    }
+    } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
@@ -176,60 +178,67 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-struct comp
-{
-    bool operator()(vi a, vi b)
-    {
-        if (a[0] == b[0])
-            return a[1] > b[1];
-        return a[0] < b[0]; 
-    }
-};
-
 void func()
 {
-    newint(n, m, p);
-    vi profit = inputvec(n + 1, 1);
-    V<V<pii>> g(n + 1);
-    range(i, m)
+    newint(q);
+    ll low = -1, high = INF;
+    vi ans;
+    range(q)
     {
-        newint(a, b, c);
-        g[a].push_back({b, c});
-    }
-
-    V<V<pii>> dis(n + 1, V<pii>(n + 1, {INF, 0}));
-    multiset<vi, comp> bfs; 
-    dis[1][1] = {0, p};
-
-    bfs.insert({0, p, 1, 1});
-    while (bfs.size())
-    {
-        auto x = *bfs.begin();
-        bfs.erase(bfs.begin()); 
-        ll old_dis = x[0], paise = x[1], profit_index = x[2], node = x[3];
-        foreach (i, g[node])
+        newint(opr);
+        if (opr == 1)
         {
-            ll paisereq = max(0LL, i.second - paise);
-            ll extradis = (paisereq + profit[profit_index] - 1) / profit[profit_index];
-            ll newpaise = paise + extradis * profit[profit_index] - i.second;
-            ll newprofit_index = profit_index;
-            if (profit[i.first] > profit[newprofit_index])
-                newprofit_index = i.first;
-            if (old_dis + extradis > dis[i.first][newprofit_index].first)
-                continue;
-            if (old_dis + extradis == dis[i.first][newprofit_index].first &&
-                newpaise <= dis[i.first][newprofit_index].second)
-                continue;
-            dis[i.first][newprofit_index] = {old_dis + extradis, newpaise};
-            bfs.insert({old_dis + extradis, newpaise, newprofit_index, i.first});
+            newint(a, b, days);
+            ll daybef = (a - b) * (days - 1) + b;
+            ll dayaft = (a - b) * days + b;
+            if (days == 1)
+                daybef = 0;
+            if (high <= daybef)
+                ans.pb(0);
+            else if (dayaft <= low)
+                ans.pb(0);
+            else
+            {
+                low = max(low, daybef);
+                high = min(high, dayaft);
+                ans.pb(1);
+            }
         }
-    }
-    ll ans = INF;
-    foreach (i, dis[n])
-        ans = min(ans, i.first);
-    if (ans == INF)
-    {
-        give(-1);
+        else
+        {
+            newint(a, b);
+            __uint128_t l = 1, r = INF, mid;
+            while (r - l > 1)
+            {
+                mid = (l + r) / 2;
+                if ((a - b) * (mid - 1) + b >= high)
+                    r = mid;
+                else if ((a - b) * mid + b <= low)
+                    l = mid + 1;
+                else
+                    l = mid;
+            }
+            ll days = l;
+            ll daybef = (a - b) * (days - 1) + b;
+            ll dayaft = (a - b) * days + b;
+            if (days == 1)
+                daybef = 0;
+            if (high <= daybef)
+                ans.pb(-1);
+            else if (dayaft <= low)
+                ans.pb(-1);
+            else if (days == 1)
+                ans.pb(days);
+            else
+            {
+                ll daybef = (a - b) * (days - 2) + b;
+                ll dayaft = (a - b) * (days - 1) + b;
+                if (high <= daybef || dayaft <= low)
+                    ans.pb(days);
+                else
+                    ans.pb(-1);
+            }
+        }
     }
     print(ans);
 }

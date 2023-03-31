@@ -9,8 +9,8 @@ using namespace std;
 // #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 
 // Uncomment them for optimisations
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx2")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx2")
 
 // for segment tree
 // #define mid (start+end)/2
@@ -39,10 +39,10 @@ using is_string = is_same<decay_t<T>,
 template <typename T>
 constexpr bool is_iterable_v = is_iterable<T>::value;
 template <typename T>
-typename enable_if<!is_iterable_v<T>, void>::type inline __print(T &&container) { cout << container; }
+typename enable_if<!is_iterable_v<T>, void>::type __print(T &&container) { cout << container; }
 template <typename T>
-typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type inline __print(T &&
-                                                                                            container)
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&
+                                                                                     container)
 {
     auto itr = container.begin();
     __print(*itr), itr++;
@@ -53,9 +53,10 @@ typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type inline 
     }
 }
 template <typename T>
-typename enable_if<is_string<T>::value, void>::type inline __print(T &&string_container) { cout << string_container; }
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
 template <typename T>
-typename enable_if<is_same<T, const char *>::value, void>::type inline __print(T &&string_container) { cout << string_container; }
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
 template <size_t N>
 void __print(const char (&str)[N]) { cout << str; }
 template <typename... T>
@@ -83,10 +84,11 @@ inline void printl(T &&...args) { ((__print(args), cout << " "), ...); }
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
 #define give(...)           \
+    do                      \
     {                       \
         print(__VA_ARGS__); \
         return;             \
-    }
+    } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
@@ -176,62 +178,96 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-struct comp
+ll dfs(ll n, V<V<pii>> &g)
 {
-    bool operator()(vi a, vi b)
+    ll ans = 1;
+    foreach (i, g[n])
     {
-        if (a[0] == b[0])
-            return a[1] > b[1];
-        return a[0] < b[0]; 
+        ll tmpans = (power(2, dfs(i.first, g)));
+        tmpans = inv(power(tmpans, tmpans*tmpans)); 
+        i.second = tmpans;
+        ans += tmpans << 1;
+        ans %= mod;
     }
-};
-
+    sort(all(g[n]), [](pii &a, pii &b)
+         { return a.second < b.second; });
+    return ans;
+}
+ll checker(ll a, ll b, V<V<pii>> &g)
+{
+    vi hash1, hash2;
+    foreach (i, g[a])
+        hash1.push_back(i.second);
+    foreach (i, g[b])
+        hash2.push_back(i.second);
+    if (hash1.size() != hash2.size())
+        return false;
+    if (hash1 != hash2)
+        return false;
+    range(i, g[a].size())
+    {
+        if (!checker(g[a][i].first, g[b][i].first, g))
+            return false;
+    }
+    return true;
+}
+void _dfs(ll n, ll par, vi &parent, vvi &graph)
+{
+    parent[n] = par;
+    foreach (i, graph[n])
+        if (i != par)
+            _dfs(i, n, parent, graph);
+}
+V<V<pii>> graph(ll n)
+{
+    vvi g(n + 1);
+    range(i, n - 1)
+    {
+        newint(a, b);
+        g[a].pb(b);
+        g[b].pb(a);
+    }
+    vi parent(n + 1);
+    _dfs(1, 0, parent, g);
+    V<V<pii>> ans(n + 1);
+    range(i, 1, n + 1)
+    {
+        ans[parent[i]].push_back({i, 1});
+    }
+    return ans;
+}
 void func()
 {
-    newint(n, m, p);
-    vi profit = inputvec(n + 1, 1);
-    V<V<pii>> g(n + 1);
-    range(i, m)
+    newint(n);
+    auto g = graph(n);
+    vi vpar(n + 1);
+    dfs(1, g);
+    ll u = 1, again = 1;
+    while(again)
     {
-        newint(a, b, c);
-        g[a].push_back({b, c});
-    }
-
-    V<V<pii>> dis(n + 1, V<pii>(n + 1, {INF, 0}));
-    multiset<vi, comp> bfs; 
-    dis[1][1] = {0, p};
-
-    bfs.insert({0, p, 1, 1});
-    while (bfs.size())
-    {
-        auto x = *bfs.begin();
-        bfs.erase(bfs.begin()); 
-        ll old_dis = x[0], paise = x[1], profit_index = x[2], node = x[3];
-        foreach (i, g[node])
+        u = again; 
+        again = 0; 
+        map<ll, vi> freq;
+        foreach (i, g[u])
+            freq[i.second].pb(i.first);
+        foreach (i, freq)
         {
-            ll paisereq = max(0LL, i.second - paise);
-            ll extradis = (paisereq + profit[profit_index] - 1) / profit[profit_index];
-            ll newpaise = paise + extradis * profit[profit_index] - i.second;
-            ll newprofit_index = profit_index;
-            if (profit[i.first] > profit[newprofit_index])
-                newprofit_index = i.first;
-            if (old_dis + extradis > dis[i.first][newprofit_index].first)
-                continue;
-            if (old_dis + extradis == dis[i.first][newprofit_index].first &&
-                newpaise <= dis[i.first][newprofit_index].second)
-                continue;
-            dis[i.first][newprofit_index] = {old_dis + extradis, newpaise};
-            bfs.insert({old_dis + extradis, newpaise, newprofit_index, i.first});
+            auto &x = i.second;
+            range(j, 0, x.size() - 1, 2)
+            {
+                if (!checker(x[j], x[j + 1], g))
+                    give("NO");
+            }
+            if (x.size() % 2 != 0)
+            {
+                if (again)
+                    give("NO");
+                else
+                    again = x.back();
+            }
         }
     }
-    ll ans = INF;
-    foreach (i, dis[n])
-        ans = min(ans, i.first);
-    if (ans == INF)
-    {
-        give(-1);
-    }
-    print(ans);
+    give("YES");
 }
 int main()
 {

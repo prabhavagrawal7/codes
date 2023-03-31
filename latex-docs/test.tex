@@ -3,6 +3,8 @@
 \usepackage[]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{tabularx}
 \usepackage{color, hyperref, xcolor}
 \usepackage[document]{ragged2e}
@@ -22,12 +24,16 @@
 
 \begin{document}
 
-\begin{figure}
-  Let \( \mathcal{T} \) be a topological space, a basis is defined as
-\[
- \mathcal{B} = \{B_{\alpha} \in \mathcal{T}\, |\,  U = \bigcup B_{\alpha} \forall U \in \mathcal{T} \}
-\]
-  \caption{A famous equation}
-  \end{figure}
-  
+\begin{algorithm}
+\caption{Covariance Matching-Based 1-D Kalman Filter}
+Initialize $x_0, P_0, Q, R$ \\
+for $k = 1$ to $N:$ \\
+\qquad    Predict equations: \\
+\qquad    $\hat{s}^-_k = \hat{s}_{k-1}$ \\
+\qquad    $P^-_k = P_{k-1} + Q$ \\
+\qquad    Update equations: \\
+\qquad    $K_k = \frac{P^-_k}{P^-_k + R}$ \\
+\qquad    $\hat{s}_k = \hat{s}^-_k + K_k(z_k - \hat{s}^-_k)$ \\
+\qquad    $P_k = (1 - K_k)P^-_k$ \\
+\end{algorithm}
 \end{document}

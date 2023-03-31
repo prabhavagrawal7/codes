@@ -176,42 +176,17 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-vi depth;
-vvi blft;
-V<V<pii>> dp;
-vi singular; 
 vi vec, parent;
-
-ll lca(ll a, ll b)
-{
-    if (depth[a] > depth[b])
-        swap(a, b);
-    range(i, 20 - 1, -1, -1)
-    {
-        if (depth[blft[b][i]] >= depth[a])
-        {
-            b = blft[b][i];
-        }
-    }
-    if (a == b)
-        return a;
-    range(i, 20 - 1, -1, -1)
-    {
-        if (blft[a][i] != blft[b][i])
-        {
-            a = blft[a][i];
-            b = blft[b][i];
-        }
-    }
-    return blft[a][0];
-}
+ll n, sqn;
+vi depth;
+V<UM<ll, ll>> dp; 
 ll rec(ll a, ll b)
 {
-    if (a == b) return singular[a]; 
-    if(a > b) swap(a, b); 
+    if(a == 0 || b == 0) return 0; 
+    if(a < b) swap(a, b); 
+    if(depth[a] % sqn == 0 && dp[a].count(b)) return dp[a][b]; 
     ll ans = vec[a] * vec[b] + rec(parent[a], parent[b]); 
-    if(dp[a].size() * dp[a].size() <= dp.size())
-        dp[a].pb({b, ans}); 
+    if(depth[a] % sqn == 0) dp[a][b] = ans; 
     return ans; 
 }
 void func()
@@ -219,7 +194,7 @@ void func()
     newint(n, q);
     vec = inputvec(n + 1, 1);
     parent = inputvec(n + 1, 2);
-
+    sqn = sqrtl(n);
     vvi g(n + 1);
     range(i, 2, n + 1)
     {
@@ -230,11 +205,8 @@ void func()
     stack<ll> dfs;
     dfs.push(1);
     vi vis(n + 1);
-    blft.assign(n + 1, vi(20, 0));
     depth.assign(n + 1, 0);
-    singular.assign(n + 1, 0);
-    singular[1] = vec[1] * vec[1];
-    vis[1] = true; 
+    vis[1] = true;
 
     while (dfs.size())
     {
@@ -244,45 +216,17 @@ void func()
         {
             if (vis[i])
                 continue;
-            singular[i] = singular[x] + vec[i] * vec[i];
             depth[i] = depth[x] + 1;
-            blft[i][0] = x;
-            range(j, 1, 20) blft[i][j] = blft[blft[i][j - 1]][j - 1];
             dfs.push(i);
-            vis[i] = true; 
+            vis[i] = true;
         }
     }
     dp.assign(n + 1, {});
-    range(i, 1, dp.size()) dp[i].reserve(sqrt(n) + 1); 
+    range(i, 1, dp.size()) dp[i].reserve(sqrt(n) + 1);
     range(i, q)
     {
         newint(a, b);
-        ll L = lca(a, b);
-        if (a > b)
-            swap(a, b);
-        bool flag = false;
-        if (depth[a] - depth[L] > sqrt(n))
-        {
-            foreach (i, dp[a])
-            {
-                if (i.first == b)
-                {
-                    print(i.second);
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag) continue;
-            print(rec(a, b)); 
-        }
-        else {
-            ll ans = 0; 
-            while(a != b) {
-                ans += vec[a] * vec[b];
-                a = parent[a], b = parent[b]; 
-            }
-            print(ans + singular[a]); 
-        }
+        print(rec(a, b)); 
     }
 }
 int main()
