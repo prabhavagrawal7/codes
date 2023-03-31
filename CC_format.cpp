@@ -2,12 +2,6 @@
 using namespace std;
 #define ll int64_t
 
-// ordered set
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-// using namespace __gnu_pbds;
-// #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
-
 // Uncomment them for optimisations
 //#pragma GCC optimize("Ofast")
 //#pragma GCC target("avx2")
@@ -46,7 +40,7 @@ template<typename... T>inline void printl(T &&...args){((__print(args), cout<<" 
 #define newint(...) ll __VA_ARGS__;take_input(__VA_ARGS__)
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
-#define give(...){print(__VA_ARGS__);return;}
+#define give(...) do{print(__VA_ARGS__);return;} while(false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
