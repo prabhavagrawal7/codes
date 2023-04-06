@@ -207,37 +207,14 @@ void func()
         else
         {
             newint(a, b);
-            __uint128_t l = 1, r = INF, mid;
-            while (r - l > 1)
-            {
-                mid = (l + r) / 2;
-                if ((a - b) * (mid - 1) + b >= high)
-                    r = mid;
-                else if ((a - b) * mid + b <= low)
-                    l = mid + 1;
-                else
-                    l = mid;
-            }
-            ll days = l;
-            ll daybef = (a - b) * (days - 1) + b;
-            ll dayaft = (a - b) * days + b;
-            if (days == 1)
-                daybef = 0;
-            if (high <= daybef)
-                ans.pb(-1);
-            else if (dayaft <= low)
-                ans.pb(-1);
-            else if (days == 1)
-                ans.pb(days);
+            ll day1 = (high + a - b * 2 - 1) / (a - b); 
+            ll day2 = (low - a + (a - b) + (a - b)) / (a - b);
+            day1 = max(day1, 1LL);
+            day2 = max(day2, 1LL);
+            if (day1 == day2)
+                ans.pb(day1);
             else
-            {
-                ll daybef = (a - b) * (days - 2) + b;
-                ll dayaft = (a - b) * (days - 1) + b;
-                if (high <= daybef || dayaft <= low)
-                    ans.pb(days);
-                else
-                    ans.pb(-1);
-            }
+                ans.pb(-1);
         }
     }
     print(ans);

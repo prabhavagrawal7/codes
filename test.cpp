@@ -2,12 +2,6 @@
 using namespace std;
 #define ll int64_t
 
-// ordered set
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-// using namespace __gnu_pbds;
-// #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
-
 // Uncomment them for optimisations
 // #pragma GCC optimize("Ofast")
 // #pragma GCC target("avx2")
@@ -177,68 +171,24 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-void func()
+const ll range = 1e7 + 1;
+vi prime(range, 1);
+void sieve()
 {
-    newint(q);
-    ll low = -1, high = INF;
-    vi ans;
-    range(q)
+    for (int p = 2; p * p <= range; ++p)
     {
-        newint(opr);
-        if (opr == 1)
+        if (prime[p] == 1)
         {
-            newint(a, b, days);
-            ll daybef = (a - b) * (days - 1) + b;
-            ll dayaft = (a - b) * days + b;
-            if (days == 1)
-                daybef = 0;
-            if (high <= daybef)
-                ans.pb(0);
-            else if (dayaft <= low)
-                ans.pb(0);
-            else
-            {
-                low = max(low, daybef);
-                high = min(high, dayaft);
-                ans.pb(1);
-            }
-        }
-        else
-        {
-            newint(a, b);
-            __int128_t l = 1, r = INF, mid;
-            while (r - l > 1)
-            {
-                mid = (l + r) / 2;
-                if ((a - b) * (mid - 1) + b >= high)
-                    r = mid;
-                else
-                    l = mid;
-            }
-            ll days1 = l;
-            l = 0, r = INT_INF * 3LL;
-            while (r - l > 1)
-            {
-                mid = (l + r) / 2;
-                if ((a - b) * mid + b <= low)
-                    l = mid;
-                else
-                    r = mid;
-            }
-            ll days2 = r; 
-            if(days1 == days2) {ans.pb(days2);}
-            else ans.pb(-1);
+            for (int i = p * p; i <= range; i += p)
+                if (prime[i] == 1)
+                    prime[i] = p;
         }
     }
-    print(ans);
+}
+void func()
+{
 }
 int main()
 {
-    FAST;
-    newint(t);
-    range(t)
-    {
-        func();
-    }
+    sieve();
 }

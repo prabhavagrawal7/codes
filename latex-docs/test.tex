@@ -1,39 +1,147 @@
-% !TEX program = lualatex
-\documentclass[12pt]{article}
-\usepackage[]{geometry}
-\usepackage{titlesec}
-\usepackage{enumitem}
+\documentclass{beamer}
+\usetheme{Madrid}
+
+\usepackage{graphicx}
 \usepackage{algorithm}
-\usepackage{algpseudocode}
-\usepackage{tabularx}
-\usepackage{color, hyperref, xcolor}
-\usepackage[document]{ragged2e}
-\definecolor{linkcolor}{HTML}{003c50}
-\hypersetup{ 
-	colorlinks=true, 
-     urlcolor=linkcolor
-     } 
-\thispagestyle{empty}
-\geometry{paperheight=11.5in, paperwidth=8.5in, margin=1cm}
-\newcommand{\resumename}[1]{\LARGE\textbf{#1}\small}
-\titleformat{\section} 
-  {\normalfont\fontsize{12pt}{10}\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
-\titlespacing*{\section}{0em}{1.2em}{0.5em}
-\titleformat{\subsection}[runin]{\bfseries}{}{}{}[]
-\titlespacing*{\subsection}{0em}{0.75em}{0em}
+\usepackage{algorithmic}
+
+\logo{\includegraphics[width=1.5cm]{institute_logo.png}}
+
+\title[Apple M1]{Apple M1: A Breakthrough in Processor Technology}
+\author[Your Name]{Your Name}
+\institute[Institute Name]{Institute Name}
+\date{\today}
 
 \begin{document}
 
-\begin{algorithm}
-\caption{Covariance Matching-Based 1-D Kalman Filter}
-Initialize $x_0, P_0, Q, R$ \\
-for $k = 1$ to $N:$ \\
-\qquad    Predict equations: \\
-\qquad    $\hat{s}^-_k = \hat{s}_{k-1}$ \\
-\qquad    $P^-_k = P_{k-1} + Q$ \\
-\qquad    Update equations: \\
-\qquad    $K_k = \frac{P^-_k}{P^-_k + R}$ \\
-\qquad    $\hat{s}_k = \hat{s}^-_k + K_k(z_k - \hat{s}^-_k)$ \\
-\qquad    $P_k = (1 - K_k)P^-_k$ \\
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Table of Contents}
+\tableofcontents
+\end{frame}
+
+\section{Introduction}
+\begin{frame}
+\frametitle{Introduction}
+This presentation will cover the breakthrough technology behind Apple's M1 processor, including its architecture, performance, and features.
+\end{frame}
+
+\section{Architecture}
+\begin{frame}
+\frametitle{Architecture}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{m1_architecture.png}
+\caption{Apple M1 architecture diagram}
+\end{figure}
+\end{frame}
+
+\section{Performance}
+\begin{frame}
+\frametitle{Performance}
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Benchmark} & \textbf{M1} & \textbf{Intel i7} \\
+\hline
+Geekbench 5 single-core & 1743 & 1250 \\
+\hline
+Geekbench 5 multi-core & 7564 & 4300 \\
+\hline
+Cinebench R23 single-core & 1494 & 1134 \\
+\hline
+Cinebench R23 multi-core & 7678 & 4239 \\
+\hline
+\end{tabular}
+\caption{Performance benchmarks for M1 and Intel i7}
+\end{table}
+\end{frame}
+
+\section{Features}
+\begin{frame}
+\frametitle{Features}
+\begin{itemize}
+\item Neural Engine for machine learning tasks
+\item Unified memory architecture for improved performance
+\item 8-core GPU for graphics-intensive tasks
+\item Low power consumption for longer battery life
+\end{itemize}
+\end{frame}
+
+\section{Mathematical Equations}
+\begin{frame}
+\frametitle{Mathematical Equations}
+\begin{equation}
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\end{equation}
+\end{frame}
+
+\section{Tables}
+\begin{frame}
+\frametitle{Tables}
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Item} & \textbf{Quantity} & \textbf{Price} \\
+\hline
+Apple M1 MacBook Pro & 1 & \$1,299 \\
+\hline
+Apple M1 Mac Mini & 2 & \$699 \\
+\hline
+Apple M1 MacBook Air & 3 & \$999 \\
+\hline
+\end{tabular}
+\caption{Apple M1 products and
+prices}
+\end{table}
+\end{frame}
+
+\section{Figures}
+\begin{frame}
+\frametitle{Figures}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{m1_chips.png}
+\caption{Apple M1 chips}
+\end{figure}
+\end{frame}
+
+\section{Algorithm}
+\begin{frame}
+\frametitle{Algorithm}
+\begin{algorithm}[H]
+\caption{Calculate Fibonacci sequence}
+\begin{algorithmic}
+\STATE Input: n (number of terms)
+\STATE Output: Fibonacci sequence up to n terms
+\STATE initialize a = 0, b = 1
+\STATE print a
+\STATE print b
+\FOR{$i = 2$ to $n$}
+\STATE c = a + b
+\STATE print c
+\STATE a = b
+\STATE b = c
+\ENDFOR
+\end{algorithmic}
 \end{algorithm}
+\end{frame}
+
+\section{Footer}
+\begin{frame}
+\frametitle{Footer}
+\begin{center}
+Your Name | \today | \insertframenumber/\inserttotalframenumber
+\end{center}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}
+\frametitle{Conclusion}
+The Apple M1 is a breakthrough in processor technology, offering exceptional performance, advanced features, and low power consumption. Its architecture, performance, and features make it a great choice for a wide range of applications, from gaming to machine learning. Thank you for your attention.
+\end{frame}
+
 \end{document}
