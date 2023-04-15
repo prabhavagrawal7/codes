@@ -12,60 +12,27 @@ using namespace std;
 // #define rnode (node*2+2)
 
 // printing bullshits open
-template <typename _A, typename _B>
-ostream &operator<<(ostream &os, const pair<_A, _B> &p)
-{
-    os << "[" << p.first << "," << p.second << "]";
-    return os;
-}
-template <typename T, typename = void>
-struct is_iterable : false_type
-{
-};
-template <typename T>
-struct is_iterable<T, void_t<decltype(begin(declval<T &>())),
-                             decltype(end(declval<T &>()))>> : true_type
-{
-};
-template <typename T>
-using is_string = is_same<decay_t<T>,
-                          string>;
-template <typename T>
-constexpr bool is_iterable_v = is_iterable<T>::value;
-template <typename T>
-typename enable_if<!is_iterable_v<T>, void>::type __print(T &&container) { cout << container; }
-template <typename T>
-typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&
-                                                                                     container)
-{
-    auto itr = container.begin();
-    __print(*itr), itr++;
-    for (; itr != container.end(); ++itr)
-    {
-        cout << ' ';
-        __print(*itr);
-    }
-}
-template <typename T>
-typename enable_if<is_string<T>::value, void>::type
-__print(T &&string_container) { cout << string_container; }
-template <typename T>
-typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
-template <size_t N>
-void __print(const char (&str)[N]) { cout << str; }
-template <typename... T>
-inline void print(T &&...args)
-{
-    ((__print(args), cout << " "), ...);
-    cout << endl;
-}
-template <typename... T>
-inline void printl(T &&...args) { ((__print(args), cout << " "), ...); }
+template <typename _A, typename _B> ostream &operator<<(ostream &os, const pair<_A, _B> &p) { os 
+<< "[" << p.first << "," << p.second << "]"; return os; } template <typename T, typename = void> 
+struct is_iterable : false_type { }; template <typename T> struct is_iterable<T, void_t<decltype
+(begin(declval<T &>())), decltype(end(declval<T &>()))>> : true_type { }; template <typename T> 
+using is_string = is_same<decay_t<T>, string>; template <typename T> constexpr bool is_iterable_v 
+= is_iterable<T>::value; template <typename T> typename enable_if<!is_iterable_v<T>, void>::type 
+__print(T &&container) { cout << container; } template <typename T> typename 
+enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T && container) { for(auto 
+itr = container.begin(); itr != container.end(); itr++) { __print(*itr); if(next(itr) != container.
+end()) cout << ' '; } } template <typename T> typename enable_if<is_string<T>::value, void>::type 
+__print(T &&string_container) { cout << string_container; } template <typename T> typename 
+enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << 
+string_container; } template <size_t N> void __print(const char (&str)[N]) { cout << str; } 
+template <typename... T> inline void print(T &&...args) { ((__print(args), cout << " "), ...); 
+cout << endl; } template <typename... T> inline void printl(T &&...args) { ((__print(args), cout 
+<< " "), ...); }
 // printing bullshits close
 
 #define popcount(x) __builtin_popcountll(x)
 #define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
-#define ctz(x) __builtin_ctzll(x)        // count trailing zeros
+#define ctz(x) __builtin_ctzll(x)		// count trailing zeros
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
 #define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
@@ -77,11 +44,11 @@ inline void printl(T &&...args) { ((__print(args), cout << " "), ...); }
     take_input(__VA_ARGS__)
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
-#define give(...)           \
-    do                      \
-    {                       \
+#define give(...)		   \
+    do					  \
+    {					   \
         print(__VA_ARGS__); \
-        return;             \
+        return;			 \
     } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
@@ -117,7 +84,7 @@ string db_bin(ll n)
     return ans;
 }
 #define newstring(str) \
-    string str;        \
+    string str;		\
     cin >> str;
 #define foreach(a, x) for (auto &&a : x)
 const ld pi = acos(-1);
@@ -170,25 +137,29 @@ ll power(ll x, ll y)
 }
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-const ll range = 1e7 + 1;
-vi prime(range, 1);
-void sieve()
-{
-    for (int p = 2; p * p <= range; ++p)
-    {
-        if (prime[p] == 1)
-        {
-            for (int i = p * p; i <= range; i += p)
-                if (prime[i] == 1)
-                    prime[i] = p;
-        }
-    }
-}
+/* ----------------------------------------------------------------------------------------------*/
+
 void func()
 {
+    vi v; 
+    ll n = 10; 
+    while(v.size() != 10) 
+    {
+        ll offset = 0; 
+        range(i, v.size()) {
+            offset += v[i] * power(10, v.size()-i-1); 
+        }
+        v.pb(n / 10 - offset); 
+        n = n * 10; 
+    }
+    print(v); 
 }
 int main()
 {
-    sieve();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

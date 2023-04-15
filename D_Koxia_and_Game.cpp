@@ -2,12 +2,6 @@
 using namespace std;
 #define ll int64_t
 
-// ordered set
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-// using namespace __gnu_pbds;
-// #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
-
 // Uncomment them for optimisations
 // #pragma GCC optimize("Ofast")
 // #pragma GCC target("avx2")
@@ -16,6 +10,61 @@ using namespace std;
 // #define mid (start+end)/2
 // #define lnode (node*2+1)
 // #define rnode (node*2+2)
+
+// printing bullshits open
+template <typename _A, typename _B>
+ostream &operator<<(ostream &os, const pair<_A, _B> &p)
+{
+    os
+        << "[" << p.first << "," << p.second << "]";
+    return os;
+}
+template <typename T, typename = void>
+struct is_iterable : false_type
+{
+};
+template <typename T>
+struct is_iterable<T, void_t<decltype(begin(declval<T &>())), decltype(end(declval<T &>()))>> : true_type
+{
+};
+template <typename T>
+using is_string = is_same<decay_t<T>, string>;
+template <typename T>
+constexpr bool is_iterable_v = is_iterable<T>::value;
+template <typename T>
+typename enable_if<!is_iterable_v<T>, void>::type
+__print(T &&container) { cout << container; }
+template <typename T>
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&container)
+{
+    for (auto
+             itr = container.begin();
+         itr != container.end(); itr++)
+    {
+        __print(*itr);
+        if (next(itr) != container.end())
+            cout << ' ';
+    }
+}
+template <typename T>
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
+template <typename T>
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
+template <size_t N>
+void __print(const char (&str)[N]) { cout << str; }
+template <typename... T>
+inline void print(T &&...args)
+{
+    ((__print(args), cout << " "), ...);
+    cout << endl;
+}
+template <typename... T>
+inline void printl(T &&...args) { ((__print(args), cout
+                                                       << " "),
+                                   ...); }
+// printing bullshits close
+
 #define popcount(x) __builtin_popcountll(x)
 #define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
 #define ctz(x) __builtin_ctzll(x)        // count trailing zeros
@@ -31,10 +80,11 @@ using namespace std;
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
 #define give(...)           \
+    do                      \
     {                       \
         print(__VA_ARGS__); \
         return;             \
-    }
+    } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
@@ -100,30 +150,10 @@ istream &operator>>(istream &is, V<T> &v)
     range(i, v.size()) { is >> v[i]; }
     return is;
 }
-template <typename T>
-ostream &operator<<(ostream &os, const V<T> &v)
-{
-    range(i, v.size()) { os << v[i] << (i + 1 != v.size() ? " " : ""); }
-    return os;
-}
-template <typename _A, typename _B>
-ostream &operator<<(ostream &os, const pair<_A, _B> &p)
-{
-    os << "[" << p.first << ", " << p.second << "]";
-    return os;
-}
-template <typename... T>
-inline void print(T &&...args)
-{
-    ((cout << args << " "), ...);
-    cout << endl;
-}
-template <typename... T>
-inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-const ll mod = 1000000007;
-// const ll mod = 998244353;
+// const ll mod = 1000000007;
+const ll mod = 998244353;
 inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
 // define rll above this
 #ifndef __RLL__
@@ -142,58 +172,56 @@ ll power(ll x, ll y)
 }
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-vi parent;
-ll gp(ll n)
-{
-    if (parent[n] == n)
-        return n;
-    return parent[n] = gp(parent[n]);
-}
+/* ----------------------------------------------------------------------------------------------*/
 
+ll gp(ll n, vi &p)
+{
+    if (n == p[n])
+        return n;
+    return p[n] = gp(p[n], p);
+}
 void func()
 {
-    parent.clear();
     newint(n);
-    parent.assign(n + 1, 0);
-    range(i, parent.size()) parent[i] = i;
     vi a = inputvec(n);
     vi b = inputvec(n);
-
-    si singles;
-    ll ans = 1;
+    vi p(n + 1);
+    range(i, 1, n + 1) p[i] = i;
     range(i, n)
     {
-        parent[gp(a[i])] = parent[gp(b[i])];
-        if (a[i] == b[i])
-        {
-            if (!singles.count(a[i]))
-            {
-                singles.insert(a[i]);
-                ans *= n;
-            }
-            else
-            {
-                give(0);
-            }
+        p[gp(a[i], p)] = gp(b[i], p);
+    }
+    UM<ll, V<pii>> s; 
+    range(i, n) {
+        s[gp(a[i], p)].pb({a[i], b[i]}); 
+    }
+    ll ans = 1; 
+    foreach(i, s)
+    {
+        auto &u = i.second; 
+        ll v = u.size(); 
+        si c; 
+        foreach(i, u) {
+            c.insert(i.first), c.insert(i.second); 
+        }
+        if(c.size() != v) {
+            give(0); 
+        }
+        bool x = 0; 
+        
+        foreach(i, u)  if(i.first == i.second) x = 1; 
+        
+        if(x) {
+            ans *= n;
+            ans %= mod; 
+        }
+        else {
+            ans *= 2; 
+            ans %= mod; 
         }
     }
-    si singleparents;
-    foreach (i, singles)
-    {
-        singleparents.insert(gp(i));
-    }
-    si trueparents;
-    range(i, 1, parent.size())
-    {
-        if (singleparents.count(gp(i)))
-            continue;
-        else
-        {
-            trueparents.insert(gp(i));
-        }
-    }
-    print(ans * power(2, trueparents.size()));
+    print(ans); 
+
 }
 int main()
 {
