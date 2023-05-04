@@ -2,23 +2,37 @@
 using namespace std;
 #define ll int64_t
 
-// ordered set
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-// using namespace __gnu_pbds;
-// #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
-
 // Uncomment them for optimisations
 // #pragma GCC optimize("Ofast")
-// #pragma GCC target("avx,avx2,fma")
+// #pragma GCC target("avx2")
 
 // for segment tree
 // #define mid (start+end)/2
 // #define lnode (node*2+1)
 // #define rnode (node*2+2)
-#define popcount(x) __builtin_popcount(x)
-#define clz(x) (63 - __builtin_clzl(x)) // count leading zeros
-#define ctz(x) __builtin_ctz(x)         // count trailing zeros
+
+// printing bullshits open
+template <typename _A, typename _B> ostream &operator<<(ostream &os, const pair<_A, _B> &p) { os 
+<< "[" << p.first << "," << p.second << "]"; return os; } template <typename T, typename = void> 
+struct is_iterable : false_type { }; template <typename T> struct is_iterable<T, void_t<decltype
+(begin(declval<T &>())), decltype(end(declval<T &>()))>> : true_type { }; template <typename T> 
+using is_string = is_same<decay_t<T>, string>; template <typename T> constexpr bool is_iterable_v 
+= is_iterable<T>::value; template <typename T> typename enable_if<!is_iterable_v<T>, void>::type 
+__print(T &&container) { cout << container; } template <typename T> typename 
+enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T && container) { for(auto 
+itr = container.begin(); itr != container.end(); itr++) { __print(*itr); if(next(itr) != container.
+end()) cout << ' '; } } template <typename T> typename enable_if<is_string<T>::value, void>::type 
+__print(T &&string_container) { cout << string_container; } template <typename T> typename 
+enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << 
+string_container; } template <size_t N> void __print(const char (&str)[N]) { cout << str; } 
+template <typename... T> inline void print(T &&...args) { ((__print(args), cout << " "), ...); 
+cout << endl; } template <typename... T> inline void printl(T &&...args) { ((__print(args), cout 
+<< " "), ...); }
+// printing bullshits close
+
+#define popcount(x) __builtin_popcountll(x)
+#define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
+#define ctz(x) __builtin_ctzll(x)		// count trailing zeros
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
 #define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
@@ -30,11 +44,12 @@ using namespace std;
     take_input(__VA_ARGS__)
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
-#define give(...)           \
-    {                       \
+#define give(...)		   \
+    do					  \
+    {					   \
         print(__VA_ARGS__); \
-        return;             \
-    }
+        return;			 \
+    } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
@@ -69,7 +84,7 @@ string db_bin(ll n)
     return ans;
 }
 #define newstring(str) \
-    string str;        \
+    string str;		\
     cin >> str;
 #define foreach(a, x) for (auto &&a : x)
 const ld pi = acos(-1);
@@ -100,144 +115,40 @@ istream &operator>>(istream &is, V<T> &v)
     range(i, v.size()) { is >> v[i]; }
     return is;
 }
-template <typename T>
-ostream &operator<<(ostream &os, const V<T> &v)
-{
-    range(i, v.size()) { os << v[i] << (i + 1 != v.size() ? " " : ""); }
-    return os;
-}
-template <typename _A, typename _B>
-ostream &operator<<(ostream &os, const pair<_A, _B> &p)
-{
-    os << "[" << p.first << ", " << p.second << "]";
-    return os;
-}
-template <typename... T>
-inline void print(T &&...args)
-{
-    ((cout << args << " "), ...);
-    cout << endl;
-}
-template <typename... T>
-inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
 const ll mod = 1000000007;
 // const ll mod = 998244353;
-inline ll rs(ll n) { return (n = n) >= 0 ? n : n + mod; }
-template <typename T>
-ll power(T x, ll y)
+inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
+// define rll above this
+#ifndef __RLL__
+ll power(ll x, ll y)
 {
-    ll _x = x;
-    _x %= mod;
-    y %= mod - 1;
+    x %= mod, y %= mod - 1;
     ll res = 1;
     while (y)
     {
         if (y & 1LL)
-            res = (res * _x);
+            res = (res * x) % mod;
         y >>= 1;
-        _x = (_x * _x);
+        x = (x * x) % mod;
     }
-    return res;
+    return res % mod;
 }
 ll inv(ll n) { return power(n, mod - 2); }
-
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-class ModularInteger
-{
-private:
-    int64_t val = 0;
-    int64_t mod = 1e9 + 7;
-
-public:
-    operator int64_t() const { return val; }
-    template <typename T> operator T() { return static_cast<T>(val); }
-    constexpr ModularInteger() : val(0) {}
-    template <typename T>
-    constexpr ModularInteger(T _n) : val((_n % mod + mod) % mod) {}
-    int64_t getMod() { return mod; }
-    void setMod(int64_t newMod) { mod = newMod; }
-    inline ModularInteger power(ModularInteger b, int64_t p) const noexcept
-    {
-        int64_t res = 1;
-        while (p > 0)
-        {
-            if (p & 1)
-                res = (res * b.val) % mod;
-            b.val = (b.val * b.val) % mod;
-            p = p >> 1;
-        }
-        return res;
-    }
-
-    // arithmetic operators
-    inline ModularInteger operator++() { return val++; }
-    inline ModularInteger operator--() { return val--; }
-    inline ModularInteger operator+(const ModularInteger a) const noexcept { return ModularInteger(val + a.val); }
-    inline ModularInteger operator-(const ModularInteger a) const noexcept { return ModularInteger(val - a.val); }
-    inline ModularInteger operator*(const ModularInteger a) const noexcept { return ModularInteger(a.val * val); }
-    inline ModularInteger operator/(const ModularInteger a) const noexcept { return ModularInteger(power(a, mod - 2) * val); }
-    inline ModularInteger operator%(const ModularInteger a) const noexcept { return ModularInteger(val % a.val); }
-    inline ModularInteger operator>>(const ModularInteger a) const noexcept { return ModularInteger(val >> a.val); }
-    inline ModularInteger operator<<(const ModularInteger a) const noexcept { return ModularInteger(val << a.val); }
-    template <typename T>
-    inline ModularInteger operator+(T a) const noexcept { return val + ModularInteger(a); }
-    template <typename T>
-    inline ModularInteger operator-(T a) const noexcept { return val - ModularInteger(a); }
-    template <typename T>
-    inline ModularInteger operator*(T a) const noexcept { return val * ModularInteger(a); }
-    template <typename T>
-    inline ModularInteger operator/(T a) const noexcept { return val / ModularInteger(a); }
-    template <typename T>
-    inline ModularInteger operator%(T a) const noexcept { return val % ModularInteger(a); }
-    template <typename T>
-    inline ModularInteger operator>>(T a) const noexcept { return val >> ModularInteger(a); }
-    template <typename T>
-    inline ModularInteger operator<<(T a) const noexcept { return val << ModularInteger(a); }
-
-    template <typename T>
-    inline void operator+=(T a) { this = *this + ModularInteger(a); }
-    template <typename T>
-    inline void operator-=(T a) { val = val - ModularInteger(a); }
-    template <typename T>
-    inline void operator*=(T a) { val = val * ModularInteger(a); }
-    template <typename T>
-    inline void operator/=(T a) { val = val / ModularInteger(a); }
-    template <typename T>
-    inline void operator%=(T a) { val = val % a; }
-    template <typename T>
-    inline void operator>>=(T a) { val = val >> ModularInteger(a); }
-    template <typename T>
-    inline void operator<<=(T a) { val = val << ModularInteger(a); }
-
-    // logical operators
-    template <typename T>
-    inline bool operator<(T a) const noexcept { return (val < a); }
-    template <typename T>
-    inline bool operator>(T a) const noexcept { return (val > a); }
-    template <typename T>
-    inline bool operator<=(T a) { return (val <= a); }
-    template <typename T>
-    inline bool operator>=(T a) { return (val >= a); }
-    inline bool operator!() { return !val; }
-    friend istream &operator>>(istream &cc, ModularInteger &a)
-    {
-        ll __x;
-        cc >> __x;
-        a = __x;
-        return cc;
-    }
-};
+#endif
+/* ----------------------------------------------------------------------------------------------*/
 
 void func()
 {
+    
 }
 int main()
 {
-    // FAST;
-    ll a = 1e18;
-    ModularInteger b = a;
-    b.
-    print();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

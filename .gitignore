@@ -9,7 +9,4 @@
 # remove folder named .vscode
 .vscode
 # remove folder named tempCodeRunnerFile
-tempCodeRunnerFile.*
-# remove all files which don't have any extension
-*
 
