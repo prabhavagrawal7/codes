@@ -2,15 +2,9 @@
 using namespace std;
 #define ll int64_t
 
-// ordered set
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-// using namespace __gnu_pbds;
-// #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
-
 // Uncomment them for optimisations
-//#pragma GCC optimize("Ofast")
-//#pragma GCC target("avx2")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx2")
 
 // for segment tree
 // #define mid (start+end)/2
@@ -18,35 +12,79 @@ using namespace std;
 // #define rnode (node*2+2)
 
 // printing bullshits open
-template<typename _A, typename _B> ostream&operator<<(ostream&os,const pair<_A,_B> &p){os<<"[" << p.
-first<<","<<p.second<<"]";return os;} template<typename T,typename = void> struct is_iterable: 
-false_type {};template<typename T> struct is_iterable<T,void_t<decltype(begin (declval<T &>())),
-decltype(end(declval<T &>()))>>:true_type {};template<typename T> using is_string = is_same<decay_t<T>,
-string>;template<typename T> constexpr bool is_iterable_v = is_iterable<T>::value;template<typename T> 
-typename enable_if<!is_iterable_v<T>,void>::type __print(T &&container){cout<<container;} 
-template<typename T> typename enable_if<is_iterable_v<T>&&!is_string<T>::value,void>::type __print(T&&
-container){auto itr = container.begin();__print(*itr),itr++;for (;itr != container.end();++itr)
-{cout<<' ';__print(*itr);} } template<typename T> typename enable_if<is_string<T>::value, void>::type 
-__print(T &&string_container){cout<<string_container;} template<typename T> typename 
-enable_if<is_same<T,const char *>::value,void>::type __print(T &&string_container){cout<< 
-string_container;} template<size_t N> void __print(const char (&str)[N]){cout<<str;} 
-template<typename... T> inline void print(T &&...args){((__print(args),cout<<" "),...);cout<< endl;} 
-template<typename... T>inline void printl(T &&...args){((__print(args), cout<<" "),...);}
+template <typename _A, typename _B>
+ostream &operator<<(ostream &os, const pair<_A, _B> &p)
+{
+    os
+        << "[" << p.first << "," << p.second << "]";
+    return os;
+}
+template <typename T, typename = void>
+struct is_iterable : false_type
+{
+};
+template <typename T>
+struct is_iterable<T, void_t<decltype(begin(declval<T &>())), decltype(end(declval<T &>()))>> : true_type
+{
+};
+template <typename T>
+using is_string = is_same<decay_t<T>, string>;
+template <typename T>
+constexpr bool is_iterable_v = is_iterable<T>::value;
+template <typename T>
+typename enable_if<!is_iterable_v<T>, void>::type
+__print(T &&container) { cout << container; }
+template <typename T>
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&container)
+{
+    for (auto
+             itr = container.begin();
+         itr != container.end(); itr++)
+    {
+        __print(*itr);
+        if (next(itr) != container.end())
+            cout << ' ';
+    }
+}
+template <typename T>
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
+template <typename T>
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
+template <size_t N>
+void __print(const char (&str)[N]) { cout << str; }
+template <typename... T>
+inline void print(T &&...args)
+{
+    ((__print(args), cout << " "), ...);
+    cout << endl;
+}
+template <typename... T>
+inline void printl(T &&...args) { ((__print(args), cout
+                                                       << " "),
+                                   ...); }
 // printing bullshits close
 
 #define popcount(x) __builtin_popcountll(x)
-#define clz(x) (63-__builtin_clzll(x)) //count leading zeros
-#define ctz(x) __builtin_ctzll(x) //count trailing zeros
+#define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
+#define ctz(x) __builtin_ctzll(x)        // count trailing zeros
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
-#define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1) (__VA_ARGS__)
-#define r4(var,start,stop,step) for(ll var=start;step>0?var<stop:var>stop;var=var+step)
-#define r3(var,start,stop) for(ll var=start;var<stop;++var)
-#define r2(var,stop) for(ll var=0;var<stop;++var)
-#define r1(stop) for (ll start_from_0=0;start_from_0<stop; ++start_from_0)
-#define newint(...) ll __VA_ARGS__;take_input(__VA_ARGS__)
+#define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
+#define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
+#define r3(var, start, stop) for (ll var = start; var < stop; ++var)
+#define r2(var, stop) for (ll var = 0; var < stop; ++var)
+#define r1(stop) for (ll start_from_0 = 0; start_from_0 < stop; ++start_from_0)
+#define newint(...) \
+    ll __VA_ARGS__; \
+    take_input(__VA_ARGS__)
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
-#define give(...){print(__VA_ARGS__);return;}
+#define give(...)           \
+    do                      \
+    {                       \
+        print(__VA_ARGS__); \
+        return;             \
+    } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
@@ -69,38 +107,179 @@ template<typename... T>inline void printl(T &&...args){((__print(args), cout<<" 
 #define FAST ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define all(a) a.begin(), a.end()
 #define db(x) cout << #x << " = " << x << "\n"
-string db_bin(ll n){string ans;while (n){ans.push_back((n & 1) + '0');n >>= 1;}reverse(all(ans));return ans;}
-#define newstring(str) string str; cin >> str;
+string db_bin(ll n)
+{
+    string ans;
+    while (n)
+    {
+        ans.push_back((n & 1) + '0');
+        n >>= 1;
+    }
+    reverse(all(ans));
+    return ans;
+}
+#define newstring(str) \
+    string str;        \
+    cin >> str;
 #define foreach(a, x) for (auto &&a : x)
-const ld pi = acos(-1);typedef vector<string>vs;typedef pair<ll,ll>pii;
-typedef vector<ll>vi;typedef map<ll,ll>mii;typedef set<ll>si;typedef vector<vector<ll>>vvi;
-template<typename...T>inline void take_input(T &&...args) { ((cin >> args), ...); }
-vi inputvec(ll n,ll start=0){vi vec(n);range(i,start,n)cin>>vec[i];return vec;}
-template <typename T>inline bool btn(T a,T b,T c){if ((a <= b && b <= c) || (a >= b && b >= c))return true;return false;}
-template<typename T>istream&operator>>(istream&is,V<T>&v){range(i,v.size()){is>>v[i];}return is;}
+const ld pi = acos(-1);
+typedef vector<string> vs;
+typedef pair<ll, ll> pii;
+typedef vector<ll> vi;
+typedef map<ll, ll> mii;
+typedef set<ll> si;
+typedef vector<vector<ll>> vvi;
+template <typename... T>
+inline void take_input(T &&...args) { ((cin >> args), ...); }
+vi inputvec(ll n, ll start = 0)
+{
+    vi vec(n);
+    range(i, start, n) cin >> vec[i];
+    return vec;
+}
+template <typename T>
+inline bool btn(T a, T b, T c)
+{
+    if ((a <= b && b <= c) || (a >= b && b >= c))
+        return true;
+    return false;
+}
+template <typename T>
+istream &operator>>(istream &is, V<T> &v)
+{
+    range(i, v.size()) { is >> v[i]; }
+    return is;
+}
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
 const ll mod = 1000000007;
 // const ll mod = 998244353;
-inline ll rs(ll n) { return (n%=mod) >= 0 ? n : n + mod; }
-//define rll above this
+inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
+// define rll above this
 #ifndef __RLL__
-ll power(ll x, ll y){x%=mod,y%=mod-1;ll res=1;while(y){if(y&1LL)res=(res*x)%mod;y>>=1;x=(x*x)%mod;}return res%mod;}
-ll inv(ll n){return power(n, mod - 2);}
-#endif
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-void func()
+ll power(ll x, ll y)
 {
-    set<ll> ms = {1, 1, 2, 3, 34, 5, }; 
-    print(ms); 
+    x %= mod, y %= mod - 1;
+    ll res = 1;
+    while (y)
+    {
+        if (y & 1LL)
+            res = (res * x) % mod;
+        y >>= 1;
+        x = (x * x) % mod;
+    }
+    return res % mod;
+}
+ll inv(ll n) { return power(n, mod - 2); }
+#endif
+/* ----------------------------------------------------------------------------------------------*/
+//      inttobinary
+vi intToBinary(ll n)
+{
+    vi binary(63);
+    for (ll i = 0; i < 64 && n != 0; i++)
+    {
+        if (n & 1)
+            binary[i] = 1;
+        else
+            binary[i] = 0;
+        n >>= 1LL;
+    }
+    return binary;
+}
+
+//      binarytoint
+ll binaryToInt(vi &num)
+{
+    ll dec_value = 0;
+    ll base = 1;
+
+    for (ll i = 0; i < num.size(); i++)
+    {
+        if (num[i] == 1)
+        {
+            dec_value += base;
+        }
+        base = base * 2;
+    }
+    return dec_value;
+}
+ll low, high;
+vi vlow, vhigh;
+ll dp[64][2][2][2][2];
+ll rec(ll n, bool low1, bool high1, bool low2, bool high2)
+{
+    if (n == -1)
+        return 1;
+    ll &ch = dp[n][low1][high1][low2][high2];
+    if (ch != -1)
+        return ch;
+    ll ans = 0;
+    range(cont, 3)
+    {
+        ll u1 = cont % 2, u2 = cont / 2;
+        ll nlow1 = low1, nhigh1 = high1, nlow2 = low2, nhigh2 = high2;
+        if (low1 && vlow[n] > u1)
+            continue;
+        if (low2 && vlow[n] > u2)
+            continue;
+        if (high1 && vhigh[n] < u1)
+            continue;
+        if (high2 && vhigh[n] < u2)
+            continue;
+
+        if (u2 == 1 && low1 == low2 && high1 == high2)
+            continue;
+        if (low1 && vlow[n] != u1)
+            nlow1 = false;
+        if (low2 && vlow[n] != u2)
+            nlow2 = false;
+        if (high1 && vhigh[n] != u1)
+            nhigh1 = false;
+        if (high2 && vhigh[n] != u2)
+            nhigh2 = false;
+        ans += rec(n - 1, nlow1, nhigh1, nlow2, nhigh2);
+    }
+    return ch = ans;
+}
+ll func()
+{
+    // cin >> low >> high;
+    vlow = intToBinary(low);
+    vhigh = intToBinary(high);
+    memset(dp, -1, sizeof(dp));
+    return (rec(62, 1, 1, 1, 1));
+}
+ll nfunc()
+{
+    si s;
+    range(i, 100)
+    {
+        range(j, i, 100)
+        {
+            if (i >= low && j <= high)
+            {
+                if ((i ^ j) == (i + j))
+                {
+                    s.insert(i + j);
+                }
+            }
+        }
+    }
+    return s.size();
 }
 int main()
 {
-    FAST;
-    newint(t);
-    range(t)
+    low = 0, high = 7; 
+    print(nfunc()); 
+    while (false)
     {
-        func();
+        low = rand() % 10;
+        high = rand() % 10 + low;
+        if(nfunc() != func())
+        {
+            print(low, high); 
+            break; 
+        }
     }
 }

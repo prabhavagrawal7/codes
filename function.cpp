@@ -156,11 +156,11 @@ vi intToBinary(ll n)
     vi binary(63);
     for (ll i = 0; i < 64 && n != 0; i++)
     {
-        if (n & 1)
+        if (n & 1LL)
             binary[i] = 1;
         else
             binary[i] = 0;
-        n >>= 1;
+        n >>= 1LL;
     }
     return binary;
 }

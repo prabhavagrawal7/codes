@@ -1,1 +1,1 @@
-reversed
+pyautogui
