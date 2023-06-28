@@ -5,6 +5,8 @@
 \usepackage{tabularx}
 \usepackage{color, hyperref, xcolor}
 \usepackage[document]{ragged2e}
+\usepackage{graphicx}
+\usepackage{multirow}
 \definecolor{linkcolor}{HTML}{003c50}
 \hypersetup{ 
 	colorlinks=true, 
@@ -22,15 +24,42 @@
 \begin{document}
 \resumename{Prabhav Agrawal}
 \vspace*{-6pt}
+
+% \begin{table}[h]
+% 	\centering
+	
+% 	\begin{tabular}{lll}
+% 	  \hline
+% 	  \begin{tabular}{@{}ll}
+% 		\textbf{Linkedin:} & \href{https://linkedin.com/in/prabhavagrawal7}{linkedin.com/in/prabhavagrawal7} \\
+% 		\textbf{Github:}   & \href{https://github.com/prabhavagrawal7}{github.com/prabhavagrawal7}           \\
+% 		\textbf{Codechef:} & \href{https://codechef.com/users/prabhav7}{codechef.com/users/prabhav7}       \\
+% 		\textbf{Codeforces:} & \href{https://codeforces.com/profile/prabhavagrawal7}{codeforces.com/profile/prabhavagrawal7}
+% 	  \end{tabular}
+% 	  &
+% 	  \multicolumn{4}{c|}{
+% 	  \begin{tabular}{@{}l}
+% 		\textbf{Email:} \href{mailto:prabhavagrawal7@gmail.com}{prabhavagrawal7@gmail.com} \\
+% 		\textbf{Phone:} \href{tel:+919653051636}{+91-9653051636}
+% 	  \end{tabular}} \\
+% 	  \hline
+% 	  \multicolumn{3}{|c|}{\includegraphics[width=3cm]{passport_photo.png}} \\
+% 	  \hline
+% 	\end{tabular}
+% 	\caption{Large Table}
+% 	\label{tab:large_table}
+%   \end{table}
+
 \begin{table}[h]
-	\centering
-	\begin{tabularx}{\textwidth}{@{}llXr}
-		Linkedin & \href{https://linkedin.com/in/prabhavagrawal7}{linkedin.com/in/prabhavagrawal7} &   & Email: \href{mailto:prabhavagrawal7@gmail.com}{prabhavagrawal7@gmail.com} \\
-		Github   & \href{https://github.com/prabhavagrawal7}{github.com/prabhavagrawal7}           &   & Mobile: \href{tel:+919653051636}{+91-9653051636}                          \\
-		Codechef & \href{https://codechef.com/users/prabhav7}{codechef.com/users/prabhav7} \\
-		Codeforces & \href{https://codeforces.com/profile/prabhavagrawal7}{codeforces.com/profile/prabhavagrawal7} &                                                               \\
-	\end{tabularx}
+\begin{tabular}{lllp{\linewidth}}
+	\multirow{1}{*}{\textbf{Linkedin}} & \multirow{1}{*}{\href{https://linkedin.com/in/prabhavagrawal7}{linkedin.com/in/prabhavagrawal7}} & 
+	\multirow{1}{*}{Email: \href{mailto:prabhavagrawal7@gmail.com}{prabhavagrawal7@gmail.com}} & \multirow{4}{*}{\includegraphics[width=2.0cm]{prabhav_photo.png}} \\
+	\multirow{1}{*}{\textbf{Github}} & \multirow{1}{*}{\href{https://github.com/prabhavagrawal7}{github.com/prabhavagrawal7}} & \multirow{1}{*}{Mobile: \href{tel:+919653051636}{+91-9653051636}} \\
+	\textbf{Codechef} & \href{https://codechef.com/users/prabhav7}{codechef.com/users/prabhav7} & \\
+	\textbf{Codeforces} & \href{https://codeforces.com/profile/prabhavagrawal7}{codeforces.com/profile/prabhavagrawal7} & \\
+\end{tabular}
 \end{table}
+
 \vspace{-\topsep}
 \vspace*{-5pt}
 \section*{EDUCATION}

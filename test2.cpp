@@ -173,113 +173,55 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-//      inttobinary
-vi intToBinary(ll n)
-{
-    vi binary(63);
-    for (ll i = 0; i < 64 && n != 0; i++)
-    {
-        if (n & 1)
-            binary[i] = 1;
-        else
-            binary[i] = 0;
-        n >>= 1LL;
-    }
-    return binary;
-}
 
-//      binarytoint
-ll binaryToInt(vi &num)
+void func()
 {
-    ll dec_value = 0;
-    ll base = 1;
-
-    for (ll i = 0; i < num.size(); i++)
+    vi vec; // create random vector of size 10 and check if last element is present in any triplet
+    range(10) vec.pb(rand() % 10);
+    sort(all(vec));
+    ll n = vec.size();
+    ll ans = INT_INF;
+    V<vi> trip;
+    // create three triplets (i, j, k) such that summation of min(abs(vec[i] - vec[l]), abs(vec[j] - vec[l]), abs(vec[k] - vec[l])) is minimum
+    for (ll i = 0; i < n; ++i)
     {
-        if (num[i] == 1)
+        for (ll j = i + 1; j < n; ++j)
         {
-            dec_value += base;
-        }
-        base = base * 2;
-    }
-    return dec_value;
-}
-ll low, high;
-vi vlow, vhigh;
-ll dp[64][2][2][2][2];
-ll rec(ll n, bool low1, bool high1, bool low2, bool high2)
-{
-    if (n == -1)
-        return 1;
-    ll &ch = dp[n][low1][high1][low2][high2];
-    if (ch != -1)
-        return ch;
-    ll ans = 0;
-    range(cont, 3)
-    {
-        ll u1 = cont % 2, u2 = cont / 2;
-        ll nlow1 = low1, nhigh1 = high1, nlow2 = low2, nhigh2 = high2;
-        if (low1 && vlow[n] > u1)
-            continue;
-        if (low2 && vlow[n] > u2)
-            continue;
-        if (high1 && vhigh[n] < u1)
-            continue;
-        if (high2 && vhigh[n] < u2)
-            continue;
-
-        if (u2 == 1 && low1 == low2 && high1 == high2)
-            continue;
-        if (low1 && vlow[n] != u1)
-            nlow1 = false;
-        if (low2 && vlow[n] != u2)
-            nlow2 = false;
-        if (high1 && vhigh[n] != u1)
-            nhigh1 = false;
-        if (high2 && vhigh[n] != u2)
-            nhigh2 = false;
-        ans += rec(n - 1, nlow1, nhigh1, nlow2, nhigh2);
-    }
-    return ch = ans;
-}
-ll func()
-{
-    // cin >> low >> high;
-    vlow = intToBinary(low);
-    vhigh = intToBinary(high);
-    memset(dp, -1, sizeof(dp));
-    return (rec(62, 1, 1, 1, 1));
-}
-ll nfunc()
-{
-    si s;
-    range(i, 100)
-    {
-        range(j, i, 100)
-        {
-            if (i >= low && j <= high)
+            for (ll k = j + 1; k < n; ++k)
             {
-                if ((i ^ j) == (i + j))
+                ll sum = 0;
+                for (ll l = 0; l < n; ++l)
                 {
-                    s.insert(i + j);
+                    sum += min(abs(vec[i] - vec[l]), abs(vec[j] - vec[l]), abs(vec[k] - vec[l]));
+                }
+                if (sum == ans)
+                {
+                    ans = sum;
+                    trip.push_back({i, j, k});
+                }
+                else if (sum < ans)
+                {
+                    ans = sum;
+                    trip.clear();
+                    trip.push_back({i, j, k});
                 }
             }
         }
     }
-    return s.size();
+    bool check_last = false;
+    foreach(tr, trip)
+    {
+        if(tr.back() == n-1) check_last = true;
+        print(tr);
+    }
+    if(check_last == false) print(vec); 
+    print(check_last);
 }
 int main()
 {
-    low = 0, high = 7; 
-    print(nfunc()); 
-    while (false)
+    FAST;
+    while(true)
     {
-        low = rand() % 10;
-        high = rand() % 10 + low;
-        if(nfunc() != func())
-        {
-            print(low, high); 
-            break; 
-        }
+        func();
     }
 }

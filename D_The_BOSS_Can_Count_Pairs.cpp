@@ -177,30 +177,83 @@ ll inv(ll n) { return power(n, mod - 2); }
 void func()
 {
     newint(n);
-    map<ll, vi> mvec;
-    range(i, n)
+    vi a = inputvec(n);
+    vi b = inputvec(n);
+    V<pii> svec;
+    range(i, n) svec.push_back({a[i], b[i]});
+    sort(all(svec));
+
+    V<V<pii>> vec(n + 1);
+    range(i, svec.size())
     {
-        newint(a, b);
-        mvec[a].pb(b);
+        auto &hehe = vec[svec[i].first];
+        if (!hehe.size() || hehe.back().first != svec[i].second)
+            hehe.push_back({svec[i].second, 1});
+        else
+            hehe.back().second++;
     }
-    foreach (i, mvec)
-        sort(all(i.second));
 
-    V<pair<ll, vi>> cvec(all(mvec));
-
-    range(i, cvec.size())
+    ll ans = 0;
+    range(i, vec.size())
     {
-        range(j, i, cvec.size())
+        if (i * i > 2 * n)
+            break;
+        else if (vec[i].size() == 0)
+            continue;
+        range(j, i + 1, vec.size())
         {
-            if (cvec[i].first * cvec[j].first > 4e5)
+            if (i * j > 2 * n)
                 break;
-            ll p1 = 0, p2 = cvec[i].second.size()-1;
-            while(true)
+            if (vec[j].size() == 0)
+                continue;
+            ll target = i * j;
+            auto &v1 = vec[i], &v2 = vec[j];
+            bool swapped = false;
+            if (v1.size() > v2.size())
             {
-                
+                swap(v1, v2);
+                swapped = true;
             }
+            ll l = v2.size();
+            range(k, v1.size())
+            {
+                l = upper_bound(v2.begin(), v2.begin() + l, mp(target - v1[k].first, INT_INF*1LL)) - v2.begin();
+                if (l > 0 && v1[k].first + v2[l - 1].first == target)
+                    ans += v1[k].second * v2[l-1].second;
+            }
+
+            if (swapped)
+                v1.swap(v2);
         }
     }
+    range(i, vec.size())
+    {
+        if (i * i > 2 * n)
+            break;
+        if (vec[i].size() == 0)
+            continue;
+        ll target = i * i;
+        auto &g = vec[i];
+        ll l = g.size() - 1;
+        ll tempans = 0;
+        range(k, g.size())
+        {
+            while (l > k && g[k].first + g[l].first > target)
+                l--;
+            if (g[k].first + g[l].first == target)
+            {
+                if (l == k)
+                {
+                    ll u = g[k].second;
+                    tempans += u * (u - 1) / 2;
+                }
+                else
+                    tempans += g[k].second * g[l].second;
+            }
+        }
+        ans += tempans;
+    }
+    print(ans);
 }
 int main()
 {

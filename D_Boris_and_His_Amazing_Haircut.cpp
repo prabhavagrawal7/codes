@@ -2,23 +2,72 @@
 using namespace std;
 #define ll int64_t
 
-// ordered set
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-// using namespace __gnu_pbds;
-// #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
-
 // Uncomment them for optimisations
-#pragma GCC optimize("Ofast")
-// #pragma GCC target("avx,avx2,fma")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx2")
 
 // for segment tree
 // #define mid (start+end)/2
 // #define lnode (node*2+1)
 // #define rnode (node*2+2)
-#define popcount(x) __builtin_popcount(x)
-#define clz(x) (63 - __builtin_clzl(x)) // count leading zeros
-#define ctz(x) __builtin_ctz(x)         // count trailing zeros
+
+// printing bullshits open
+template <typename _A, typename _B>
+ostream &operator<<(ostream &os, const pair<_A, _B> &p)
+{
+    os
+        << "[" << p.first << "," << p.second << "]";
+    return os;
+}
+template <typename T, typename = void>
+struct is_iterable : false_type
+{
+};
+template <typename T>
+struct is_iterable<T, void_t<decltype(begin(declval<T &>())), decltype(end(declval<T &>()))>> : true_type
+{
+};
+template <typename T>
+using is_string = is_same<decay_t<T>, string>;
+template <typename T>
+constexpr bool is_iterable_v = is_iterable<T>::value;
+template <typename T>
+typename enable_if<!is_iterable_v<T>, void>::type
+__print(T &&container) { cout << container; }
+template <typename T>
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&container)
+{
+    for (auto
+             itr = container.begin();
+         itr != container.end(); itr++)
+    {
+        __print(*itr);
+        if (next(itr) != container.end())
+            cout << ' ';
+    }
+}
+template <typename T>
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
+template <typename T>
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
+template <size_t N>
+void __print(const char (&str)[N]) { cout << str; }
+template <typename... T>
+inline void print(T &&...args)
+{
+    ((__print(args), cout << " "), ...);
+    cout << endl;
+}
+template <typename... T>
+inline void printl(T &&...args) { ((__print(args), cout
+                                                       << " "),
+                                   ...); }
+// printing bullshits close
+
+#define popcount(x) __builtin_popcountll(x)
+#define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
+#define ctz(x) __builtin_ctzll(x)        // count trailing zeros
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
 #define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
@@ -31,10 +80,11 @@ using namespace std;
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
 #define give(...)           \
+    do                      \
     {                       \
         print(__VA_ARGS__); \
         return;             \
-    }
+    } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
 #define INF INT64_MAX
@@ -100,31 +150,13 @@ istream &operator>>(istream &is, V<T> &v)
     range(i, v.size()) { is >> v[i]; }
     return is;
 }
-template <typename T>
-ostream &operator<<(ostream &os, const V<T> &v)
-{
-    range(i, v.size()) { os << v[i] << (i + 1 != v.size() ? " " : ""); }
-    return os;
-}
-template <typename _A, typename _B>
-ostream &operator<<(ostream &os, const pair<_A, _B> &p)
-{
-    os << "[" << p.first << ", " << p.second << "]";
-    return os;
-}
-template <typename... T>
-inline void print(T &&...args)
-{
-    ((cout << args << " "), ...);
-    cout << endl;
-}
-template <typename... T>
-inline void printl(T &&...args) { ((cout << args << " "), ...); }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
 const ll mod = 1000000007;
 // const ll mod = 998244353;
-inline ll rs(ll n) { return (n = n % mod) >= 0 ? n : n + mod; }
+inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
+// define rll above this
+#ifndef __RLL__
 ll power(ll x, ll y)
 {
     x %= mod, y %= mod - 1;
@@ -139,139 +171,34 @@ ll power(ll x, ll y)
     return res % mod;
 }
 ll inv(ll n) { return power(n, mod - 2); }
+#endif
+/* ----------------------------------------------------------------------------------------------*/
 
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-struct seg
-{
-#define mid (start + end) / 2
-#define lnode (node * 2 + 1)
-#define rnode (node * 2 + 2)
-    vi vec;
-    vi tree;
-    ll n;
-    ll opr(ll a, ll b)
-    {
-        // critical
-        return max(a, b);
-    }
-    seg(vi v)
-    {
-        vec = v;
-        tree.assign(vec.size() * 4, 0);
-        n = vec.size();
-        buildtree(0, 0, n - 1);
-    }
-    void buildtree(ll node, ll start, ll end)
-    {
-        if (start == end)
-        {
-            tree[node] = vec[start];
-            return;
-        }
-        buildtree(lnode, start, mid);
-        buildtree(rnode, mid + 1, end);
-        tree[node] = opr(tree[lnode], tree[rnode]);
-        return;
-    }
-    ll rangefind(ll l, ll r)
-    {
-        return rangefind(l, r, 0, 0, n - 1);
-    }
-    ll rangefind(ll l, ll r, ll node, ll start, ll end)
-    {
-        // l-r-start-end | start-end-l-r
-        // critical
-        if (r < start || end < l)
-            return 0;
-        // l-start-end-r
-        if (l <= start && end <= r)
-            return tree[node];
-        else
-            return opr(rangefind(l, r, lnode, start, mid), rangefind(l, r, rnode, mid + 1, end));
-    }
-    void update(ll ind, ll val)
-    {
-        update(ind, val, 0, 0, n - 1);
-    }
-    void update(ll ind, ll val, ll node, ll start, ll end)
-    {
-        if (start == end)
-        {
-            tree[node] = val;
-            return;
-        }
-        if (ind <= mid)
-            update(ind, val, lnode, start, mid);
-        else
-            update(ind, val, rnode, mid + 1, end);
-        tree[node] = opr(tree[lnode], tree[rnode]);
-    }
-};
 void func()
 {
     newint(n);
     vi vec = inputvec(n);
-    vi tvec = inputvec(n);
-    seg s(tvec);
-    newint(r);
-    map<ll, ll> raz;
-    range(r)
-    {
-        newint(x);
-        raz[x]++;
-    }
-    // check trivial
-    vi vis(n);
-    range(i, n)
-    {
-        if (vec[i] < tvec[i])
-        {
-            give("NO");
-        }
-    }
-    map<ll, vi> ind;
-    range(i, n)
-    {
-        ind[tvec[i]].push_back(i);
-    }
+    vi target = inputvec(n);
+    newint(q);
+    vi razor = inputvec(q);
+    multiset<ll> freq(all(razor));
 
+    stack<ll> s;
     range(i, n)
     {
-        if (vec[i] == tvec[i] || vis[i] == 1)
-            continue;
-        if (vis[i] == 0 && raz.count(tvec[i]) == 0)
-        {
+        if (vec[i] < target[i])
             give("NO");
-        }
-        else if (vis[i] == 0)
+        while (s.size() && s.top() < target[i])
+            s.pop();
+        if (vec[i] == target[i] || (s.size() && s.top() == target[i]))
+            continue;
+        if (freq.count(target[i]))
         {
-            vis[i] = 1;
-            raz[tvec[i]]--;
-            if (raz[tvec[i]] == 0)
-            {
-                raz.erase(tvec[i]);
-            }
+            freq.erase(freq.find(target[i]));
+            s.push(target[i]);
         }
-        ll prevpos = i;
-        while (true)
-        {
-            auto &indes = ind[tvec[i]];
-            auto pos = upper_bound(all(indes), prevpos);
-            if (pos == indes.end())
-                break;
-            else
-            {
-                ll nxt = *pos;
-                if (s.rangefind(i, nxt) == tvec[i])
-                {
-                    vis[nxt] = 1;
-                    prevpos = nxt; 
-                }
-                else
-                    break;
-            }
-        }
+        else
+            give("NO");
     }
     give("YES");
 }

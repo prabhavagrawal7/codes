@@ -12,27 +12,62 @@ using namespace std;
 // #define rnode (node*2+2)
 
 // printing bullshits open
-template <typename _A, typename _B> ostream &operator<<(ostream &os, const pair<_A, _B> &p) { os 
-<< "[" << p.first << "," << p.second << "]"; return os; } template <typename T, typename = void> 
-struct is_iterable : false_type { }; template <typename T> struct is_iterable<T, void_t<decltype
-(begin(declval<T &>())), decltype(end(declval<T &>()))>> : true_type { }; template <typename T> 
-using is_string = is_same<decay_t<T>, string>; template <typename T> constexpr bool is_iterable_v 
-= is_iterable<T>::value; template <typename T> typename enable_if<!is_iterable_v<T>, void>::type 
-__print(T &&container) { cout << container; } template <typename T> typename 
-enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T && container) { for(auto 
-itr = container.begin(); itr != container.end(); itr++) { __print(*itr); if(next(itr) != container.
-end()) cout << ' '; } } template <typename T> typename enable_if<is_string<T>::value, void>::type 
-__print(T &&string_container) { cout << string_container; } template <typename T> typename 
-enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << 
-string_container; } template <size_t N> void __print(const char (&str)[N]) { cout << str; } 
-template <typename... T> inline void print(T &&...args) { ((__print(args), cout << " "), ...); 
-cout << endl; } template <typename... T> inline void printl(T &&...args) { ((__print(args), cout 
-<< " "), ...); }
+template <typename _A, typename _B>
+ostream &operator<<(ostream &os, const pair<_A, _B> &p)
+{
+    os
+        << "[" << p.first << "," << p.second << "]";
+    return os;
+}
+template <typename T, typename = void>
+struct is_iterable : false_type
+{
+};
+template <typename T>
+struct is_iterable<T, void_t<decltype(begin(declval<T &>())), decltype(end(declval<T &>()))>> : true_type
+{
+};
+template <typename T>
+using is_string = is_same<decay_t<T>, string>;
+template <typename T>
+constexpr bool is_iterable_v = is_iterable<T>::value;
+template <typename T>
+typename enable_if<!is_iterable_v<T>, void>::type
+__print(T &&container) { cout << container; }
+template <typename T>
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&container)
+{
+    for (auto
+             itr = container.begin();
+         itr != container.end(); itr++)
+    {
+        __print(*itr);
+        if (next(itr) != container.end())
+            cout << ' ';
+    }
+}
+template <typename T>
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
+template <typename T>
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
+template <size_t N>
+void __print(const char (&str)[N]) { cout << str; }
+template <typename... T>
+inline void print(T &&...args)
+{
+    ((__print(args), cout << " "), ...);
+    cout << endl;
+}
+template <typename... T>
+inline void printl(T &&...args) { ((__print(args), cout
+                                                       << " "),
+                                   ...); }
 // printing bullshits close
 
 #define popcount(x) __builtin_popcountll(x)
 #define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
-#define ctz(x) __builtin_ctzll(x)		// count trailing zeros
+#define ctz(x) __builtin_ctzll(x)        // count trailing zeros
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
 #define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
@@ -44,11 +79,11 @@ cout << endl; } template <typename... T> inline void printl(T &&...args) { ((__p
     take_input(__VA_ARGS__)
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
-#define give(...)		   \
-    do					  \
-    {					   \
+#define give(...)           \
+    do                      \
+    {                       \
         print(__VA_ARGS__); \
-        return;			 \
+        return;             \
     } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
@@ -84,7 +119,7 @@ string db_bin(ll n)
     return ans;
 }
 #define newstring(str) \
-    string str;		\
+    string str;        \
     cin >> str;
 #define foreach(a, x) for (auto &&a : x)
 const ld pi = acos(-1);
@@ -138,97 +173,66 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-void dfs(ll n, V<si> &g, ll p, vi &depth)
+V<si> g;
+V<pii> storage;
+ll dfs(ll n, ll par, vi &subtree)
 {
-    foreach(i, g[n])
+    subtree[n] = 1;
+    foreach (i, g[n])
     {
-        if(i == p) continue;
-        depth[i] = depth[n] + 1; 
-        dfs(i, g, n, depth); 
+        if (par == i)
+            continue;
+        dfs(i, n, subtree);
+        subtree[n] += subtree[i];
     }
+    return 0;
 }
+ll remdfs(ll n, ll par, vi &subtree)
+{
+    ll removed = 0;
+    foreach (i, g[n])
+    {
+        if (i == par)
+            continue;
+        removed += remdfs(i, n, subtree);
+    }
+    if (subtree[n] - removed == 3)
+    {
+        storage.push_back({n, par});
+        removed += 3;
+    }
+    return removed;
+}
+
 void func()
 {
-    newint(n); 
-    vector<set<ll>> g(n + 1); 
-    map<pii, ll> order; 
-    range(i, n-1)
+    newint(n);
+    g.assign(n + 1, {});
+    storage.clear();
+    map<pii, ll> mapped;
+    range(i, n - 1)
     {
-        newint(a, b); 
-        g[a].insert(b); 
-        g[b].insert(a); 
-        order[{a, b}] = i + 1; 
-        order[{b, a}] = i + 1; 
+        newint(a, b);
+        g[a].insert(b);
+        g[b].insert(a);
+        mapped[{a, b}] = i + 1;
+        mapped[{b, a}] = i + 1;
     }
-    if(n % 3 != 0) give(-1);
-    vi depth(n + 1); 
-    dfs(1, g, 0, depth); 
-
-    set<pair<ll, ll>> leafnodes; 
-    range(i, 1, n + 1)
+    vi subtree(n + 1);
+    dfs(1, 0, subtree);
+    if (remdfs(1, 0, subtree) == n)
     {
-        if(g[i].size() == 1) 
-            leafnodes.insert({depth[i], i}); 
-    }
-    vi ans; 
-    while(leafnodes.size())
-    {
-        ll l1 = prev(leafnodes.end())->second; 
-        leafnodes.erase({depth[l1], l1}); 
-        ll lc = *g[l1].begin(); 
-        leafnodes.erase({depth[lc], lc}); 
-
-        if(g[lc].size() > 3 || g[lc].size() == 1) give(-1); 
-
-        if(g[lc].size() == 3)
+        V<ll> ans;
+        foreach (i, storage)
         {
-            ll lcc = -1; 
-            ll hanger = -1; 
-            foreach(i, g[lc]) {
-                if(i == l1) continue;
-                if(g[i].size() == 1 && lcc == -1) lcc = i; 
-                else hanger = i; 
-            }
-            if(lcc == -1) give(-1); 
-            g[lc].clear(); 
-            g[l1].clear(); 
-            g[lcc].clear(); 
-            g[hanger].erase(lc); 
-            if(g[hanger].size() == 1)
-            {
-                leafnodes.insert({depth[hanger], hanger}); 
-            }
-            leafnodes.erase({depth[lcc], lcc}); 
-            ans.push_back(order[{lc, hanger}]);
+            if (mapped.count({i.first, i.second}))
+                ans.push_back(mapped[{i.first, i.second}]);
         }
-        else {
-            ll lcc = -1; 
-            foreach(i, g[lc])
-            {
-                if(i == l1) continue; 
-                lcc = i; 
-            }
-            if(g[lcc].size() > 2) give(-1); 
-            ll hanger = -1; 
-            foreach(i, g[lcc])
-            {
-                if(i == lc) continue;
-                hanger = i; 
-            }
-            g[lc].clear(); 
-            g[lcc].clear(); 
-            g[l1].clear(); 
-            if(hanger != -1)
-            {
-                g[hanger].erase(lcc); 
-                if(g[hanger].size() == 1) leafnodes.insert({depth[hanger], hanger}); 
-                ans.push_back(order[{lcc, hanger}]);
-            }
-            leafnodes.erase({depth[lcc], lcc}); 
-        }
+        print(ans.size()); 
+        print(ans);
     }
-    print(ans.size()); 
-    print(ans); 
+    else
+        print(-1);
 }
 int main()
 {

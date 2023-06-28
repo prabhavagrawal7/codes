@@ -6,6 +6,8 @@
 \usepackage{color, hyperref, xcolor}
 \usepackage[document]{ragged2e}
 \usepackage{xtab}
+\usepackage{graphicx}
+\usepackage{multirow}
 \thispagestyle{empty}
 \geometry{paperheight=11.5in, paperwidth=8.5in, margin=0.8cm}
 \newcommand{\resumename}[1]{\LARGE\textbf{#1} \hfill \small}
@@ -18,14 +20,19 @@
 \noindent
 \resumename{Akanksha Bhadauria} 
 \begin{table}[h]
-	\centering
-	\begin{tabularx}{\textwidth}{@{}llXr}
-		Linkedin & \href{https://www.linkedin.com/in/bhadauriakanksha2403/}{linkedin.com/in/bhadauriakanksha2403/} &   & Email: \href{mailto:bhadauriakanksha2403@gmail.com}{bhadauriakanksha2403@gmail.com} \\ 
-		Codechef & \href{https://www.codechef.com/users/tanishka125}{codechef.com/users/tanishka125}               &   & Mobile: \href{tel:+918433434933}{+91-8433434933}                                    \\
-		Codeforces &\href{https://codeforces.com/profile/tanu24}{codeforces.com/profile/tanu24} \\
-		Github &\href{https://github.com/akanksha2403}{github.com/akanksha2403} \\
-	\end{tabularx}
-\end{table}
+	\hspace*{-10pt}
+	\begin{tabular}{llrp{0cm}}
+		\multirow{1}{*}{\textbf{Linkedin}} & \multirow{1}{*}{\href{https://www.linkedin.com/in/bhadauriakanksha2403/}{linkedin.com/in/bhadauriakanksha2403/}} & 
+		\multirow{1}{*}{Email: \href{mailto:bhadauriakanksha2403@gmail.com}{bhadauriakanksha2403@gmail.com}} & \multirow{4}{*}{
+			% \includegraphics[width=2.0cm]{akanksha_photo.png}
+			} \\
+		\multirow{1}{*}{\textbf{Github}} & \multirow{1}{*}{\href{https://github.com/akanksha2403}{github.com/akanksha2403}} & \multirow{1}{*}{Mobile: \href{tel:+918433434933}{+91-8433434933}} \\
+		\textbf{Codechef} & \href{https://www.codechef.com/users/tanishka125}{codechef.com/users/tanishka125} & \\
+		\textbf{Codeforces} & \href{https://codeforces.com/profile/tanu24}{codeforces.com/profile/tanu24} & \\
+	\end{tabular}
+	\end{table}
+	
+
 \vspace{-\topsep}
 \section*{EDUCATION}
 \subsection*{Indian Institute of Information Technology, Lucknow}      \hfill \textbf{Lucknow, Uttar Pradesh, India} \\
