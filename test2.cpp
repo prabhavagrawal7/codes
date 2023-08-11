@@ -174,54 +174,26 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
 
-void func()
+int solve(ll n)
 {
-    vi vec; // create random vector of size 10 and check if last element is present in any triplet
-    range(10) vec.pb(rand() % 10);
-    sort(all(vec));
-    ll n = vec.size();
-    ll ans = INT_INF;
-    V<vi> trip;
-    // create three triplets (i, j, k) such that summation of min(abs(vec[i] - vec[l]), abs(vec[j] - vec[l]), abs(vec[k] - vec[l])) is minimum
-    for (ll i = 0; i < n; ++i)
+    ll ans = 0;
+    for (int i = 1; i <= n; i++)
     {
-        for (ll j = i + 1; j < n; ++j)
+        string str = to_string(i);
+        bool flag = false;
+        range(i, 1, str.size())
         {
-            for (ll k = j + 1; k < n; ++k)
+            if (abs(0 + str[i] - str[i - 1]) != 1)
             {
-                ll sum = 0;
-                for (ll l = 0; l < n; ++l)
-                {
-                    sum += min(abs(vec[i] - vec[l]), abs(vec[j] - vec[l]), abs(vec[k] - vec[l]));
-                }
-                if (sum == ans)
-                {
-                    ans = sum;
-                    trip.push_back({i, j, k});
-                }
-                else if (sum < ans)
-                {
-                    ans = sum;
-                    trip.clear();
-                    trip.push_back({i, j, k});
-                }
+                flag = true;
+                break;
             }
         }
+        if(!flag) ans++; 
     }
-    bool check_last = false;
-    foreach(tr, trip)
-    {
-        if(tr.back() == n-1) check_last = true;
-        print(tr);
-    }
-    if(check_last == false) print(vec); 
-    print(check_last);
+    return ans;
 }
 int main()
 {
-    FAST;
-    while(true)
-    {
-        func();
-    }
+    print(solve(101));
 }

@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.ejs": "html",
         "**/*.html": "html",
         "**/templates/*/*.html": "django-html",
         "**/templates/*": "django-txt",
@@ -105,7 +106,8 @@
         "numeric": "cpp",
         "random": "cpp",
         "ranges": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "iterator": "cpp"
     },
     "cph.general.onceMaintainerMessage": false
 }

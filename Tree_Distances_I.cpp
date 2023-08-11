@@ -12,27 +12,62 @@ using namespace std;
 // #define rnode (node*2+2)
 
 // printing bullshits open
-template <typename _A, typename _B> ostream &operator<<(ostream &os, const pair<_A, _B> &p) { os 
-<< "[" << p.first << "," << p.second << "]"; return os; } template <typename T, typename = void> 
-struct is_iterable : false_type { }; template <typename T> struct is_iterable<T, void_t<decltype
-(begin(declval<T &>())), decltype(end(declval<T &>()))>> : true_type { }; template <typename T> 
-using is_string = is_same<decay_t<T>, string>; template <typename T> constexpr bool is_iterable_v 
-= is_iterable<T>::value; template <typename T> typename enable_if<!is_iterable_v<T>, void>::type 
-__print(T &&container) { cout << container; } template <typename T> typename 
-enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T && container) { for(auto 
-itr = container.begin(); itr != container.end(); itr++) { __print(*itr); if(next(itr) != container.
-end()) cout << ' '; } } template <typename T> typename enable_if<is_string<T>::value, void>::type 
-__print(T &&string_container) { cout << string_container; } template <typename T> typename 
-enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << 
-string_container; } template <size_t N> void __print(const char (&str)[N]) { cout << str; } 
-template <typename... T> inline void print(T &&...args) { ((__print(args), cout << " "), ...); 
-cout << endl; } template <typename... T> inline void printl(T &&...args) { ((__print(args), cout 
-<< " "), ...); }
+template <typename _A, typename _B>
+ostream &operator<<(ostream &os, const pair<_A, _B> &p)
+{
+    os
+        << "[" << p.first << "," << p.second << "]";
+    return os;
+}
+template <typename T, typename = void>
+struct is_iterable : false_type
+{
+};
+template <typename T>
+struct is_iterable<T, void_t<decltype(begin(declval<T &>())), decltype(end(declval<T &>()))>> : true_type
+{
+};
+template <typename T>
+using is_string = is_same<decay_t<T>, string>;
+template <typename T>
+constexpr bool is_iterable_v = is_iterable<T>::value;
+template <typename T>
+typename enable_if<!is_iterable_v<T>, void>::type
+__print(T &&container) { cout << container; }
+template <typename T>
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&container)
+{
+    for (auto
+             itr = container.begin();
+         itr != container.end(); itr++)
+    {
+        __print(*itr);
+        if (next(itr) != container.end())
+            cout << ' ';
+    }
+}
+template <typename T>
+typename enable_if<is_string<T>::value, void>::type
+__print(T &&string_container) { cout << string_container; }
+template <typename T>
+typename enable_if<is_same<T, const char *>::value, void>::type __print(T &&string_container) { cout << string_container; }
+template <size_t N>
+void __print(const char (&str)[N]) { cout << str; }
+template <typename... T>
+inline void print(T &&...args)
+{
+    ((__print(args), cout << " "), ...);
+    cout << endl;
+}
+template <typename... T>
+inline void printl(T &&...args) { ((__print(args), cout
+                                                       << " "),
+                                   ...); }
 // printing bullshits close
 
 #define popcount(x) __builtin_popcountll(x)
 #define clz(x) (63 - __builtin_clzll(x)) // count leading zeros
-#define ctz(x) __builtin_ctzll(x)		// count trailing zeros
+#define ctz(x) __builtin_ctzll(x)        // count trailing zeros
 #define GET_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define range(...) GET_MACRO(__VA_ARGS__, r4, r3, r2, r1)(__VA_ARGS__)
 #define r4(var, start, stop, step) for (ll var = start; step > 0 ? var < stop : var > stop; var = var + step)
@@ -44,11 +79,11 @@ cout << endl; } template <typename... T> inline void printl(T &&...args) { ((__p
     take_input(__VA_ARGS__)
 #define min(...) min({__VA_ARGS__})
 #define max(...) max({__VA_ARGS__})
-#define give(...)		   \
-    do					  \
-    {					   \
+#define give(...)           \
+    do                      \
+    {                       \
         print(__VA_ARGS__); \
-        return;			 \
+        return;             \
     } while (false)
 #define endl "\n"
 #define FULL_INF numeric_limits<double>::infinity()
@@ -84,7 +119,7 @@ string db_bin(ll n)
     return ans;
 }
 #define newstring(str) \
-    string str;		\
+    string str;        \
     cin >> str;
 #define foreach(a, x) for (auto &&a : x)
 const ld pi = acos(-1);
@@ -138,58 +173,61 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-vvi g; 
-vi vis; 
-vi depth; 
+const ll maxnodes = 2e5 + 1;
+vi g[maxnodes];
+ll depth[maxnodes];
+ll partialdepth[maxnodes];
+
 ll dfs(ll n, ll par)
 {
-    
-}
-ll bfs(ll n)
-{
-    queue<ll> q; 
-    q.push(n); 
-    ll last = n; 
-    vis[n] = 1; 
-    depth[n] = 0; 
-    while(!q.empty())
+    multiset<ll> store;
+    foreach (i, g[n])
     {
-        ll u = q.front(); 
-        last = u; 
-        q.pop(); 
-        for(auto v : g[u])
-        {
-            if(!vis[v])
-            {
-                vis[v] = 1; 
-                depth[v] = depth[u] + 1; 
-                q.push(v); 
-            }
-        }
+        if (par == i)
+            continue;
+        depth[n] = max(depth[n], 1 + dfs(i, n));
+        store.insert(depth[i]);
     }
-    return last; 
+    foreach (i, g[n])
+    {
+        if (par == i)
+            continue;
+        store.erase(store.find(depth[i]));
+        partialdepth[i] = *store.rbegin() + 1;
+        store.insert(depth[i]);
+    }
+}
+ll ans[maxnodes];
+ll adfs(ll n, ll par)
+{
+    ans[n] = max(ans[n], depth[n]); 
+    foreach(i, g[n])
+    {
+        if(par == i) continue;
+        ans[i] = depth[i] + partialdepth[i]; 
+        adfs(i, n); 
+    }
 }
 void func()
 {
-    newint(n); 
-    g = vvi(n + 1); 
-    depth = vi(n + 1);
-    vis = vi(n + 1);
-    range(i, n - 1)
+    newint(n);
+    range(n - 1)
     {
-        newint(u, v);
-        g[u].pb(v);
-        g[v].pb(u);
+        newint(a, b);
+        g[a].push_back(b);
+        g[b].push_back(a);
     }
-    ll lst = bfs(1); 
-    
+    memset(depth, 0, sizeof(depth));
+    memset(partialdepth, 0, sizeof(partialdepth));
+    memset(ans, 0, sizeof(ans));
+    dfs(1, 0);
+    ll node = max_element(depth, depth + maxnodes) - depth;
+    dfs(node, 0);
+    vi report(ans + 1, ans + n + 1); 
+    print(report); 
 }
 int main()
 {
     FAST;
-    newint(t);
-    range(t)
-    {
-        func();
-    }
+    func();
 }
