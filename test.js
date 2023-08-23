@@ -1,10 +1,11 @@
 setInterval(() => {
   document.querySelectorAll("button").forEach((element) => {
+    window.scrollTo(0, document.body.scrollHeight);
     if (element.innerText == "Next") {
       element.click();
     }
   });
-}, 5000);
+}, 10000);
 setInterval(() => {
   var allqueries = document.querySelectorAll("span");
   for (const ele of allqueries) {

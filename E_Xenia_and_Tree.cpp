@@ -100,74 +100,154 @@ ll lcm(ll x, ll y)
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-// ordered set
+V<set<ll>> g(1e5 + 1), gn(1e5 + 1);
+vr subtree(1e5 + 1), par(1e5 + 1), res(1e5 + 1, INT_MAX);
+vvr LCA(1e5+5, vr(21, 0));
+vr depth(1e5 + 1, 0);
 
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-// using namespace __gnu_pbds;
-// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
-/*-----------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-ll rec(ll i, ll prev, ll cpu, vr &v, vr &cold, vr &hot)
+void dfspre(ll node)
 {
-    if (i == v.size())
-        return 0;
+    stack<ll> s;
+    s.push(node);
+    vector<int> vis(g.size() + 1);
+    while (!s.empty())
+    {
+        ll cur = s.top();
+        s.pop();
+        foreach (i, g[cur])
+        {
+            if (vis[i])
+                continue;
+            vis[i] = 1;
+            s.push(i);
+            depth[i] = depth[cur] + 1;
+            LCA[i][0] = cur;
+            range(j, 1, 21, 1)
+            {
+                LCA[i][j] = LCA[LCA[i][j - 1]][j - 1];
+            }
+        }
+    }
+}
 
-    ll ans = INF;
+ll dfs(ll node, ll parent)
+{
+    subtree[node] = 1;
+    foreach (i, g[node])
+    {
+        if (i == parent)
+            continue;
+        subtree[node] += dfs(i, node);
+    }
+    return subtree[node];
+}
 
-    if (v[prev] == v[i])
+ll dfs1(ll node, ll parent, ll subtreesize)
+{
+    foreach (i, g[node])
     {
-        ans = min(ans, rec(i + 1, i - 1, cpu, v, cold, hot) + hot[v[i]]);
+        if (i != parent && subtree[i] > subtreesize / 2)
+        {
+            return dfs1(i, node, subtreesize);
+        }
     }
-    if (v[i] == v[i - 1])
+    return node;
+}
+
+void decompose(ll node, ll parent)
+{
+    ll subtreesize = dfs(node, 0);
+    ll centroid = dfs1(node, parent, subtreesize);
+
+    par[centroid] = parent;
+
+    foreach (i, g[centroid])
     {
-        ans = min(ans, rec(i + 1, prev, cpu, v, cold, hot) + hot[v[i]]);
+        g[i].erase(centroid);
+        decompose(i, centroid);
+    }
+}
+
+ll lca(ll p, ll q)
+{
+    if (depth[p] < depth[q])
+        swap(p, q);
+    ll d = depth[p] - depth[q];
+
+    range(i, 20, -1, -1)
+    {
+        if ((d >> i) & 1LL)
+            p = LCA[p][i];
     }
 
-    ans = min(ans, rec(i + 1, prev, cpu, v, cold, hot) + cold[v[i]]);
-    ans = min(ans, rec(i + 1, i - 1, cpu, v, cold, hot) + cold[v[i]]);
-    return ans;
+    if (p == q)
+        return p;
+    range(i, 20, -1, -1)
+    {
+        if ((LCA[p][i] != LCA[q][i]))
+        {
+            p = LCA[p][i];
+            q = LCA[q][i];
+        }
+        // else break;
+    }
 
-    if ((v[prev] == v[i] && v[i - 1] == v[i]))
+    return LCA[p][0];
+}
+
+ll distance(ll u, ll v)
+{
+    ll x = lca(u, v);
+    return depth[u] + depth[v] - 2 * depth[x];
+}
+
+void update(ll node)
+{
+    ll cur = node;
+    while (cur != 0)
     {
-        ans = min(ans, hot[v[i]] + rec(i + 1, prev, cpu, v, cold, hot));
+        res[cur] = min(res[cur], distance(node, cur));
+        cur = par[cur];
     }
-    else if ((v[prev] == v[i] && v[i - 1] != v[i]))
-    {
-        ans = min(hot[v[i]] + rec(i + 1, prev, cpu, v, cold, hot), cold[v[i]] + rec(i + 1, i, 1 - cpu, v, cold, hot));
-    }
-    else if ((v[prev] != v[i] && v[i - 1] == v[i]))
-    {
-        ans = min(cold[v[i]] + rec(i + 1, prev, cpu, v, cold, hot), hot[v[i]] + rec(i + 1, i, 1 - cpu, v, cold, hot));
-    }
-    else
-    {
-        ans = min(cold[v[i]] + rec(i + 1, prev, cpu, v, cold, hot), cold[v[i]] + rec(i + 1, i, 1 - cpu, v, cold, hot));
-    }
-    return ans;
 }
 
 void solve()
 {
-    newinput(n, k);
-    vr v = inputvector(n);
-    vr cold = inputvector(k + 1, 1);
-    vr hot = inputvector(k + 1, 1);
+    newinput(n, q);
+    range(n - 1)
+    {
+        newinput(u, v);
+        g[u].insert(v);
+        g[v].insert(u);
+    }
+    gn = g;
+    dfspre(1);
+    decompose(1, 0);
+    update(1);
+    range(q)
+    {
+        newinput(t, u);
 
-    vvr dp(n + 1, vr(k + 1, -1));
-    ll ans = cold[v[0]] + rec(1, 0, 0, v, cold, hot);
-    print(ans);
+        if (t == 1)
+        {
+            update(u);
+        }
+        else
+        {
+            ll v = u;
+            ll ans = INT_MAX;
+            while (v != 0)
+            {
+                ans = min(ans, res[v] + distance(v, u));
+                v = par[v];
+            }
+
+            print(ans);
+        }
+    }
 }
+
 int main()
 {
-    // FAST;
-    // #pragma GCC optimize("Ofast")
-    // #pragma GCC target("avx,avx2,fma")
-
-    newinput(t);
-    range(t)
-    {
-        solve();
-    }
+    solve();
 }

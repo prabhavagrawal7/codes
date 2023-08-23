@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.8)  28 JUL 2023 19:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.8)  23 AUG 2023 14:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -297,15 +297,15 @@ LaTeX Font Info:    ... okay on input line 24.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(17.07182pt, 580.15135pt, 17.07182pt)
-* v-part:(T,H,B)=(17.07182pt, 796.96135pt, 17.07182pt)
+* h-part:(L,W,R)=(18.49411pt, 577.30678pt, 18.49411pt)
+* v-part:(T,H,B)=(18.49411pt, 801.34421pt, 18.49411pt)
 * \paperwidth=614.295pt
-* \paperheight=831.105pt
-* \textwidth=580.15135pt
-* \textheight=796.96135pt
-* \oddsidemargin=-55.19817pt
-* \evensidemargin=-55.19817pt
-* \topmargin=-92.19817pt
+* \paperheight=838.33243pt
+* \textwidth=577.30678pt
+* \textheight=801.34421pt
+* \oddsidemargin=-53.77588pt
+* \evensidemargin=-53.77588pt
+* \topmargin=-90.77588pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=12.0pt
@@ -355,7 +355,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 30.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 56.
+(Font)              <10.95> on input line 45.
  [1
 
 {/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] (./Prabhav_Agrawal_resume.aux)
@@ -363,15 +363,15 @@ Package rerunfilecheck Info: File `Prabhav_Agrawal_resume.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 10153 strings out of 476025
- 162272 string characters out of 5790018
- 1873388 words of memory out of 5000000
- 30481 multiletter control sequences out of 15000+600000
+ 10154 strings out of 476025
+ 162287 string characters out of 5790018
+ 1875388 words of memory out of 5000000
+ 30482 multiletter control sequences out of 15000+600000
  517847 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,8n,76p,327b,429s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on Prabhav_Agrawal_resume.pdf (1 page, 118498 bytes).
+Output written on Prabhav_Agrawal_resume.pdf (1 page, 117513 bytes).
 PDF statistics:
  71 PDF objects out of 1000 (max. 8388607)
  51 compressed objects within 1 object stream

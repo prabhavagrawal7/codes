@@ -107,7 +107,8 @@
         "random": "cpp",
         "ranges": "cpp",
         "algorithm": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "__availability": "cpp"
     },
     "cph.general.onceMaintainerMessage": false
 }

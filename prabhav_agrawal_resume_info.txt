@@ -1,0 +1,64 @@
+**Resume Information:**
+
+------------------ START OF INFORMATION ------------------
+**Name:** Prabhav Agrawal
+
+**Contact:**
+- LinkedIn: [linkedin.com/in/prabhavagrawal7](https://linkedin.com/in/prabhavagrawal7)
+- Github: [github.com/prabhavagrawal7](https://github.com/prabhavagrawal7)
+- Email: [prabhavagrawal7@gmail.com](mailto:prabhavagrawal7@gmail.com)
+- Mobile: [+91-9653051636](tel:+919653051636)
+
+**Education:**
+- Indian Institute of Information Technology Lucknow
+  - Bachelor of Technology - Information Technology
+  - CGPA: 8.11/10
+  - December 2020 - Present (May 2024)
+- Sunbeam English School, Varanasi
+  - CBSE Class 10th & 12th
+  - 10th CGPA: 9.4, 12th Percentage: 89.6
+  - December 2015 - June 2019
+
+**Experience:**
+- Microsoft, Noida
+  - SDE Internship
+  - May 2023 - July 2023
+  - Notable Achievements:
+    - Designed a two-stage process for accurate command filtering using local processing.
+    - Utilized semantic searching techniques for precise command identification.
+    - Enhanced UI/UX for new feature integration.
+    - Tech Used: React | TypeScript | TensorFlow.js
+
+**Projects:**
+- [Watchnow](https://github.com/prabhavagrawal7/watchnow/)
+  - Tech Used: Django | Scikit-learn | NumPy | Pandas | Matplotlib | JQuery | JS
+- [Bookshop](https://github.com/prabhavagrawal7/bookshop)
+  - Tech Used: Django | HTML | CSS | JS | Bootstrap
+- [Grievance Addressal System](https://github.com/prabhavagrawal7/grievance-addressal-system)
+  - Tech Used: Django | Data Structures | CSS | JS | Bootstrap
+
+**Achievements:**
+- Codechef: 5-star rating, Max Rated: 2031
+- Codeforces: Expert rating, Max Rated: 1809
+- Selected for Microsoft Engage and Amazon ML Summer School programs.
+- Codechef Starters 64 (Div.2): Global rank 7
+- Codechef Starters 32 (Div.2): Global rank 34
+- Codeforces Round 887 (Div.2): Global rank 175
+- Codeforces Round 865 (Div.2): Global rank 375
+- Google Kickstart 2022: Global rank 620
+
+**Position of Responsibility:**
+- Senior Member, Competitive Programming Wing, Axios
+- Indian Institute of Information Technology, Lucknow, Uttar Pradesh, India
+- May 2022 - Aug 2023
+
+**Technical Skills:**
+- Languages: C++, Python, HTML, CSS
+- Frameworks & Libraries: Django, Scikit-learn, Matplotlib, Seaborn, Bootstrap, JQuery
+- Dev Tools: Git, VS Code, Jupyter Notebook
+- Academic Coursework: DSA, OOPS, DBMS, Operating System
+
+------------------ END OF INFORMATION ------------------
+
+
+
