@@ -173,27 +173,71 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-
-class Solution
+const ll range = 1000006;
+si primes;
+void sieve()
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
+    vi prime(range + 1, 1);
+    for (int p = 2; p * p <= range; ++p)
     {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
+        if (prime[p] == 1)
         {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
+            for (int i = p * p; i <= range; i += p)
+                if (prime[i] == 1)
+                    prime[i] = p;
         }
-        return {0, 0};
     }
-};
+    range(i, 2, prime.size())
+    {
+        if (prime[i] == 1)
+            primes.insert(i);
+    }
+}
+
+ll trivial(ll n)
+{
+    vi ans(n);
+    return primes.count(n - 1) && primes.count(n - 3);
+}
+void func()
+{
+    newint(n);
+    vi ans(n);
+    ll val = -1;
+    foreach (i, primes)
+    {
+        if (i > n)
+            break;
+        if (primes.count(n - i))
+        {
+            val = i;
+            break;
+        }
+    }
+    bool flag = false; 
+    if (trivial(n))
+        val = 2, flag = true; 
+    if (val == -1)
+        give(-1);
+
+    range(i, val, n)
+    {
+        ans[i] = i - val + 1;
+    }
+    range(i, val)
+    {
+        ans[i] = i + n - val + 1;
+    }
+    swap(ans[0], ans[1]); 
+    print(ans);
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    sieve();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

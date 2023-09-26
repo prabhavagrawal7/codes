@@ -173,27 +173,71 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-
-class Solution
+bool check(vi &vec)
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
+    range(i, 1, vec.size() - 1)
     {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
-        {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
-        }
-        return {0, 0};
+        if (vec[i] > vec[i + 1] && vec[i] > vec[i - 1])
+            continue;
+        if (vec[i] < vec[i + 1] && vec[i] < vec[i - 1])
+            continue;
+        return false;
     }
-};
+    return true;
+}
+void sorting(vi &vec, mii &freq)
+{
+    sort(all(vec), [&freq](ll a, ll b)
+         { return freq[a] > freq[b]; });
+}
+vi joining(vi &store1, vi &store2)
+{
+    // joining store1 and store2 alternatively
+    vi ans;
+    range(i, store1.size())
+    {
+        ans.push_back(store1[i]);
+        if (i < store2.size())
+            ans.push_back(store2[i]);
+    }
+    return ans;
+}
+void func()
+{
+    newint(n);
+    vi vec = inputvec(n);
+    sort(all(vec));
+    if (vec[n - 1] == vec[n / 2])
+    {
+        reverse(all(vec));
+    }
+    vi store1, store2;
+    for (int i = 0; i < (n + 1) / 2; i++)
+    {
+        store1.push_back(vec[i]);
+    }
+    for (int i = (n + 1) / 2; i < n; i++)
+    {
+        store2.push_back(vec[i]);
+    }
+    mii freq;
+    foreach (i, vec)
+        freq[i]++;
+    sorting(store1, freq);
+    sorting(store2, freq);
+    reverse(all(store2));
+    vi ans = joining(store1, store2);
+    if (check(ans))
+        print(ans);
+    else
+        print(-1);
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

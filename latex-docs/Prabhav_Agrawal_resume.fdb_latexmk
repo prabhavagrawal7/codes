@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1694428247 "/Users/prabhavagrawal7/prabhav/codes/latex-docs/Prabhav_Agrawal_resume.tex" "Prabhav_Agrawal_resume.pdf" "Prabhav_Agrawal_resume" 1694428248 0
-  "/Users/prabhavagrawal7/prabhav/codes/latex-docs/Prabhav_Agrawal_resume.tex" 1694428247 6300 612e80c1031c30e7657b61c9db125bd2 ""
+["pdflatex"] 1695072410 "/Users/prabhavagrawal7/prabhav/codes/latex-docs/Prabhav_Agrawal_resume.tex" "Prabhav_Agrawal_resume.pdf" "Prabhav_Agrawal_resume" 1695072411 0
+  "/Users/prabhavagrawal7/prabhav/codes/latex-docs/Prabhav_Agrawal_resume.tex" 1695072410 6545 55abf42213ab21d7b696a75ca1f9187a ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -85,9 +85,9 @@
   "/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1683489239 4623355 b8cad38412faebe1ce5b780a45db67bd ""
   "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1683489216 7883461 4f12da628857ef72763301d42424bf2c ""
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
-  "Prabhav_Agrawal_resume.aux" 1694428248 554 e6f85c6f44bbe194532b4fa1fd8ca02c "pdflatex"
-  "Prabhav_Agrawal_resume.out" 1694428248 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "Prabhav_Agrawal_resume.tex" 1694428247 6300 612e80c1031c30e7657b61c9db125bd2 ""
+  "Prabhav_Agrawal_resume.aux" 1695072411 554 04ae3964aa57b78538b565d0454a3de2 "pdflatex"
+  "Prabhav_Agrawal_resume.out" 1695072410 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "Prabhav_Agrawal_resume.tex" 1695072410 6545 55abf42213ab21d7b696a75ca1f9187a ""
   (generated)
   "Prabhav_Agrawal_resume.aux"
   "Prabhav_Agrawal_resume.log"

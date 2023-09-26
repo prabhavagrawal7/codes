@@ -1,25 +1,43 @@
-from subsai import SubsAI
-import os, tqdm
+import pyautogui
+import time
 
+# Wait for a moment to switch to the text editor
+time.sleep(5)
 
-folder = "/Users/prabhavagrawal7/Downloads/system_design/"
-# get all files from the folder
-files = os.listdir(folder)
-# get all files not ending with .srt extension
-files = [file for file in files if file.endswith(".mp4")]
+# Code to be typed
+code = """
+#include <bits/stdc++.h>
+using namespace std;
 
-files.sort()
-# create an instance of SubsAI
-subsai = SubsAI()
-# create a model with uses c++ whisper implementation
-model = subsai.create_model("guillaumekln/faster-whisper", {"model_type": "base"})
-# generate subtitles for all files in the folder
+#define ll int64_t
+ll rec(string &s1, string &s2, ll i, ll j, vvi &dp)
+{
+    if (i == s1.size() || j == s2.size())
+        return 0;
+    if (dp[i][j] != -1)
+        return dp[i][j];
+    if (s1[i] == s2[j])
+        return dp[i][j] = 1 + rec(s1, s2, i + 1, j + 1, dp);
+    return dp[i][j] = max(rec(s1, s2, i + 1, j, dp), rec(s1, s2, i, j + 1, dp));
+}
+int main()
+{
+    string str1, str2;
+    cin >> str1 >> str2;
+    vvi dp(str1.size(), vi(str2.size(), -1));
+    cout << (rec(str1, str2, 0, 0, dp));
+}
 
-# for file in files: # remove this and add tqdm to show progress bar
-for file in tqdm.tqdm(files):
-    file = folder + file
-    subs = subsai.transcribe(file, model)
-    # remove older file extension and add .srt extension
-    file = "".join(file.split(".")[:-1]) + ".srt"
-    subs.save(file)
-    print(f"Subtitles saved to {file}")
+"""
+
+# Split the code into lines
+code = code.replace("    ", "")
+lines = code.split("\n")
+
+# Iterate through each line and type it
+for line in lines:
+    pyautogui.write(line, interval=0.1)
+    pyautogui.press("enter")
+
+# You can adjust the sleep time between lines if needed
+# time.sleep(1)

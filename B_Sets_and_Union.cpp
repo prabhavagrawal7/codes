@@ -174,26 +174,45 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
 
-class Solution
+void func()
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
+    newint(n);
+    vvi vec(n);
+    range(i, n)
     {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
-        {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
-        }
-        return {0, 0};
+        newint(x);
+        vec[i] = inputvec(x);
     }
-};
+    map<ll, ll> freq;
+    range(i, n)
+    {
+        range(j, vec[i].size())
+        {
+            freq[vec[i][j]]++;
+        }
+    }
+
+    vi termswithlowestfreq;
+    ll ans = 0;
+    foreach (terms, freq)
+    {
+        ll term = terms.first; 
+        set<ll> s;
+        foreach (v, vec)
+        {
+            if (!binary_search(all(v), term))
+                s.insert(v.begin(), v.end());
+        }
+        ans = max(ans, (ll)s.size());
+    }
+    print(ans);
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

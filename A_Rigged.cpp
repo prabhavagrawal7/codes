@@ -174,26 +174,32 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
 
-class Solution
+void func()
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
+    newint(n);
+    V<pii> vec(n);
+    ll weight;
+    ll endurance;
+    range(i, n)
     {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
+        newint(a, b);
+        if (i == 0)
+            weight = a, endurance = b;
+        else 
         {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
+            if(a < weight) continue;
+            if(b < endurance) continue;
+            weight = -1; 
         }
-        return {0, 0};
     }
-};
+    print(weight); 
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

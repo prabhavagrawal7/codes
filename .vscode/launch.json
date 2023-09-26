@@ -15,7 +15,7 @@
             "program": "${workspaceFolder}/${fileBasenameNoExtension}",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "expressions": "native",
+            "expressions": "simple",
             "preLaunchTask": "C/C++: clang++ build active file"
         },
         {

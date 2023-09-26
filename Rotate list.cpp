@@ -8,32 +8,34 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-class Solution {
-public:
-  ListNode *rotateRight(ListNode *head, int k)
+class Solution
 {
-    
-    if (head == nullptr || head->next == nullptr)
-        return head;
-    
-    int length = 1;
+public:
+    ListNode *rotateRight(ListNode *head, int k)
+    {
 
-    ListNode *tracker = head;
-    for (length; tracker->next != nullptr; length++)
-    {
-        tracker = tracker->next;
+        if (head == nullptr || head->next == nullptr)
+            return head;
+
+        int length = 1;
+
+        ListNode *tracker = head;
+        for (length; tracker->next != nullptr; length++)
+        {
+            tracker = tracker->next;
+        }
+        k = k % length;
+        if (k == 0)
+            return head;
+        ListNode *last = tracker;
+        tracker = head;
+        for (int i = 1; i < length - k; i++)
+        {
+            tracker = tracker->next;
+        }
+        auto ans = tracker->next;
+        tracker->next = nullptr;
+        last->next = head;
+        return ans;
     }
-    k = k % length;
-    if(k == 0) return head;
-    ListNode *last = tracker;
-    tracker = head;
-    for (int i = 1; i < length - k; i++)
-    {
-        tracker = tracker->next;
-    }
-    auto ans = tracker->next;
-    tracker->next = nullptr;
-    last->next = head;
-    return ans;
-}
 };

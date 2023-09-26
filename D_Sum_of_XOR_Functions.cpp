@@ -173,27 +173,46 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-
-class Solution
+// prefix, count, ans
+vi rec(ll n, vi &vec, bool u)
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
+    if (n == vec.size())
+        return {0, 0, 0};
+    vi ans = rec(n + 1, vec, u);
+    
+    if (u)
     {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
-        {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
-        }
-        return {0, 0};
+        // yahi pr rok do
+        vi ans = vi{0, 1, n};
     }
-};
+}
+ll findans(vi &vec, ll n, ll bit)
+{
+}
+void func()
+{
+    newint(n);
+    vi vec = inputvec(n);
+    ll ans = 0;
+    range(i, 32)
+    {
+        // store elements with ith bit set
+        vi temp;
+        range(j, vec.size())
+        {
+            if (vec[j] & (1 << i))
+                temp.pb(j);
+        }
+        if (temp.size() == 0)
+            continue;
+    }
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

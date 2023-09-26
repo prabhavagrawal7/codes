@@ -174,26 +174,30 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
 
-class Solution
+void func()
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
-    {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
-        {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
-        }
-        return {0, 0};
-    }
-};
+    newint(n, k, target);
+
+    ll smallest = (k * (k + 1)) / 2;
+    if (smallest > target)
+        give("NO");
+
+    ll extra = (target - smallest) / k;
+
+    ll cval = k + extra;
+    if (k + extra > n)
+        give("NO");
+    target = target - (smallest + extra * k);
+    ll newval = n - cval; 
+    if(newval * k < target) give("NO"); 
+    give("YES"); 
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

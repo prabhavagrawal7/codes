@@ -173,27 +173,98 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-
-class Solution
+ll cycle = -1;
+vi store;
+bool cyclefound = false;
+void dfs(ll n, vvi &g, ll par, vi &vis, vi &rec)
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
+    vis[n] = true;
+    rec.push_back(n);
+    foreach (i, g[n])
     {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
+        if (i == par)
+            continue;
+        if (vis[i] == true && cyclefound == false)
         {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
+            for (int k = rec.size() - 1; k >= 0; k--)
+            {
+                store[rec[k]] = true;
+                if (rec[k] == i)
+                    break;
+            }
+            cyclefound = true;
+            continue;
         }
-        return {0, 0};
+        else if (vis[i] == true)
+            continue;
+        dfs(i, g, n, vis, rec);
     }
-};
+    rec.pop_back();
+}
+void func()
+{
+    newint(n, a, b);
+    vvi g(n + 1);
+    range(i, n)
+    {
+        newint(x, y);
+        g[x].push_back(y);
+        g[y].push_back(x);
+    }
+    store.assign(n + 1, 0);
+    cycle = -1;
+    cyclefound = false;
+    vi vis(n + 1, 0);
+    vi rec;
+    dfs(n, g, -1, vis, rec);
+
+    vi tom, jerry;
+    vi tom_vis(n + 1);
+    vi jerry_vis(n + 1);
+    tom.push_back(a);
+    tom_vis[a] = true;
+    jerry.push_back(b);
+    jerry_vis[b] = true;
+    if (a == b)
+        give("NO");
+    while (jerry.size())
+    {
+        vi newtom;
+        foreach (t, tom)
+        {
+            foreach (nt, g[t])
+            {
+                if (tom_vis[nt])
+                    continue;
+                tom_vis[nt] = true;
+                newtom.push_back(nt);
+            }
+        }
+        swap(tom, newtom);
+        vi newjerry;
+        foreach (j, jerry)
+        {
+            if (store[j])
+                give("YES");
+            foreach (nj, g[j])
+            {
+                if (jerry_vis[nj] || tom_vis[nj])
+                    continue;
+                jerry_vis[nj] = true;
+                newjerry.push_back(nj);
+            }
+        }
+        swap(jerry, newjerry);
+    }
+    give("NO");
+}
+
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

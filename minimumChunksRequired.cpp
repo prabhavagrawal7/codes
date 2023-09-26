@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll int64_t
@@ -173,27 +174,33 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-
-class Solution
+int minimumChunksRequired(long totalPackets, vector<vector<long>> chunkSize)
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
+    chunkSize.push_back({totalPackets + 1, totalPackets + 1});
+    sort(chunkSize.begin(), chunkSize.end());
+    int packet = 1;
+    int ans = 0;
+    for (auto chunks : chunkSize)
     {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
+        ll start = chunks[0], end = chunks[1];
+        if (start > packet)
         {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
+            ans += __builtin_popcountll(start - packet);
         }
-        return {0, 0};
+        packet = end + 1;
     }
-};
+    return ans;
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(totalPackets); // total packets
+    newint(n);            // number of chunks
+    vector<vector<long>> chunks(n, vector<long>(2));
+    range(i, n)
+    {
+        cin >> chunks[i][0] >> chunks[i][1];
+    }
+    cout << minimumChunksRequired(totalPackets, chunks) << endl;
+    return 0;
 }

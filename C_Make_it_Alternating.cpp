@@ -152,8 +152,7 @@ istream &operator>>(istream &is, V<T> &v)
 }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-const ll mod = 1000000007;
-// const ll mod = 998244353;
+const ll mod = 998244353;
 inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
 // define rll above this
 #ifndef __RLL__
@@ -173,27 +172,58 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-
-class Solution
+// if string is form of 0010011010 then it will return 0101010
+vector<pair<char, ll>> compressed(string str)
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
+    ll n = str.size();
+    vector<pair<char, ll>> ans;
+    range(i, 0, n)
     {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
+        if (ans.size() == 0 || ans.back().first != str[i])
         {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
+            ans.push_back({str[i], 1});
         }
-        return {0, 0};
+        else
+        {
+            ans.back().second++;
+        }
     }
-};
+    return ans;
+}
+vector<ll> f = {1};
+ll fac(ll n)
+{
+    while (f.size() <= n)
+    {
+        f.push_back(f.back() * f.size() % mod);
+    }
+    return f[n];
+}
+void func()
+{
+    newstring(str);
+    ll n = str.size();
+    auto cstr = compressed(str);
+    ll cn = cstr.size(); 
+    ll ans = 1;
+    ll sum = 0;
+
+    foreach (ele, cstr)
+    {
+        sum += ele.second;
+        ans = ans * fac(ele.second) % mod;
+        ans = ans * inv(fac(ele.second - 1)) % mod;
+    }
+    ans = ans * fac(sum - cn) % mod;
+    print(n - cn, ans);
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    f.reserve(1000000);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

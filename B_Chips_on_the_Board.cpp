@@ -174,26 +174,22 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
 
-class Solution
+void func()
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
-    {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
-        {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
-        }
-        return {0, 0};
-    }
-};
+    newint(n);
+    vi a = inputvec(n);
+    vi b = inputvec(n);
+
+    ll ans = min(*min_element(all(a)) * n + accumulate(all(b), 0LL),
+                 *min_element(all(b)) * n + accumulate(all(a), 0LL));
+    print(ans);
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

@@ -174,26 +174,55 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
 
-class Solution
+void func()
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
+    newint(n, sn);
+    newstring(str);
+
+    vi A = inputvec(sn);
+    vi B = inputvec(sn);
+
+    foreach (i, A)
+        i--;
+    foreach (i, B)
+        i--;
+
+    vector<bool> store(n);
+    newint(q);
+    range(i, q)
     {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
-        {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
-        }
-        return {0, 0};
+        newint(x);
+        x--;
+        ll idx = upper_bound(all(A), x) - A.begin() - 1;
+
+        ll a = min(x, A[idx] + B[idx] - x);
+        ll b = max(x, A[idx] + B[idx] - x);
+        store[a] = !store[a];
+        store[b] = !store[b]; 
     }
-};
+    range(i, 1, store.size())
+    {
+        store[i] = (store[i] ^ store[i - 1]);
+    }
+
+    range(i, n)
+    {
+        if (store[i] == 0)
+            continue;
+        ll idx = upper_bound(all(A), i) - A.begin() - 1;
+        ll dis = i - A[idx];
+        if(dis * 2 > B[idx] - A[idx]) continue;
+        ll j = B[idx] - dis;
+        swap(str[i], str[j]);
+    }
+    print(str);
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

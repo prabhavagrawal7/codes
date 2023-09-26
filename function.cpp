@@ -151,35 +151,26 @@ ll NCR(ll n, ll r)
 }
 
 //      inttobinary
-vi intToBinary(ll n)
+vi inttobinary(ll n)
 {
     vi binary(63);
-    for (ll i = 0; i < 64 && n != 0; i++)
+    for (ll i = 0; i < 63; i++)
     {
-        if (n & 1LL)
-            binary[i] = 1;
-        else
-            binary[i] = 0;
+        binary[i] = (n & 1); 
         n >>= 1LL;
     }
     return binary;
 }
-
 //      binarytoint
-ll binaryToInt(vi &num)
+ll binarytoint(vi &&num)
 {
-    ll dec_value = 0;
-    ll base = 1;
-
-    for (ll i = 0; i < num.size(); i++)
+    ll ans = 0; 
+    for(int i = num.size()-1; i >= 0; i--)
     {
-        if (num[i] == 1)
-        {
-            dec_value += base;
-        }
-        base = base * 2;
+        ans <<= 1; 
+        ans ^= num[i]; 
     }
-    return dec_value;
+    return ans; 
 }
 
 //      TO FIND NO OF PRIME FACTORS OF A NUMBER

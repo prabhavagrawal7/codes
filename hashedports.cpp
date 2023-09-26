@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll int64_t
@@ -174,26 +175,49 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
 
-class Solution
+void func()
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
-    {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
-        {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
-        }
-        return {0, 0};
-    }
-};
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
+}
+deque<int> logic(vector<int> &packetIds, int numberOfPorts, int transmissionTime, deque<int> sent_ports, vector<int> availablePorts, int time, deque<int> portQueue)
+{
+    for (auto &packet_id : packetIds)
+    {
+        while (!portQueue.empty() && availablePorts[portQueue.front()] <= time)
+        {
+            portQueue.pop_front();
+        }
+        if (portQueue.size() == numberOfPorts)
+        {
+            time = availablePorts[portQueue.front()];
+            portQueue.pop_front();
+        }
+        int port = packet_id % numberOfPorts;
+        while (availablePorts[port] > time)
+        {
+            port = (port + 1) % numberOfPorts;
+        }
+        availablePorts[port] = time + transmissionTime;
+        portQueue.push_back(port);
+        sent_ports.push_back(port);
+        time++;
+    }
+    return sent_ports;
+}
+vector<int> sentTimes(int numberOfPorts, int transmissionTime, vector<int> packetIds)
+{
+    deque<int> sent_ports;
+    int time = 1;
+    vector<int> availablePorts(numberOfPorts, 0);
+    deque<int> portQueue;
+    auto ans = logic(packetIds, numberOfPorts, transmissionTime, sent_ports, availablePorts, time, portQueue);
+    return vector<int>(ans.begin(), ans.end());
 }
