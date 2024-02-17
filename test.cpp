@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include "bits/stdc++.h"
 using namespace std;
 #define ll int64_t
 
@@ -145,5 +145,10 @@ void func()
 }
 int main()
 {
-    print(1 >> (-1)); 
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

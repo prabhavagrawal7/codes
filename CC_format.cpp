@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include "bits/stdc++.h"
 using namespace std;
 #define ll int64_t
 
@@ -15,7 +15,8 @@ using namespace std;
 template <typename _A, typename _B>
 ostream &operator<<(ostream &os, const pair<_A, _B> &p)
 {
-	os << "[" << p.first << "," << p.second << "]";
+	os
+		<< "[" << p.first << "," << p.second << "]";
 	return os;
 }
 template <typename T, typename = void>
@@ -23,27 +24,26 @@ struct is_iterable : false_type
 {
 };
 template <typename T>
-struct is_iterable<T, void_t<decltype(begin(declval<T &>())),
-							 decltype(end(declval<T &>()))>> : true_type
+struct is_iterable<T, void_t<decltype(begin(declval<T &>())), decltype(end(declval<T &>()))>> : true_type
 {
 };
 template <typename T>
-using is_string = is_same<decay_t<T>,
-						  string>;
+using is_string = is_same<decay_t<T>, string>;
 template <typename T>
 constexpr bool is_iterable_v = is_iterable<T>::value;
 template <typename T>
-typename enable_if<!is_iterable_v<T>, void>::type __print(T &&container) { cout << container; }
+typename enable_if<!is_iterable_v<T>, void>::type
+__print(T &&container) { cout << container; }
 template <typename T>
-typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&
-																					 container)
+typename enable_if<is_iterable_v<T> && !is_string<T>::value, void>::type __print(T &&container)
 {
-	auto itr = container.begin();
-	__print(*itr), itr++;
-	for (; itr != container.end(); ++itr)
+	for (auto
+			 itr = container.begin();
+		 itr != container.end(); itr++)
 	{
-		cout << ' ';
 		__print(*itr);
+		if (next(itr) != container.end())
+			cout << ' ';
 	}
 }
 template <typename T>
@@ -60,7 +60,9 @@ inline void print(T &&...args)
 	cout << endl;
 }
 template <typename... T>
-inline void printl(T &&...args) { ((__print(args), cout << " "), ...); }
+inline void printl(T &&...args) { ((__print(args), cout
+													   << " "),
+								   ...); }
 // printing bullshits close
 
 #define popcount(x) __builtin_popcountll(x)
@@ -170,10 +172,21 @@ ll power(ll x, ll y)
 }
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------*/
 
 void func()
 {
+	newint(n);
+	vi vec = inputvec(n);
+	range(i, n)
+	{
+		cout << vec[i] << endl;
+	}
+
+	if (n % 2 == 0)
+		print("Bob");
+	else
+		print("Alice");
 }
 int main()
 {

@@ -110,5 +110,5 @@
         "iterator": "cpp",
         "__availability": "cpp"
     },
-    "cph.general.onceMaintainerMessage": false
+    "files.autoSave": "afterDelay",
 }
