@@ -1,3 +1,6 @@
+*
+!/**/
+!*.*
 **/*.dSYM
 **/*.bin
 **/*.fls
@@ -5,8 +8,4 @@
 **/*.synctex.gz
 **/*.csv
 .cph
-
-# unix executable file
-*.exe
-*.*
 
