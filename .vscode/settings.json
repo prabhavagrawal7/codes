@@ -108,7 +108,8 @@
         "ranges": "cpp",
         "algorithm": "cpp",
         "iterator": "cpp",
-        "__availability": "cpp"
+        "__availability": "cpp",
+        "version": "cpp"
     },
     "files.autoSave": "afterDelay",
 }

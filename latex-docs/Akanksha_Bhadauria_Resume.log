@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.8)  23 SEP 2023 19:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.8)  18 OCT 2023 19:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -393,12 +393,7 @@ Overfull \hbox (20.12407pt too wide) in paragraph at lines 28--38
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 45.
 
-Overfull \hbox (1.63908pt too wide) in paragraph at lines 67--68
-[]\OT1/cmr/m/n/10.95 Cleaned raw data with NumPy and Pan-das and cre-ated mean-ing-ful vi-su-al-iza-tions with Mat-plotlib and Seaborn.  
- []
-
-
-Underfull \hbox (badness 10000) in alignment at lines 94--94
+Underfull \hbox (badness 10000) in alignment at lines 92--92
 [][] 
  []
 
@@ -415,9 +410,9 @@ Here is how much of TeX's memory you used:
  30612 multiletter control sequences out of 15000+600000
  517847 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,76p,330b,428s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,76p,336b,428s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on Akanksha_Bhadauria_Resume.pdf (1 page, 115658 bytes).
+Output written on Akanksha_Bhadauria_Resume.pdf (1 page, 115767 bytes).
 PDF statistics:
  69 PDF objects out of 1000 (max. 8388607)
  49 compressed objects within 1 object stream

@@ -159,41 +159,85 @@ inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
 #ifndef __RLL__
 ll power(ll x, ll y)
 {
-    x %= mod, y %= mod - 1;
     ll res = 1;
     while (y)
     {
         if (y & 1LL)
-            res = (res * x) % mod;
+            res = (res * x);
         y >>= 1;
-        x = (x * x) % mod;
+        x = (x * x);
     }
-    return res % mod;
+    return res;
 }
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
 
-class Solution
+void func()
 {
-public:
-    vector<int> twoSum(vector<ll> vec, int k)
+    newint(n);
+    string vec(n, '0');
+
+
+    vec[0] = '1';
+    vec[n / 2] = '6';
+    vec.back() = '9';
+    V<string> ans;
+    ans.push_back(vec);
+    while (true)
     {
-        int n = vec.size();
-        sort(vec.begin(), vec.end());a
-        int r = n - 1;
-        for (int i = 0; i < n; i++)
-        {
-            while (r > 0 && vec[r] + vec[i] > k)
-                r--;
-            if (i != r && vec[r] + vec[i] == k)
-                return {i, r};
-        }
-        return {0, 0};
+        ll val1 = find(all(vec), '6') - vec.begin();
+        ll val2 = find(all(vec), '9') - vec.begin();
+        if (val1 == 1)
+            break;
+        swap(vec[val1], vec[val1 - 1]);
+        swap(vec[val2], vec[val2 - 2]);
+        ans.push_back(vec);
     }
-};
+    vec.assign(n, '0');
+    vec[0] = '9';
+    vec[n / 2] = '6';
+    vec.back() = '1';
+    ans.push_back(vec);
+    while (true)
+    {
+        ll val1 = find(all(vec), '6') - vec.begin();
+        ll val2 = find(all(vec), '1') - vec.begin();
+        if (val1 == 1)
+            break;
+        swap(vec[val1], vec[val1 - 1]);
+        swap(vec[val2], vec[val2 - 2]);
+        ans.push_back(vec);
+    }
+    foreach (i, ans)
+    {
+        print(i);
+    }
+
+    /*
+100000060000009
+100000600000900
+100006000090000
+100060009000000
+100600900000000
+106090000000000
+169000000000000
+196000000000000
+610090000000000
+900000060000001
+900000600000100
+900006000010000
+900060001000000
+900600100000000
+906010000000000
+*/
+}
 int main()
 {
-    newint(n, k);
-    Solution().twoSum(inputvec(n), k);
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

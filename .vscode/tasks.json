@@ -10,6 +10,7 @@
                 "-std=c++17",
                 "-Wall",
                 "-g",
+                "-lncurses",    
                 "-fsanitize=address",
                 "-fsanitize=undefined",
                 "-fno-sanitize-recover=all",

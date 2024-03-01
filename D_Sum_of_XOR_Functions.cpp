@@ -152,8 +152,7 @@ istream &operator>>(istream &is, V<T> &v)
 }
 inline ld TLD(ll n) { return n; }
 ll gcd(ll __m, ll __n) { return __n == 0 ? __m : gcd(__n, __m % __n); }
-const ll mod = 1000000007;
-// const ll mod = 998244353;
+const ll mod = 998244353;
 inline ll rs(ll n) { return (n %= mod) >= 0 ? n : n + mod; }
 // define rll above this
 #ifndef __RLL__
@@ -173,46 +172,42 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-// prefix, count, ans
-vi rec(ll n, vi &vec, bool u)
+ll calc(vi &vec)
 {
-    if (n == vec.size())
-        return {0, 0, 0};
-    vi ans = rec(n + 1, vec, u);
-    
-    if (u)
+    vec.insert(vec.begin(), 0);
+    V<vi> idx(2);
+    vi sums(2);
+    ll pref = 0;
+    ll ans = 0;
+    range(i, vec.size())
     {
-        // yahi pr rok do
-        vi ans = vi{0, 1, n};
+        pref ^= vec[i];
+        idx[pref].push_back(i);
+        auto &prev_values = idx[!pref];
+        sums[!pref] += i;
+        ans += (prev_values.size() * i - sums[pref]);
     }
-}
-ll findans(vi &vec, ll n, ll bit)
-{
+    return ans;
 }
 void func()
 {
     newint(n);
     vi vec = inputvec(n);
     ll ans = 0;
-    range(i, 32)
+    range(i, 31)
     {
-        // store elements with ith bit set
-        vi temp;
-        range(j, vec.size())
+        vi newvec(n);
+        range(j, n)
         {
-            if (vec[j] & (1 << i))
-                temp.pb(j);
+            newvec[j] = ((vec[j] >> i) & 1);
         }
-        if (temp.size() == 0)
-            continue;
+        ll tempans = rs(rs(calc(newvec)) * power(2, i));
+        ans = (ans + tempans) % mod;
     }
+    print(ans);
 }
 int main()
 {
     FAST;
-    newint(t);
-    range(t)
-    {
-        func();
-    }
+    func();
 }

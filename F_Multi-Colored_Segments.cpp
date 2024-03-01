@@ -140,17 +140,17 @@ struct seg
 #define mid ((start + end) / 2)
 #define lnode (n->left)
 #define rnode (n->right)
-    struct node
+    struct Node
     {
         ll lazy, val;
-        node *left, *right;
-        node()
+        Node *left, *right;
+        Node()
         {
             lazy = 0, val = 0;
             left = nullptr, right = nullptr;
         }
     };
-    node *n = new node();
+    Node *n = new Node();
     ll smallestright(ll ind)
     {
         return smallestright(ind, n, 0, INT_INF / 2);
@@ -168,12 +168,12 @@ struct seg
         return rfind(l, r, n, 0, INT_INF / 2);
     }
 
-    inline void extend(node *n, ll start, ll end)
+    inline void extend(Node *n, ll start, ll end)
     {
         if (lnode == nullptr)
-            lnode = new node();
+            lnode = new Node();
         if (rnode == nullptr)
-            rnode = new node();
+            rnode = new Node();
         if (n->lazy)
         {
             n->val += n->lazy * (end - start + 1);
@@ -182,7 +182,7 @@ struct seg
             n->lazy = 0;
         }
     }
-    void update(ll l, ll r, ll val, node *n, ll start, ll end)
+    void update(ll l, ll r, ll val, Node *n, ll start, ll end)
     {
         if (r < start || end < l)
             return;
@@ -200,7 +200,7 @@ struct seg
         if (rnode != nullptr)
             n->val += rnode->val + rnode->lazy * (end - (mid + 1) + 1);
     }
-    ll rfind(ll l, ll r, node *n, ll start, ll end)
+    ll rfind(ll l, ll r, Node *n, ll start, ll end)
     {
         if (r < start || end < l)
             return 0;
@@ -214,7 +214,7 @@ struct seg
             return rst;
         return rfind(l, r, rnode, mid + 1, end);
     }
-    ll smallestright(ll ind, node *n, ll start, ll end)
+    ll smallestright(ll ind, Node *n, ll start, ll end)
     {
         if (end < ind || n->val + n->lazy == 0)
             return -1;
@@ -226,7 +226,7 @@ struct seg
             return res;
         return smallestright(ind, n->right, mid + 1, end);
     }
-    ll smallestleft(ll ind, node *n, ll start, ll end)
+    ll smallestleft(ll ind, Node *n, ll start, ll end)
     {
         if (ind < start || n->val + n->lazy == 0)
             return -1;
@@ -238,7 +238,7 @@ struct seg
             return res;
         return smallestleft(ind, n->left, start, mid);
     }
-    void deletenodes(node *n)
+    void deletenodes(Node *n)
     {
         if (n == nullptr)
             return;

@@ -4,9 +4,9 @@
 **/*.aux
 **/*.synctex.gz
 **/*.csv
-# remove folder named .cph
 .cph
-# remove folder named .vscode
-.vscode
-# remove folder named tempCodeRunnerFile
+
+# unix executable file
+*.exe
+*.*
 

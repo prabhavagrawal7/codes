@@ -1,94 +1,48 @@
-import React from "react";
-import "./index.css";
-fetch = require("node-fetch");
-function MovieList() {
-  return (
-    <div className="layout-column align-items-center mt-50">
-      <section className="layout-row align-items-center justify-content-center">
-        <input
-          type="number"
-          className="large"
-          placeholder="Enter Year eg 2015"
-          data-testid="year-input"
-        />
-        <button className="" data-testid="submit-button">
-          Search
-        </button>
-      </section>
-
-      <ul className="mt-50 styled" data-testid="movieList">
-        <li className="glide-up-fade-in py-10"></li>
-      </ul>
-
-      <div className="mt-50 slide-up-fade-in" data-testid="no-result"></div>
-    </div>
-  );
-}
-
-export default MovieList;
-
-function MovieList() {
-  const [inputYear, setInputYear] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [noResults, setNoResults] = useState(false);
-
-  const handleInputChange = (event) => {
-    setInputYear(event.target.value);
-  };
-
-  const handleSearch = () => {
-    if (!inputYear) {
-      return; // Don't make an API call if inputYear is empty
-    }
-
-    // + Construct the API URL with the inputYear
-    const apiUrl = `https://jsonmock.hackerrank.com/api/moviesdata?Year=${inputYear}`;
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.length > 0) {
-          setMovies(data.map((movie) => movie.Title));
-          setNoResults(false);
-        } else {
-          setMovies([]);
-          setNoResults(true);
+async function connectspammer() {
+  var allqueries = document.querySelectorAll("span");
+  // filter out the span elements with text "Connect"
+  allqueries = Array.prototype.filter.call(allqueries, function (item) {
+    return item.innerText == "Connect";
+  });
+  let count = 0;
+  for (const ele of allqueries) {
+    console.log("count = ", count);
+    count++;
+    ele.click();
+    // slow down the script by 2 seconds
+    await new Promise((r) => setTimeout(r, 300));
+    // send button class name is artdeco-button__text and text is Send
+    let sendbutt = document.getElementsByClassName("artdeco-button__text");
+    sendbutt = Array.prototype.filter.call(sendbutt, function (item) {
+      return item.innerText == "Send without a note";
+    });
+    // find the send button and click it
+    if (sendbutt.length) {
+      sendbutt[0].click();
+    } else {
+      // click the close button
+      // button contains data-test-modal-close-btn = "" and aria-label = "Dismiss" and class = artdeco-modal__dismiss
+      document.querySelectorAll("button").forEach((element) => {
+        if (element.getAttribute("aria-label") == "Dismiss") {
+          element.click();
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
       });
-  };
-
-  return (
-    <div className="layout-column align-items-center mt-50">
-      <section className="layout-row align-items-center justify-content-center">
-        <input
-          type="number"
-          className="large"
-          placeholder="Enter Year eg 2015"
-          data-testid="year-input"
-          value={inputYear}
-          onChange={handleInputChange}
-        />
-        <button className="" data-testid="submit-button" onClick={handleSearch}>
-          Search
-        </button>
-      </section>
-
-      {noResults ? (
-        <div className="mt-50 slide-up-fade-in" data-testid="no-result">
-          No Results Found
-        </div>
-      ) : (
-        <ul className="mt-50 styled" data-testid="movieList">
-          {movies.map((movie, index) => (
-            <li className="glide-up-fade-in py-10" key={index}>
-              {movie}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+    }
+  }
 }
+function nextPage() {
+  document.querySelectorAll("button").forEach((element) => {
+    window.scrollTo(0, document.body.scrollHeight);
+    if (element.innerText == "Next") {
+      element.click();
+    }
+  });
+
+}
+connectspammer();
+setInterval(() => {
+  connectspammer();
+}, 2000);
+
+setInterval(nextPage, 5000);
+
