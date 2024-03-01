@@ -8,5 +8,7 @@
 **/*.aux
 **/*.synctex.gz
 **/*.csv
+**/*.plist
 .cph
+**/*.exe
 
