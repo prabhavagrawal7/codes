@@ -1,143 +1,70 @@
-\documentclass[letterpaper, 10pt, oneside]{article}
-\usepackage[margin=1in]{geometry}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{multicol}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{hhline}
-\usepackage{enumitem}
-\usepackage{calc}
-\usepackage{lipsum}
-\usepackage{soul}
 
-\definecolor{lightgray}{RGB}{245, 245, 245}
-\definecolor{darkgray}{RGB}{112, 112, 112}
-\definecolor{blue}{RGB}{66, 133, 244}
-\definecolor{orange}{RGB}{255, 152, 0}
-\definecolor{green}{RGB}{106, 170, 116}
-\definecolor{purple}{RGB}{156, 108, 176}
+\documentclass{article}
 
-\newcommand{\uline}[1]{\textcolor{blue}{\underline{\smash{#1}}}}
+\usepackage{lipsum} % for dummy text
+
+\title{My Document}
+\author{John Doe}
+\date{\today}
 
 \begin{document}
-\thispagestyle{empty}
 
-\noindent
-{\Large\bfseries Prabhav Agrawal}
+\maketitle
 
-\vspace{0.2cm}
-\noindent
-\textcolor{darkgray}{\rule{\textwidth}{0.4pt}}
+Given an array $a_1, a_2, \ldots, a_n$ such that $a_i = i$ for all $i$. For an integer $k \geq 2$, the operation $Swap(k)$ is defined as:
 
-\vspace{0.2cm}
-\noindent
-\textcolor{blue}{\textbf{Email:}} \textcolor{black}{prabhavagra7@gmail.com}
-\hspace{1.8cm} \textcolor{blue}{\textbf{Mobile:}} \textcolor{black}{+91-9653051636}
+Let $d$ be the largest divisor of $k$ which is not equal to $k$. Swap the elements $a_d$ and $a_k$.
 
-\vspace{0.2cm}
-\noindent
-\textcolor{blue}{\textbf{LinkedIn:}} \textcolor{black}{\href{https://www.linkedin.com/in/prabhavagra7/}{linkedin.com/in/prabhavagra7}}
-\hspace{0.8cm} \textcolor{blue}{\textbf{GitHub:}} \textcolor{black}{\href{https://github.com/prabhavagra7}{github.com/prabhavagra7}}
-\hspace{0.8cm} \textcolor{blue}{\textbf{Codeforces:}} \textcolor{black}{\href{https://codeforces.com/profile/prabhavagra7}{codeforces.com/users/prabhavagra7}}
+Suppose you perform $Swap(i)$ for all $2 \leq i \leq n$ in order. Find the position of 1 in the resulting array. In other words, find such $j$ that $a_j = 1$ after performing these operations.
 
-\vspace{0.2cm}
-\noindent
-\textcolor{darkgray}{\rule{\textwidth}{0.4pt}}
+Input
 
-\vspace{0.5cm}
-\noindent
-{\Large\bfseries EDUCATION}
+Each test case contains multiple test cases. The first line contains the number of test cases $t$ ($1 \leq t \leq 10^4$). The description of the test cases follows.
 
-\vspace{0.2cm}
-\noindent
-\textcolor{blue}{\textbf{Indian Institute of Information Technology, Lucknow}} \hspace{3.8cm} \textcolor{darkgray}{December 2020 - Present (May 2024)}
-\textcolor{black}{Bachelor of Technology - Information Technology (CGPA: 7.89/10)}
+The only line of each test case contains one integer $n$ ($1 \leq n \leq 10^9$) — the length of the array $a$.
 
-\vspace{0.2cm}
-\noindent
-\textcolor{blue}{\textbf{Sunbeam English School}} \hspace{7.4cm} \textcolor{darkgray}{December 2009 - Present (May 2024)}
-\textcolor{black}{CBSE Class 10th \& 12th (CGPA: 9.4, 12th Percentage: 89.6\%)}
+Output
 
-\vspace{0.2cm}
-\noindent
-\textcolor{darkgray}{\rule{\textwidth}{0.4pt}}
+For each test case, output the position of 1 in the resulting array.
 
-\vspace{0.5cm}
-\noindent
-{\Large\bfseries EXPERIENCE}
+Example
 
-\vspace{0.2cm}
-\noindent
-\textcolor{blue}{\textbf{Microsoft}} \hspace{9.3cm} \textcolor{darkgray}{May 2023 - July 2023}
-\textcolor{black}{Software Engineering (Intern)}
-\begin{itemize}
- \item Designed a two-stage process to accurately filter context in real-time text streaming using local processing, reducing load on large language models (LLMs).
- \item Explored the UI/UX to seamlessly accommodate new features, maintaining a user-centric design approach.
- \item Utilized Semantic Search to evaluate the relationship between detected \& desired context, enabling context identification.
- \item Enhanced the UI/UX of TypeScript/TensorFlow.js
-\end{itemize}
+input
 
-\vspace{0.2cm}
-\noindent
-\textcolor{blue}{\textbf{Watchow}} \hspace{10.2cm} \textcolor{darkgray}{April 2022 - May 2023}
-\textcolor{black}{Django | Scikit-learn | NumPy | Pandas | Matplotlib | jQuery | JavaScript}
-\begin{itemize}
- \item Applied content-based recommendation system in the project.
- \item Improved UI/UX with personalized recommendation, search bar, movie pages, and user authentication.
- \item Created a dummy website for shopping books using Django, HTML, CSS, JavaScript, and Bootstrap.
- \item Implemented user authentication and cart checkout functionality.
- \item Developed an order tracking page to help users keep track of their orders.
- \item Deployed a web-based Complaint Management System, optimizing complaint handling.
- \item Managed a database schema to ensure secure access to the system.
- \item Implemented email escalation to higher authorities based on response deadlines, enhancing workflow efficiency and ensuring minimal response delays.
- \item Automated compliance with a tree structure, utilizing self-defined roles for efficient designation hierarchy management.
- \item Rated "Expert" on Codeforces (Max Rated: 1809)
- \item Rated 5 star on CodeChef (Max Rated: 2031)
- \item Global rank 7 in CodeChef Starters 64 (Div. 2)
- \item Global rank 34 in CodeChef Starters 32 (Div. 2)
- \item Global rank 175 out of 10k in Codeforces Round 857 (Div. 2)
- \item Global rank 320 out of 10k in Codeforces Round 868 (Div. 2)
-\end{itemize}
+4
 
-\vspace{0.2cm}
-\noindent
-\textcolor{darkgray}{\rule{\textwidth}{0.4pt}}
+1
 
-\vspace{0.5cm}
-\noindent
-{\Large\bfseries ACHIEVEMENTS}
+4
 
-\vspace{0.2cm}
-\noindent
-\textcolor{blue}{\textbf{Senior Member, Competitive Programming Wing, Axios}} \hspace{1.8cm} \textcolor{darkgray}{May 2022 - Aug 2023}
-\textcolor{black}{Indian Institute of Information Technology, Lucknow}
+5
 
-\vspace{0.2cm}
-\noindent
-\textcolor{darkgray}{\rule{\textwidth}{0.4pt}}
+120240229
 
-\vspace{0.5cm}
-\noindent
-{\Large\bfseries TECHNICAL SKILLS}
+output
 
-\vspace{0.2cm}
-\noindent
-\textcolor{blue}{\textbf{Programming Languages}} \hspace{4.8cm} \textcolor{black}{C++, Python, HTML, CSS, JavaScript, Matlab, Seaborn, Bootstrap, jQuery}
-\textcolor{blue}{\textbf{Frameworks \& Libraries}} \hspace{4.2cm} \textcolor{black}{Django, Scikit-learn, Matplotlib, NumPy, Pandas}
-\textcolor{blue}{\textbf{Tools}} \hspace{9.1cm} \textcolor{black}{Git, VS Code, Jupyter Notebook}
-\textcolor{blue}{\textbf{Academic Coursework}} \hspace{4.5cm} \textcolor{black}{DSA, OOPS, DBMS, Operating System}
+1
 
-\vspace{0.2cm}
-\noindent
-\textcolor{darkgray}{\rule{\textwidth}{0.4pt}}
+4
+
+4
+
+67108864
+
+Note
+
+In the first test case, the array is [1] and there are no operations performed.
+
+In the second test case, $a$ changes as follows:
+
+Initially, $a$ is [1,2,3,4].
+
+After performing $Swap(2)$, $a$ changes to [2,\underline{1},3,4].
+
+After performing $Swap(3)$, $a$ changes to [3,1,2,4].
+
+After performing $Swap(4)$, $a$ changes to [3,4,1,2] (that is, the element 1 lies on index 4). Thus, the answer is 4.
 
 \end{document}
+
+
