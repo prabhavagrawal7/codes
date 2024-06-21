@@ -173,21 +173,96 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-
+deque<pair<bool, int>> preprocess(string &str)
+{
+    int n = str.size();
+    deque<pair<bool, int>> v;
+    for (int i = 0; i < n; i++)
+    {
+        if (v.empty() || v.back().first != str[i] - '0')
+            v.push_back({str[i] - '0', 1});
+        else
+            v.back().second++;
+    }
+    return v;
+}
+ll checker(deque<pair<bool, int>> &v, int m)
+{
+    foreach (i, v)
+    {
+        if (i.second != m)
+            return 0;
+    }
+    range(i, v.size() - 1)
+    {
+        if (v[i].first == v[i + 1].first)
+            return 0;
+    }
+    return 1;
+}
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    newint(n, m);
+    newstring(str);
+    deque<pair<bool, int>> v = preprocess(str);
+    ll store = 0;
+    while (v.size() && v.front().second == m)
     {
-        printl(57 ^ 37 ^ i);
+        store += v.front().second;
+        v.pop_front();
     }
-    print();
-    for (int i = 0; i < 20; i++)
+
+    if (v.size() == 0)
     {
-        printl(i);
+        give(n);
     }
+
+    if (v[0].second > m)
+    {
+        ll diff = v[0].second - m;
+        v[0].second -= diff;
+        if (v.back().first == v[0].first)
+        {
+            if (v[0].second == 0)
+                v.pop_front();
+            v.back().second += diff;
+        }
+        else
+        {
+            if (v[0].second == 0)
+                v.pop_front();
+            v.push_back({v[0].first, diff});
+        }
+        store += diff;
+    }
+    else
+    {
+        ll diff = v[0].second;
+        v[0].second -= diff;
+        if (v.back().first == v[0].first)
+        {
+            v.pop_front();
+            v.back().second += diff;
+        }
+        else
+        {
+            v.pop_front();
+            v.push_back({v[0].first, diff});
+        }
+
+        store += diff;
+    }
+    if (checker(v, m))
+        print(store);
+    else
+        give(-1);
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

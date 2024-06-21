@@ -176,18 +176,35 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    newint(n, k);
+    if (n == k)
     {
-        printl(57 ^ 37 ^ i);
+        give(vi(n, 1));
     }
-    print();
-    for (int i = 0; i < 20; i++)
+    else if (k == 0)
     {
-        printl(i);
+        if (n == 1 || n == 2)
+            give(-1);
+        vi ans = {1, 3, 2};
+        vi temp(n - 3, 0);
+        ans.insert(ans.end(), temp.begin(), temp.end());
+        give(ans);
     }
+    else if (k == 1)
+    {
+        vi vec(n);
+        range(i, n) vec[i] = i + 1;
+        give(vec);
+    }
+    else
+        give(-1);
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

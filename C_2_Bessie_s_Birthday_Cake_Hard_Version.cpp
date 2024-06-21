@@ -176,18 +176,61 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    newint(n, m, k);
+    vi vec = inputvec(m);
+    range(i, m) vec[i]--;
+    sort(all(vec));
+
+    set<ll> store(all(vec));
+    range(i, m)
     {
-        printl(57 ^ 37 ^ i);
+        if (store.count(vec[i] % n) && store.count((vec[i] + 2) % n))
+        {
+            store.insert((vec[i] + 1) % n);
+        }
     }
-    print();
-    for (int i = 0; i < 20; i++)
+
+    vi newvec(all(store));
+
+    vi extrapoints;
+    range(i, newvec.size())
     {
-        printl(i);
+        ll val = newvec[i] % n - newvec[(i + 1) % newvec.size()];
+        if (val > 0)
+            val -= n;
+        ll absval = abs(val) - 1;
+        if (absval < 2)
+            continue;
+        extrapoints.push_back(absval);
     }
+
+    sort(all(extrapoints), [](ll a, ll b)
+         {
+        if(a % 2 == b % 2) return a < b; 
+        return a % 2 == 1 && b % 2 == 0; });
+
+    ll points = store.size() - 2;
+    range(i, extrapoints.size())
+    {
+        if (k >= extrapoints[i] / 2)
+        {
+            points += extrapoints[i];
+            k -= extrapoints[i] / 2;
+        }
+        else
+        {
+            points += k * 2;
+            break; 
+        }
+    }
+    print(points);
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

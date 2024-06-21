@@ -176,18 +176,22 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    newint(n, m);
+    ll v = (n ^ m);
+    ll ans = 0;
+    while (v % 2 == 0)
     {
-        printl(57 ^ 37 ^ i);
+        ans++;
+        v >>= 1;
     }
-    print();
-    for (int i = 0; i < 20; i++)
-    {
-        printl(i);
-    }
+    print((1LL << ans));
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

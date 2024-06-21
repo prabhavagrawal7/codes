@@ -176,18 +176,36 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    newint(n);
+    vi vec = inputvec(n);
+    vi ans;
+    vi m(n + 1);
+    ll mex = 0;
+    range(i, n)
     {
-        printl(57 ^ 37 ^ i);
+        if (vec[i] > 0)
+        {
+            ans.push_back(mex);
+            m[mex] = 1;
+            while (m[mex])
+            {
+                mex++;
+            }
+        }
+        else
+        {
+            ans.push_back(mex - vec[i]);
+            m[mex - vec[i]] = 1;
+        }
     }
-    print();
-    for (int i = 0; i < 20; i++)
-    {
-        printl(i);
-    }
+    print(ans);
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

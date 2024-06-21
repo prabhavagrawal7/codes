@@ -174,20 +174,102 @@ ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
 
+int n, k;
+vi jointwo(vi &v1, vi &v2)
+{
+    int l1 = 0, l2 = 0;
+    vi ans;
+    while (l1 < v1.size() && l2 < v2.size())
+    {
+        if (v1[l1] > v2[l2])
+        {
+            ans.push_back(v1[l1]);
+            l1++;
+        }
+        else
+        {
+            ans.push_back(v2[l2]);
+            l2++;
+        }
+        if (ans.size() == k)
+            return ans;
+    }
+    if (ans.size() == k)
+        return ans;
+
+    while (l1 < v1.size())
+    {
+        ans.push_back(v1[l1]);
+        l1++;
+        if (ans.size() == k)
+            return ans;
+    }
+    while (l2 < v2.size())
+    {
+        ans.push_back(v2[l2]);
+        l2++;
+        if (ans.size() == k)
+            return ans;
+    }
+    return ans;
+}
+
+vi joinN(vector<vi> &v)
+{
+    while (v.size() > 1)
+    {
+        vector<vi> tempstore;
+        for (int i = 0; i < v.size(); i += 2)
+        {
+            if (i + 1 == v.size())
+            {
+                tempstore.push_back(v[i]);
+                break;
+            }
+            tempstore.push_back(jointwo(v[i], v[i + 1]));
+        }
+        swap(v, tempstore);
+    }
+    return v[0];
+}
+
+vi add(vi &v, int val)
+{
+    for (int i = 0; i < v.size(); i++)
+    {
+        v[i] += val;
+    }
+    return v;
+}
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    cin >> n >> k;
+    vvi store(n);
+    range(i, n)
     {
-        printl(57 ^ 37 ^ i);
+        vi temp = inputvec(n - i);
+        store[i].swap(temp);
     }
-    print();
-    for (int i = 0; i < 20; i++)
+    vector<vi> dp(n + 1);
+    dp[n] = vi(1, 0);
+    range(i, n - 1, -1, -1)
     {
-        printl(i);
+        vector<vi> temp(n - i);
+        for (int j = i; j < n; j++)
+        {
+            temp[j - i] = add(dp[j + 1], store[i][j - i]);
+        }
+        temp.push_back({0}); // for the case when we don't take any element from the current row
+        dp[i] = joinN(temp);
     }
+    print(dp[0]);
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

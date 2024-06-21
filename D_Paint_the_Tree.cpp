@@ -173,21 +173,89 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-
+vi get_nodes_between(ll n, ll parent, ll m, vvi &g)
+{
+    for (auto &&i : g[n])
+    {
+        if (i == parent)
+            continue;
+        if (i == m)
+        {
+            return {i};
+        }
+        vi temp = get_nodes_between(i, n, m, g);
+        if (temp.size())
+        {
+            temp.pb(i);
+            return temp;
+        }
+    }
+    return {};
+}
+ll dfs(ll n, ll parent, vvi &g)
+{
+    ll ans = 0;
+    for (auto &&i : g[n])
+    {
+        if (i == parent)
+            continue;
+        ans += dfs(i, n, g) + 2;
+    }
+    return ans;
+}
+ll find_removal_length(vvi &g, ll mid_node)
+{
+    ll best_due_to = -1;
+    ll ans = 0;
+    range(i, 1, g.size())
+    {
+        if (g[i].size() != 1)
+            continue;
+        ll x = i, par = -1;
+        ll count = 0;
+        while (g[x].size() <= 2 && x != mid_node)
+        {
+            ll newx = g[x][0] == par ? g[x][1] : g[x][0];
+            par = x;
+            x = newx;
+            count++;
+        }
+        if (ans < count)
+        {
+            ans = count;
+            best_due_to = i;
+        }
+    }
+    return best_due_to;
+}
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    newint(n);
+    newint(a, b);
+    vvi g(n + 1);
+    range(i, 1, n)
     {
-        printl(57 ^ 37 ^ i);
+        newint(a, b);
+        g[a].pb(b);
+        g[b].pb(a);
     }
-    print();
-    for (int i = 0; i < 20; i++)
-    {
-        printl(i);
-    }
+    vi nodes = get_nodes_between(a, -1, b, g);
+    nodes.push_back(a);
+    reverse(all(nodes));
+    ll mid_node = nodes[(nodes.size() - 1) / 2];
+    ll ans_rb = get_nodes_between(mid_node, -1, b, g).size();
+    ll ans_jump = dfs(mid_node, -1, g);
+    ll removal_from = find_removal_length(g, mid_node);
+    ll removal = get_nodes_between(mid_node, -1, removal_from, g).size();
+    print(ans_rb + ans_jump - removal);
+    // now paint mid_node to all the nodes in minimum
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

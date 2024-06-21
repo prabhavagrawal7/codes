@@ -173,21 +173,84 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
+#include <iostream>
+using namespace std;
+
+int findMinOperations(string str, int K, vector<int> prefix)
+{
+
+    /* Storing the length of Input string */
+    int N = str.length();
+
+    /* To store the minimum number of operations required. */
+    int minOperations = 0;
+
+    /* Iterating over the string str. */
+    for (int ind = 0; ind < N; ind++)
+    {
+        /* If ith character is '0' and there is substring of length K present on the right side. */
+        ll val = prefix[ind];
+        if (ind - 1 >= 0)
+            val ^= prefix[ind - 1];
+        // debug(N, s);
+        if (!(val) && ind + K <= N)
+        {
+
+            /* Then flip the substring s[i, i+k]. */
+            // s.update(ind, ind + K - 1, 0, 0, N - 1);
+            prefix[ind] ^= 1;
+            prefix[ind + K] ^= 1;
+            // debug(N, s);
+            /* Incrementing the answer since we performed a flip. */
+            minOperations++;
+        }
+        if (ind - 1 >= 0)
+            prefix[ind] ^= prefix[ind - 1];
+    }
+
+    bool zeroPresent = false;
+
+    /* Checking if the string still contains a zero. */
+    for (int i = 0; i < N; i++)
+    {
+        if (prefix[i] == 0)
+            zeroPresent = true;
+    }
+
+    /* If there still exists a zero then return -1 otherwise return
+    minimum number of operations required. */
+    return (zeroPresent ? -1 : minOperations);
+}
 
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    newint(n);
+    newstring(str);
+    vector<int> prefix(n + 1, 0);
+    for (ll i = 0; i < n; i++)
     {
-        printl(57 ^ 37 ^ i);
+        if (str[i] == '1')
+        {
+            prefix[i + 1] ^= 1;
+            prefix[i] ^= 1;
+        }
     }
-    print();
-    for (int i = 0; i < 20; i++)
+
+    for (int k = n; k >= 1; k--)
     {
-        printl(i);
+        ll ans = findMinOperations(str, k, prefix);
+        if (ans == -1)
+            continue;
+        print(k);
+        break;
     }
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

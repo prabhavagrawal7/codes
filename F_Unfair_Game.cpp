@@ -1,6 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
-#define ll int64_t
+#define ll int
 
 // Uncomment them for optimisations
 // #pragma GCC optimize("Ofast")
@@ -173,21 +173,115 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
+vi getDivisors(int n)
+{
+    vi divisors;
+    for (int i = 1; i * i <= n; i++)
+    {
+        if (n % i == 0)
+        {
+            divisors.push_back(i);
+            if (i != n / i)
+                divisors.push_back(n / i);
+        }
+    }
+    sort(all(divisors)); 
+    return divisors;
+}
+// join two sorted vectors and return sorted vector with unique elements
+vi join(vi &v1, vi &v2)
+{
+    vi ans;
+    int i = 0, j = 0;
 
+    while (i < v1.size() && j < v2.size())
+    {
+        if (v1[i] < v2[j])
+        {
+            if (ans.empty() || ans.back() != v1[i])
+                ans.push_back(v1[i]);
+            i++;
+        }
+        else if (v2[j] < v1[i])
+        {
+            if (ans.empty() || ans.back() != v2[j])
+                ans.push_back(v2[j]);
+            j++;
+        }
+        else
+        {
+            if (ans.empty() || ans.back() != v1[i])
+                ans.push_back(v1[i]);
+            i++;
+            j++;
+        }
+    }
+
+    while (i < v1.size())
+    {
+        if (ans.empty() || ans.back() != v1[i])
+            ans.push_back(v1[i]);
+        i++;
+    }
+
+    while (j < v2.size())
+    {
+        if (ans.empty() || ans.back() != v2[j])
+            ans.push_back(v2[j]);
+        j++;
+    }
+
+    return ans;
+}
+
+vi prune(vi &v, ll val)
+{
+    vi ans;
+    foreach (a, v)
+    {
+        if (val % a == 0)
+            ans.push_back(a);
+    }
+    return ans;
+}
+vi combine(vi &v1, vi &v2, ll val)
+{
+    vi ans1, ans2;
+    ans1 = prune(v1, val);
+    ans2 = prune(v2, val);
+    return join(ans1, ans2);
+}
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    newint(n, m);
+    vvi vec(n, vi(m));
+    cin >> vec;
+
+    V<vvi> dp(n, vvi(m));
+    for (int i = 0; i < n; i++)
     {
-        printl(57 ^ 37 ^ i);
+        for (int j = 0; j < m; j++)
+        {
+            if (i - 1 >= 0 && j - 1 >= 0)
+                dp[i][j] = combine(dp[i][j - 1], dp[i - 1][j], vec[i][j]);
+            else if (i - 1 >= 0)
+                dp[i][j] = prune(dp[i - 1][j], vec[i][j]);
+            else if (j - 1 >= 0)
+                dp[i][j] = prune(dp[i][j - 1], vec[i][j]);
+            else
+                dp[i][j] = getDivisors(vec[i][j]);
+        }
+        if (i - 2 >= 0)
+            vvi().swap(dp[i - 2]);
     }
-    print();
-    for (int i = 0; i < 20; i++)
-    {
-        printl(i);
-    }
+    cout << *max_element(all(dp[n - 1][m - 1])) << endl;
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

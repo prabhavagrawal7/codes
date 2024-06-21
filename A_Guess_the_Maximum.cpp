@@ -176,18 +176,21 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    newint(n);
+    vi vec = inputvec(n);
+    ll ans = INT_MAX;
+    range(i, n-1)
     {
-        printl(57 ^ 37 ^ i);
+        ans = min(ans, max(vec[i], vec[i + 1]) - 1);
     }
-    print();
-    for (int i = 0; i < 20; i++)
-    {
-        printl(i);
-    }
+    print(ans);
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }

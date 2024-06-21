@@ -1,15 +1,225 @@
-Hello, everyone!
-
-I am beyond excited to share some amazing news with you all. After completing a rewarding internship at Microsoft, I have joined Rubrik as a Software Engineer Intern for the next 6 months.
-
-Today was my first day at Rubrik, and I was blown away by the welcoming and supportive culture. I am looking forward to learning from the brilliant minds at Rubrik and contributing to their innovative solutions.
-
-I want to thank Nikitha for making my onboarding process smooth and hassle-free. She is a great mentor and a friend.
-
-I also want to express my gratitude to my family and friends for their constant encouragement and guidance throughout my journey.
-
-I can't wait to see what the future holds for me at Rubrik. Stay tuned for more updates!
-
----
-
-I hope this helps you craft a compelling post for LinkedIn. If you need any further assistance, please let me know. 😊
+   I am actually interning at Rubrik India in Bangalore and currently I am working in the team which is core UI team where I have multiple tasks to work upon and like so currently in our internship,
+   I was exposed to two of the products. One is Spark UI and the other one I can not name. So, let's name it something like Luna. So, in Spark UI, actually I am working on, you can say, actually in Spark UI, I have worked on multiple features.
+   And
+   my one of my
+   major project was working with Azure RCV integration. RCV is Rubrik Cloud Vault, which is the Rubrik standard tier of archival location where people can actually archive their data and make sure that the data doesn't being attacked by some ransomware.
+   So, while working on it, so the UI task was given to me and my task was to like show the complete UI and the Figma mocks are the same. So, as I like in, so people can, so the backend team is different, but since I am working on it, I can not name it. So, let's name it Luna.
+   As I told you, I've worked upon this part. So, I'm going to explain it more.
+   So, in RCV integration. So, now, earlier users can only select the Azure based locations. But now, since we are using RCV as a wrapper around the Azure itself for some of the locations, which customers have to pay premium.
+   On that, we are also showing the RCV location based on the bundle they have attached in it. So, like the whole flow involves pretty much around like how RCV is integrated and what is the source subscription and the storage subscription. Like I have to remove a whole flow for that.
+   And likewise, while working in the, I have to collaborate with team as well. Since this is full UI, I had to learn the very basic concepts of the UI. That is React and TypeScript.
+   We are also using emotion.js and.
+   Instead of using REST API, we are using GraphQL here, which is to make sure that the changes that the things that we actually need from the backend should be controlled on a granular level, which is not possible in the REST API or even if it's so, it's a very difficult change to begin with.
+   So, GraphQL can work as a wrapper between the.
+   It's so it acts as an intermediary between microservices and the servers that are actually running and after like you can see working on Luna is working on Luna is a different task.
+   So, here I have.
+   So, Luna is a concept model that we are trying to make to.
+   Actually, convert the users from RST to to push users from the old crystal UI that was actually deprecated right now.
+   So, so the rubrics cloud model was more of a like backup security service.
+   So, for that, there is a interface for you for crystal UI.
+   But since.
+   Crystal UI is going to get deprecated just because of like the like it was made on Angular 1.2, which was very, very old and to port it to Luna.
+   We are actually trying to figure out the ways that we are doing it.
+   So, so the Luna is actually built on React 18 and my task was to handle the.
+   Many parts of it since it's a huge UI You can say.
+   There are different laws that I worked upon.
+   And there's different infrastructure tasks that I also work upon in Luna.
+   And there's different infrastructure tasks that I also worked upon in Luna.
+   So, first of all, coming up with.
+   I have been given Hyper V.
+   Flow to work with.
+   I have been given Hyper V.
+   work with so after that in hyper-v we can we can edit or add live mounts and
+   we could also see and we could actually list down the SCVMM page and back and we
+   can recover files present in hyper-v as well so there is a whole recovery flow
+   dedicated to hyper-v itself which is different you can say a whole different
+   thing so in recovery flow I have four different of five different options that
+   is first of all recover files second is live mount third is instant recovery
+   fourth is export so I think four yeah four is present so
+   now my each of the flow contains different way to recover your files so in
+   recover files you can granularly drill down to each of the file so a whole
+   navigation folder is created as a and you can drill down to each of the folder
+   and select the files that you needed to and you can just you can either download
+   these files which are actually from a snapshot or either you could overwrite
+   original files that were that were present in the hyper-v or you could also
+   export to a particular path in the hyper-v as well
+   so that's it for this video. Thank you for watching. See you in the next video. Bye.
+   now coming on to live mounts here you can select the mount name that could be
+   made so what happens in live mounts is whenever we select live mount a snap a
+   VM of the hyper-v is a new VM of the hyper-v is actually created with the
+   machine with your settings that needed to be made of or
+   so this is actually useful whenever you let's say want to have a backup VM for
+   to store with that you can actually use so let's say our college gets a
+   Ransomware attack and the server that were running our website could get
+   crashed so there's there could be a backup server that could be made to
+   instantly with the last snapshot that we actually made so we could simply just
+   use that you we could simply just point our networks to the newly created
+   snapshot using live mode so this is all about live modes we can also name it to
+   some another VM and coming on to the instant recovery so instant recovery
+   task is to just to recover the files and nothing else like so let's say a
+   ransomware attack happened and you all files are getting deleted in the in real
+   time so what you could do is because of the ransomware installed on somewhere
+   you know that
+   the files will not be like recovered so in what instant recovery does is it
+   hides all the options and straightforward does make sure that you
+   don't have to deal with any of the situations like changing the network or
+   powering on the VM it simply takes the existing VM changes takes the name of
+   the existing VM and
+   replaces all the contents of like replaces the whole VM to itself and
+   powers on so the customers won't be able to feel or very any delay and which is
+   great then coming on to the export flow here you could select a recovery host
+   and then you can actually select what the path where you want to recover and
+   so this is how you can recover and you can do the recovery a now so I also fix
+   in many like component level of worst that are actually a big chunk of problem
+   to create that so UI is not about like just making the button change a lot so
+   how that
+   user is getting feeling experience it also matters a lot so in our case which
+   was the thing was happening is like we are actually showing a table for some of
+   the tables and in the background process we are fetching the details of the table
+   as well so that like the table is up to date for every time but but since this
+   is a like it we also want to show loader as well whenever the table loads but we
+   don't want to make sure that will be want to make sure that the table gets
+   loaded only when the loader is an invisible so
+   what we were
+   getting problems was like since the details spent getting fish every time
+   the loader is being shown and to prevent it I have to make sure that internally
+   the calling happens while the data is being tagged properly so what happens
+   now is the first time that whenever the table gets loaded the loader is being
+   shown mounted on but whenever
+   fetching happens the data is actually just sticking right into it and as the
+   as it fetched the data the data will actually replace the contents of the
+   previous data so this will actually not mount and unmount the whole data which
+   is very good in case of the user experience now the problem that occurred
+   is like whenever we are actually showing the loader we are actually not showing
+   the loader sorry we have to show the loader whenever let's say someone can
+   someone is trying to query in the data but the problem is since every time
+   you
+   the we are only showing loader whenever it is for it has been fetched for the
+   first time we are actually now wanted to show loader whenever the data is being
+   changed sorry the query parameter is actually being changed so what could be
+   done is they could simply take the model and be like sorry not the model
+   we could simply take the table and make sure whenever a query is being made is
+   loading is sent it to true and the loader actually is being shown until the
+   data is being fetched so it's a different set of change than being
+   everything being in an asynchronous process although while being in a single
+   threaded application it's far difficult whenever we are actually handling the
+   asynchronous process so let's say the query gets changed but how will it know
+   that query although query becomes change the data showing is actually it will it
+   will be changed throughout the time so to make sure this the booleans actually
+   performs synchronously we had to make sure that like we have to store the
+   states of the booleans that is whenever the data is fetching as well as the data
+   the query parameters being changed at the exact point IMP and then whenever so
+   it's another level of a problem that I solved it with and
+   And I've also worked on an infra task that is like UI infra where I have to enable concurrent
+   mode and what is concurrent mode that is you can say concurrent and whenever we were using
+   react 17 the process were actually happening in a synchronous manner.
+   So a component will get unwanted and a new component will mount only after the previous
+   component will amount if we have given instructions for that.
+   But now in react 18 the we are actually able to mount and unmount based on the priority
+   given to the particular component.
+   So now react will be able to.
+   Since this components are actually critical and which are not based on that we can actually
+   determine so that a high priority component is actually needed to be replaced.
+   So mounting and mounting will happen whenever we have a higher priority component but for
+   lower priority we can actually make sure that it should not be.
+   Mounted.
+   Mounted and unmounted again and again.
+   So this is somewhat you can say like user can have a get a faster performance because
+   of that with minimalistic change in code as well as the granular control it provides with.
+   So for example we are actually.
+   We know of debouncing.
+   So whenever the user types something in the searching while while making Google search
+   so the network calls should not happen again and again whenever the user types and it should
+   wait for some second which is so for each time you type we had to make a debouncer for
+   the for that for making sure that the component is actually mounting and mounting again and
+   again.
+   But so to prevent that mounting and mounting but what we could do now is we could actually
+   set component mode to true where the react will automatically sense whether the component
+   needs mounting and mount component like component react could sense that this needs mounting
+   and unmounting based on the priority given to it.
+   So the mounting and unmounting happens for the.
+   Like the react will sense that change in text will actually lead to mounting and mounting
+   but the search results will be delayed on the basis of how react is actually perceiving
+   the priority of it.
+   So it will actually skip them or some of the transition states.
+   Which is quite helpful.
+   Because like we we had to write code for the debouncing logic but we are not doing so in
+   react 18 and but it also comes up with the.
+   But it also come up with separate set of problems such as while we are while working on like.
+   If we didn't made our components well properly coded enough that is react have their own
+   standard that should be make sure that to use it properly.
+   So let's say.
+   Whenever someone is trying to bypass the original concept of like how things should be actually
+   coded.
+   There could be a misalignment in getting to getting the more modal.
+   So let's say for example there could be a possibility because of a logic being delayed.
+   The react may not be able to sense and what could happen is a mounting remounting could
+   happen again and again and an infinite loop.
+   Or.
+   The.
+   The tests become flaky because of like.
+   The testing also becomes asynchronous which is actually great for the time being like.
+   Since the testing is actually asynchronous now the testing like loading and unloading
+   will become a little faster and which actually makes your.
+   Testing time a little bit faster.
+   But.
+   Since.
+   People may you like but we forget to add the asynchronous behavior that could that unmounting
+   could happen so let's say something is actually mounted and it could unmount as like it could.
+   The.
+   Let's say a button will trigger a change but it takes a time of like let's say.
+   It doesn't take time.
+   Let's say.
+   Time but the time between the clicking of a button button being clicked and the component
+   being mounted is let's say time t but what happens if the testing while testing the.
+   The test is actually trying to check for.
+   A label but it's not present because the component is still not mounted.
+   So.
+   Which.
+   So.
+   Earlier.
+   When the react was synchronous it was easily being done because like every test is actually
+   based on whenever a component is mounted then only test the line by line test actually runs
+   but now since things will become asynchronous the testing and the component updating and
+   the test the line by line test that actually we write with changes and.
+   This.
+   Actually.
+   Changes the whole flow of.
+   How things actually work.
+   But.
+   So.
+   If you do follow the set of guidelines that are given by the.
+   React framework.
+   We could actually find it.
+   That test won't become flaky whenever we are actually following the set of guidelines but.
+   That generally doesn't happen even in big MNCs as well.
+   Which.
+   By.
+   Due to which.
+   This.
+   Becomes.
+   Flaky.
+   And.
+   So.
+   I also need to make sure that all the components the.
+   Manually tests on the components before like.
+   Gaining to.
+   Making sure that.
+   Unmounting and.
+   Unmounting.
+   Doesn't happen in the internet loop.
+   Which can only be checked whenever we are actually leaving dark clubs because it's.
+   That.
+   .
+   This.
+   This this.
+   This.
+   Things.
+   We also during the night.
+   On a daily basis.
+   The teeth this gives a.
+   This.
+   Is.
+   it's a interpreted language and it won't be able to get it directly so i need to test it
+   so i have done all the manual testing by myself in that case as well
+   so this was all about my journey in rubric hope you have a great day%    

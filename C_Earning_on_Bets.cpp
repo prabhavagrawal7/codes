@@ -176,18 +176,31 @@ ll inv(ll n) { return power(n, mod - 2); }
 
 void func()
 {
-    for (int i = 0; i < 20; i++)
+    newint(n);
+    vi vec = inputvec(n);
+    // find lcm of all elements
+    ll lcm = 1;
+    for (auto &&i : vec)
     {
-        printl(57 ^ 37 ^ i);
+        lcm = (lcm * i) / gcd(lcm, i);
     }
-    print();
-    for (int i = 0; i < 20; i++)
+    vi elements;
+    range(i, n) elements.push_back(lcm / vec[i]);
+    range(i, n)
     {
-        printl(i);
+        if (elements[i] * vec[i] <= accumulate(all(elements), 0))
+        {
+            give(-1); 
+        }
     }
+    print(elements); 
 }
 int main()
 {
-    print(db_bin(28)); 
-    func();
+    FAST;
+    newint(t);
+    range(t)
+    {
+        func();
+    }
 }
