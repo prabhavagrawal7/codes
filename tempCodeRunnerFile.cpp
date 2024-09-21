@@ -1,15 +1,8 @@
-ll func()
-{
-    newint(n);
-    n = abs(n);
-    int val = 0;
-    int steps = 0;
-    while (val < n)
-    {
-        steps++;
-        val += steps;
-    }
-    if (val == n || (val - n) % 2 == 0)
-        return (steps) * (steps + 1) / 2;
-    return (steps + 1) * (steps + 2) / 2;
-}
+  // // Reset only the necessary elements
+        // for (int i = 0; i < l; ++i)
+        //     for (int row = 0; row < n; ++row)
+        //         for (int col = 0; col < m; ++col)
+        //         {
+        //             visited[i][row][col][0] = false;
+        //             visited[i][row][col][1] = false;
+        //         }
