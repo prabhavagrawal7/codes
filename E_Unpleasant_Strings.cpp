@@ -173,48 +173,53 @@ ll power(ll x, ll y)
 ll inv(ll n) { return power(n, mod - 2); }
 #endif
 /* ----------------------------------------------------------------------------------------------*/
-void printAB(char c)
+ll alphabet_size;
+void dfs(string &s, vvi &store, vi &dp)
 {
-    if (c == 'A')
-        print("Alice");
-    else
-        print("Bob");
+    dp[store.size()] = 0;
+    range(n, s.size(), -1, -1)
+    {
+        range(i, alphabet_size)
+        {
+            dp[n] = min(dp[n], 1 + dp[store[n][i]]);
+        }
+    }
 }
 void func()
 {
-    newint(n);
-    newstring(str);
+    newint(n, alphabet_size);
+    newstring(s);
+    newint(queries);
+    ::alphabet_size = alphabet_size;
+    vvi store(s.size() + 1, vi(alphabet_size, n + 1));
 
-    if (str[n - 1] == str[n - 2] || str[n-1] == str[0])
+    range(i, n, 0, -1)
     {
-        printAB(str[n - 1]);
-        return; 
+        store[i - 1] = store[i];
+        ll idx = s[i - 1] - 'a';
+        store[i - 1][idx] = i;
     }
-    
-    if(str[n-1] == 'A')
-    {
-        printAB('B'); 
-        return; 
-    }
+    vi dp(store.size() + 1, INT_MAX);
+    dfs(s, store, dp);
 
-    range(i, 1, n-1) {
-        if(str[i] == 'B')
+    range(queries)
+    {
+        newstring(str);
+        ll idx = 0;
+        range(i, str.size())
         {
-            printAB('B'); 
-            return; 
+            if (idx == store.size())
+                break;
+            idx = store[idx][str[i] - 'a'];
         }
+        if (idx >= dp.size())
+            print(0);
+        else
+            print(dp[idx]);
     }
-    printAB('A'); 
-
-
-
 }
 int main()
 {
-    FAST;
-    newint(t);
-    range(t)
-    {
-        func();
-    }
+
+    func();
 }
