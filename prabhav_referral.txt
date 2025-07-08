@@ -1,43 +1,22 @@
+Hi [Recipient Name],
 
-Hi Loveena,
- 
-I'm Prabhav Agrawal, a 4th-year student from IIIT Lucknow, currently pursuing B.Tech in Information Technology.
- 
-I would like to apply for the position of Software Engineer at Arcesium. It would be greatly appreciated if you could refer me for this position
+Hope you are doing well.
 
-Job Link: https://boards.greenhouse.io/arcesiumllc/jobs/4325202007 
+I'm Prabhav Agrawal, a Software Engineer at Microsoft with 1 Year of Exp. I came across an exciting opportunity for a Software Engineer-Frontend role at Paypal that aligns perfectly with my experience.
 
-I am currently interning at Rubrik and have previously interned at Microsoft. Currently I am rated 5 star on CodeChef and Expert at Codeforces.
- 
-Email ID: prabhavagrawal7@gmail.com
- 
-Here is the link to my resume for your reference: https://drive.google.com/file/d/1FLUpYbnm-QTogUZ1MuafN6OswzMqeghz/view
- 
-Thank you.
+Job Link: R0128312
 
+In my current role at Microsoft, I am actively developing features for copilot in Office apps for iOS using Swift, Objective-C. 
+Previously, as an intern at Rubrik, I gained hands-on experience with React, Typescript, and GraphQL, enhancing core UI components and building new workflows. 
+I believe my skills and background make me a strong candidate for this position.
 
-
-
-
-Hi Meet,
-
-Hope you are good and doing well.
-
-I am Prabhav Agrawal, currently a final year student at IIIT Lucknow. I am looking out for internship opportunities and found a job opening at Google which matches my expertise and interest. 
-The job link for the same is - https://www.google.com/about/careers/applications/jobs/results/83961401275491014-software-engineering-intern-winter-2024
-It would be helpful if you could refer me for the same. 
-
-My Technical Background: 
-- Recently completed an internship with Microsoft for an SDE role, gaining valuable hands-on experience.
-- Rated 5-star at CodeChef and Expert at Codeforces
-- Selected for Microsoft Engage 2022 and Amazon ML Summer School 2022
+Would you be open to referring me for this role? I have attached my resume for your convenience and would be happy to provide any additional information.
 
 Resume Link: https://drive.google.com/file/d/1FLUpYbnm-QTogUZ1MuafN6OswzMqeghz
 
-Thank you,
+Thank you for your time and consideration.
+
+Best regards,
 Prabhav Agrawal
-[Email: prabhavagrawal7@gmail.com]
-
-
-Machine Learning Datasets: 
-I have worked on datasets and gained insights with them, 
+Email: prabhavagrawal7@gmail.com
+LinkedIn: linkedin.com/in/prabhavagrawal7

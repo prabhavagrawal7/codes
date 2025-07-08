@@ -64,25 +64,10 @@
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
-  "liveServer.settings.donotShowInfoMsg": true,
   "explorer.autoReveal": true,
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
-  "chatgpt.lang": "en",
   "workbench.colorTheme": "Default Dark+",
-  "codesnippetsai.defaultModel": "Google PaLM2",
-  "codesnippetsai.gpt.accessToken": "aksdalkj",
-  "liveServer.settings.donotVerifyTags": true,
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "auto-rename-tag.activationOnLanguage": ["*"],
   "diffEditor.ignoreTrimWhitespace": false
 }
