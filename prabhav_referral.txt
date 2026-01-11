@@ -1,22 +1,13 @@
-Hi [Recipient Name],
+Hi Sharad,
 
-Hope you are doing well.
+I'm interested in the Backend Software Engineer - Digital Bank (J02019424) role at Shopee. I'm currently a Software Engineer at Microsoft (1 year exp) working on Copilot for Office iOS.
 
-I'm Prabhav Agrawal, a Software Engineer at Microsoft with 1 Year of Exp. I came across an exciting opportunity for a Software Engineer-Frontend role at Paypal that aligns perfectly with my experience.
+Job: https://careers.shopee.sg/job-detail/J02019424/1
 
-Job Link: R0128312
+Resume: https://drive.google.com/file/d/1FLUpYbnm-QTogUZ1MuafN6OswzMqeghz
 
-In my current role at Microsoft, I am actively developing features for copilot in Office apps for iOS using Swift, Objective-C. 
-Previously, as an intern at Rubrik, I gained hands-on experience with React, Typescript, and GraphQL, enhancing core UI components and building new workflows. 
-I believe my skills and background make me a strong candidate for this position.
-
-Would you be open to referring me for this role? I have attached my resume for your convenience and would be happy to provide any additional information.
-
-Resume Link: https://drive.google.com/file/d/1FLUpYbnm-QTogUZ1MuafN6OswzMqeghz
-
-Thank you for your time and consideration.
+Would you be open to referring me?
 
 Best regards,
 Prabhav Agrawal
-Email: prabhavagrawal7@gmail.com
-LinkedIn: linkedin.com/in/prabhavagrawal7
+prabhavagrawal7@gmail.com

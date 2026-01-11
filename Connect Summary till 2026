@@ -1,0 +1,135 @@
+## Connect Nov 2025
+
+Employee Response:
+
+### **What impact was delivered**
+
+**Goal #1. Engineering**
+
+- Project Catalyst Integration:
+  - Add new ZQM V2 in Catalyst chat pane for Word and PPT on iOS and added new pills (Audio overview)
+  - Enabled Flux V3 support in the Catalyst chat pane for Word and PPT on iOS, which enables modern workflow that unlocks capabilities such as image generation, code execution, and other multimodal scenarios. This required close collaboration with the BizChat team to ensure correct optionsets and variants were passed, and that service-side workflows executed seamlessly.
+  - Incorporated document context for offline documents which required extensive collaboration with Sydney service, Word and PPT teams to ensure that offline documents are seeded correctly.
+  - Collaborated with Augloop team to confirm the issue for PPT desktop where new api was not implemented for desktop tand accordingly suggested fixes accordingly.
+  - Added support for document tenant ID in telemetry to help segment usage by tenant, raised issue for Android counterpart and collaborated with team to confirm the fix.
+- Telemetry:
+  - Enabled Pacman telemetry logging for iOS which was necessary for CIE dashboards.
+  - Fixed PLT/UPLT data by fixing copilotEntryPoint logging which was necessary in collecting correct metrics.
+  - Fixed work web classification which corrected telemetry insights
+- Podcast:
+  - Implemented unified cache status and fetch chunk payload in iOS resulting in easier host integration for cache implementation for audio overview.
+  - Raised
+  - Resolved 4 accessibility issues in podcast player which results in better usability for screen reader users and fixed corresponding tests.
+  - Separated menu items in card and sheet player for better UX control.
+- File upload policy:
+  - Implemented file upload policy for Word and PPT chat pane for iOS.
+  - Identified gap in PM specs regarding disabling document grounding when file upload is restricted in certain scenarios; raised the issue and collaborated with the team to confirm and deliver the fix.
+- Arbutus: Removed link and buttons from credits from credits dialog stopping users from reaching to older copilot pro subscription.
+- RLS Security: Ensure that RLS policies are correctly mitigated by ensuring troubleshooting steps are well documented and shared with oncall engineers.
+- On-call Support: Actively participated in on-call rotation for App Chat Copilot, responding to incident alerts and coordinating with backend teams to resolve issues promptly.
+
+## Connect May 2025
+
+### App Chat Mobile
+
+#### **Admin Controls for Multi-Account Copilot iOS for Word and PPT**
+
+**Key Contributions:**
+
+- Drive design discussion for flow navigation where we actually came up with better strategy to disable copilot for disabled users.
+
+- On document scroll, removed **nudge** display for disabled users.
+
+- Fixed app crash on first install and a compliance issue by disabling prefetch for Copilot-disabled enterprise users.
+
+- Bug Fix to Disable Prefetch:
+
+  - Moved core platform logic to `OCMAIChatClient`.
+
+  - Tried calling MSO API directly (caused UI thread block and crash) and calling from OCMAIChatClient (initially crashes due to missing context, later fixed by adding context reference).
+
+#### **Enable Safelink on App Chat iOS for Word and PPT**
+
+- Facilitated Safelink design discussions with App Chat team, resolved action items.
+
+- Collaborated with **Biz Chat and Safelink service** team on follow-up actions.
+
+  - Reported discrepancy in implementation between Android and iOS, and recommended shifting the SafeLink logic from the core platform to the service layer.
+
+  - Raised and track request for **Service** team to provide app chat specific caller app id.
+
+- Fixed citation issue where external links were embedded as attribute in base url.
+
+- Notified other partner teams to enable Safelink on their respective platforms as well.
+
+#### **Interactive Auth (Failure case handling)**
+
+- Initiated initial design discussion on the **Interactive Auth** flow, identifying key infrastructure concern around executing response on failure error from augloop service.
+
+- Proposed multiple POC designs, documented their pros/cons, and led a dedicated infrastructure review.
+
+- Updated the infrastructure to now support both Interactive Auth and the credits flow feature, which will replace the previous suboptimal implementation.
+
+### **App Chat SDX**
+
+#### **Accessibility & Reliability Improvements:**
+
+- Collaborated with the **Fluent team** to resolve a **mac specific styling issue** where the mouse pointer displayed a hand cursor on hover.
+
+- Fixed **font height overlap** by setting line height in individual components.
+
+  - Explored **global styling solutions** with the Fluent team — found to be iPad-specific.
+
+  - Investigations suggest **UIWebView** is the likely root cause; migrating to **WKWebView** may resolve it.
+
+  - Shared findings with the **App Chat** team as focus shifted to iOS.
+
+- Investigated **1JS artifact consumption** in SDX to identify the source of **iPad ChatHistory scrolling issues**.
+
+- Created a **patch on 1JS package** and coordinated **version bump in SDX** to revert a faulty PR.
+
+- **Enabled Restshy for iPad** with dynamic expand/contract on user interaction.
+
+  - **Issue**: In expanded mode, suggestion pills required double-click due to pre-click mutations.
+
+  - **Fixes**:
+
+    - Temporary: Forced permanent expansion on iPad.
+
+    - Long-term: Asked Fluent team for API improvements on event timing and click handling.
+
+#### **1JS to SDX Script:**
+
+- Facilitated **knowledge transfer** and helped partner teams resolve issues in the script.
+
+#### **Enabling Copilot on GCC Accounts**
+
+1. **SDX Version Management & Collaboration:** Continuous collaboration with the iPad SDX team in Redmond for following items:
+
+    - Force update SDX version on Mac.
+
+    - Faced significant challenges testing Word and PPT on the GCC ring due to lack of documentation and extensive trial and error.
+
+    - Identified and documented environmental and infrastructure requirements for vendors to test for GCC ring which ranges from very small quirks eg: charger attached on force update, enabling flighting from Msft etc
+
+2. **Copilot Enablement & Testing**
+
+    - Conducted E2E validation of Copilot visibility and verified SDX configuration pointed to GCC servers.
+
+    - Configured packet analyzers to inspect SDX traffic on Mac
+
+    - Coordinated with vendors and the SDX team to prepare for GCC testing.
+
+## Connect Nov 2024
+
+**Deepening SDX Knowledge:** 
+
+By deepening my understanding of SDX, I enhanced my debugging skills, optimized reliability processes, and created a time-saving script for 1JS testing. This foundation helped me address issues faster and contribute tangible improvements to my team.
+
+**Enhancing Reliability for iPad and Mac SDX:** 
+
+My reliability work has focused on critical, production-facing issues. While I am still building in this area, early signs of improvement are evident, and I expect my increasing pace to drive stronger results over time.
+
+**Reducing Testing Efforts for SDX and FHL Hackathon Contribution:** 
+
+This project arose from practical challenges encountered while testing the 1JS app on iPad, where frequent CSS issues demanded rapid adjustments. The manual process of identifying, downloading, and updating 1JS packages in SDX node modules was inefficient, particularly with repeated updates. To address this, I developed a script in JavaScript that automates these tasks, significantly reducing testing time. Key enhancements include optimized file transfer speeds (cut from 80-90 seconds to 10-15 seconds per package), accurate package detection through close SDX collaboration, and parallel processing that reduced update time from 6-8 minutes to under a minute. 
