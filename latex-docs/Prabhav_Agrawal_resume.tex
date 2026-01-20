@@ -1,17 +1,26 @@
 \documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
 \usepackage[]{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
+\setlist[itemize]{label={-}}
 \usepackage{tabularx}
 \usepackage{color, hyperref, xcolor}
 \usepackage[document]{ragged2e}
 \usepackage{graphicx}
 \usepackage{multirow}
+\input{glyphtounicode}
+\pdfgentounicode=1
 \definecolor{linkcolor}{HTML}{003c51}
 \hypersetup{
 	colorlinks=true, 
 	urlcolor=linkcolor
 } 
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\sloppy
 \thispagestyle{empty}
 \geometry{paperheight=11in, paperwidth=8.5in, top=0.8cm, bottom=1cm, left=1cm, right=1cm}
 \setlength{\emergencystretch}{1em}
@@ -26,11 +35,18 @@
 \vspace*{6pt}
 
 \noindent
-\begin{tabularx}{\textwidth}{@{}l X r }
-			\textbf{GitHub} & \href{https://github.com/prabhavagrawal7}{github.com/prabhavagrawal7} & \textbf{Email:} \href{mailto:prabhavagrawal7@gmail.com}{prabhavagrawal7@gmail.com} \\
-			\textbf{LinkedIn} & \href{https://linkedin.com/in/prabhavagrawal7}{linkedin.com/in/prabhavagrawal7} & \textbf{Phone:} +91-9653051636 \\
-	\textbf{Codeforces} & \href{https://codeforces.com/profile/prabhavagrawal7}{codeforces.com/profile/prabhavagrawal7} & \\
-\end{tabularx}
+{\small
+\begin{minipage}[t]{0.64\textwidth}
+\textbf{GitHub:} \href{https://github.com/prabhavagrawal7}{\nolinkurl{github.com/prabhavagrawal7}}\\
+\textbf{LinkedIn:} \href{https://linkedin.com/in/prabhavagrawal7}{\nolinkurl{linkedin.com/in/prabhavagrawal7}}\\
+\textbf{Codeforces:} \href{https://codeforces.com/profile/prabhavagrawal7}{\nolinkurl{codeforces.com/profile/prabhavagrawal7}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.34\textwidth}
+\raggedleft
+\textbf{Email:} \href{mailto:prabhavagrawal7@gmail.com}{\nolinkurl{prabhavagrawal7@gmail.com}}\\
+\textbf{Phone:} +91-9653051636
+\end{minipage}
+}
 	
 \section*{EDUCATION}
 \subsection*{Indian Institute of Information Technology Lucknow}	\hfill\textbf{Lucknow, Uttar Pradesh, India} \\
@@ -79,10 +95,9 @@ Software Engineer Intern  \hfill \textit{May 2023 - Jul 2023} \\
 
 \section*{TECHNICAL SKILLS}
 {\small
-	\begin{tabular}{@{}llll}
-		\textbf{Languages}               &   & C++, Python, React, TypeScript, Swift, Objective-C                           \\
-		\textbf{Frameworks \& Libraries} &   & React, GraphQL (Apollo), Django, SwiftUI, Fluent UI, ML (scikit-learn) \\
-		\textbf{Core CS}                 &   & Data Structures and Algorithms, OOPS, DBMS, Operating System, Problem Solving     \\
-	\end{tabular}
+\noindent
+\textbf{Languages:} C++, Python, TypeScript, Swift, Objective-C\\
+\textbf{Frameworks \& Libraries:} React, GraphQL (Apollo), Django, Swift UI, ML (scikit-learn)\\
+\textbf{Core CS:} Data Structures and Algorithms, OOPS, DBMS, Operating System, Problem Solving
 }
 \end{document}
